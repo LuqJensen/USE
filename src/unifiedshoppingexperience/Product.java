@@ -1,15 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package unifiedshoppingexperience;
 
 /**
  *
- * @author DzenitaHasic
+ * @author Gruppe12
  */
 public class Product
 {
-    
+
+    private String model;
+    private double price;
+
+    public Product(String model, double price)
+    {
+        this.model = model;
+        this.price = price;
+    }
+
+    public void compareProduct(String searchTerm)
+    {
+
+    }
 }
