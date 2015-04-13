@@ -6,19 +6,18 @@ package unifiedshoppingexperience;
  */
 public abstract class Cart
 {
-
+    protected static int cartCreations;
     protected double price;
-    protected int productQuantity;
     protected int totalQuantity;
+    protected int cartID;
 
-    public Cart(double price, int productQuantity, int totalQuantity)
+    public Cart()
     {
-        this.price = price;
-        this.productQuantity = productQuantity;
-        this.totalQuantity = totalQuantity;
+        this.cartID = cartCreations;
+        ++cartCreations;
     }
 
-    public void addProduct(String product)
+    public void addProduct(Product product)
     {
 
     }

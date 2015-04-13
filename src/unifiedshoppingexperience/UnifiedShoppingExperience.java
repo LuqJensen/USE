@@ -1,5 +1,6 @@
 package unifiedshoppingexperience;
 
+import java.util.Map;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,8 +16,20 @@ public class UnifiedShoppingExperience extends Application
 
     private String email;
     private String phoneNumber;
+    private Map customerMap;
 
-    public void findProduct(String searchTerm)
+    public Map<Product, Integer> findProduct(String[] descriptionTags, String[] typeTags)
+    {
+        return null;
+
+    }
+
+    public void addProduct(String CustomerID, Product product)
+    {
+
+    }
+
+    public void viewCart(String id, int cartID)
     {
 
     }

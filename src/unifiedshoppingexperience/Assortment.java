@@ -1,6 +1,8 @@
 package unifiedshoppingexperience;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -9,7 +11,10 @@ import java.util.Collection;
 public class Assortment
 {
 
-    public Collection<Product> findProducts(String searchTerm)
+    private Map<String, Set<Product>> typeMap;
+    private Map<String, Set<Product>> descriptionMap;
+
+    public Map<Product, Integer> findProducts(String[] descriptionTags, String[] typeTags)
     {
 
         return null;

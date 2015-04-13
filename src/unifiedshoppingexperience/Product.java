@@ -16,8 +16,4 @@ public class Product
         this.price = price;
     }
 
-    public void compareProduct(String searchTerm)
-    {
-
-    }
 }
