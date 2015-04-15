@@ -7,9 +7,8 @@ package unifiedshoppingexperience;
 public class ShoppingCart extends Cart
 {
 
-    public ShoppingCart(double price, int productQuantity, int totalQuantity)
+    public ShoppingCart()
     {
-        super(price, productQuantity, totalQuantity);
+        super();
     }
-    
 }

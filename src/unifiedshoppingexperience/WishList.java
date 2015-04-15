@@ -6,10 +6,12 @@ package unifiedshoppingexperience;
  */
 public class WishList extends Cart
 {
+    private String name;
 
-    public WishList(double price, int productQuantity, int totalQuantity)
+    public WishList(String name)
     {
-        super(price, productQuantity, totalQuantity);
+        super();
+        this.name = name;
     }
-    
+
 }
