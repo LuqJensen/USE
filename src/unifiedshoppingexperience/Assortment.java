@@ -1,8 +1,11 @@
 package unifiedshoppingexperience;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  *
@@ -10,13 +13,46 @@ import java.util.Set;
  */
 public class Assortment
 {
+
     private Map<String, Set<Product>> typeMap;
     private Map<String, Set<Product>> descriptionMap;
 
-    public ArrayList<Product> findProducts(String[] descriptionTags, String[] typeTags)
+    public List<Product> findProducts(String[] descriptionTags, String[] typeTags)
     {
+        Map<Product, Integer> productMap = new HashMap();
 
-        return null;
+        for (String typeTag : typeTags)
+        {
+            for (Product product : typeMap.get(typeTag))
+            {
+                productMap.put(product, 0);
+            }
+        }
 
+        for (String descriptionTag : descriptionTags)
+        {
+            for (Product product : descriptionMap.get(descriptionTag))
+            {
+                Integer productHits = productMap.get(product);
+
+                if (productHits == null && typeTags == null)
+                {
+                    productMap.put(product, 1);
+                }
+                else if (productHits != null)
+                {
+                    productMap.put(product, productHits + 1);
+                }
+            }
+        }
+
+        Set<ProductHits> temp = new TreeSet();
+
+        for (Product product : productMap.keySet())
+        {
+            temp.add(new ProductHits(product, productMap.get(product)));
+        }
+
+        return new ArrayList(temp);
     }
 }
