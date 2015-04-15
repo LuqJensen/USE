@@ -13,5 +13,4 @@ public class WishList extends Cart
         super();
         this.name = name;
     }
-
 }

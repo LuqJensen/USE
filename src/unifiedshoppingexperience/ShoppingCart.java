@@ -6,7 +6,6 @@ package unifiedshoppingexperience;
  */
 public class ShoppingCart extends Cart
 {
-
     public ShoppingCart()
     {
         super();

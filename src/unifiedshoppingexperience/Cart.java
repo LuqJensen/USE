@@ -17,14 +17,8 @@ public abstract class Cart
         ++cartCreations;
     }
 
-    public void addProduct(Product product)
+    public Cart addProduct(Product product)
     {
-
+        return this;
     }
-
-    public void showProducts()
-    {
-
-    }
-
 }

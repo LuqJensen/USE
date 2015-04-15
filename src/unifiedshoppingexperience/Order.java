@@ -8,7 +8,6 @@ import java.util.Date;
  */
 public class Order
 {
-
     private int orderNumber;
     private Date purchaseDate;
     private Date deliveryDate;

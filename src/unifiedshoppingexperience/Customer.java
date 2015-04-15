@@ -8,7 +8,6 @@ import java.util.ArrayList;
  */
 public class Customer
 {
-
     private String ID;
     private String name;
     private String surName;
@@ -24,22 +23,23 @@ public class Customer
         this.surName = surName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.wishList = new ArrayList();
         this.shoppingCart = new ShoppingCart();
+        this.wishList = new ArrayList();
     }
 
-    public void addToCart(Product product)
+    public Cart addToCart(Product product)
     {
-
+        shoppingCart.addProduct(product);
+        return shoppingCart;
     }
 
-    public void viewCart(int cartID)
+    public Cart viewCart(int cartID)
     {
-
+        return shoppingCart;
     }
 
-    public void createOrder(Cart cart)
+    public Order createOrder(Cart cart)
     {
-
+        return null;
     }
 }

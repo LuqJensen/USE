@@ -6,7 +6,6 @@ package unifiedshoppingexperience;
  */
 public class Product
 {
-
     private String model;
     private double price;
 
@@ -15,5 +14,4 @@ public class Product
         this.model = model;
         this.price = price;
     }
-
 }

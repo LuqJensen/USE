@@ -6,7 +6,6 @@ package unifiedshoppingexperience;
  */
 public class Address
 {
-
     private String streetName;
     private String houseNumber;
     private int zipCode;

@@ -1,5 +1,6 @@
 package unifiedshoppingexperience;
 
+import java.util.ArrayList;
 import java.util.Map;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,25 +14,24 @@ import javafx.stage.Stage;
  */
 public class UnifiedShoppingExperience extends Application
 {
-
     private String email;
     private String phoneNumber;
     private Map customerMap;
 
-    public Map<Product, Integer> findProduct(String[] descriptionTags, String[] typeTags)
+    public ArrayList<Product> findProduct(String[] descriptionTags, String[] typeTags)
     {
         return null;
 
     }
 
-    public void addProduct(String CustomerID, Product product)
+    public Cart addProduct(String CustomerID, Product product)
     {
-
+        return null;
     }
 
-    public void viewCart(String id, int cartID)
+    public Cart viewCart(String id, int cartID)
     {
-
+        return null;
     }
 
     @Override

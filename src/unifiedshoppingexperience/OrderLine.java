@@ -11,12 +11,10 @@ package unifiedshoppingexperience;
  */
 public class OrderLine
 {
-
     private int quantity;
 
     public OrderLine(int quantity)
     {
         this.quantity = quantity;
     }
-
 }
