@@ -6,9 +6,8 @@ package unifiedshoppingexperience;
  */
 public class ProductHits
 {
-
     private int hits;
-    private Product product;
+    private final Product product;
 
     public ProductHits(Product product, int hits)
     {
@@ -21,4 +20,8 @@ public class ProductHits
         return this.hits - ph.hits;
     }
 
+    public Product getProduct()
+    {
+        return product;
+    }
 }

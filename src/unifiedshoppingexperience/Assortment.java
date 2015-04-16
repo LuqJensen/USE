@@ -13,12 +13,13 @@ import java.util.TreeSet;
  */
 public class Assortment
 {
-
     private Map<String, Set<Product>> typeMap;
     private Map<String, Set<Product>> descriptionMap;
 
     public List<Product> findProducts(String[] descriptionTags, String[] typeTags)
     {
+        assert(descriptionTags != null && typeTags != null);
+
         Map<Product, Integer> productMap = new HashMap();
 
         for (String typeTag : typeTags)
@@ -35,7 +36,7 @@ public class Assortment
             {
                 Integer productHits = productMap.get(product);
 
-                if (productHits == null && typeTags == null)
+                if (productHits == null && typeTags.length == 0)
                 {
                     productMap.put(product, 1);
                 }
@@ -46,6 +47,7 @@ public class Assortment
             }
         }
 
+        // Temporary hack for easy sorting by relevance (productHits)...
         Set<ProductHits> temp = new TreeSet();
 
         for (Product product : productMap.keySet())
@@ -53,6 +55,13 @@ public class Assortment
             temp.add(new ProductHits(product, productMap.get(product)));
         }
 
-        return new ArrayList(temp);
+        List<Product> retval = new ArrayList();
+
+        for (ProductHits ph : temp)
+        {
+            retval.add(ph.getProduct());
+        }
+
+        return retval;
     }
 }
