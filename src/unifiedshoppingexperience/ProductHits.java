@@ -4,7 +4,7 @@ package unifiedshoppingexperience;
  *
  * @author Gruppe12
  */
-public class ProductHits
+public class ProductHits implements Comparable<ProductHits>
 {
     private int hits;
     private final Product product;
@@ -15,9 +15,11 @@ public class ProductHits
         this.product = product;
     }
     
+    @Override
     public int compareTo(ProductHits ph)
     {
-        return this.hits - ph.hits;
+        // sort descending instead of ascending
+        return ph.hits - this.hits;
     }
 
     public Product getProduct()
