@@ -35,10 +35,10 @@ public class AssortmentTest
         productSet2.add(p1);
         productSet2.add(p3);
 
-        typeMap = new HashMap<String, Set<Product>>();
+        typeMap = new HashMap();
         typeMap.put("Grafikkort", productSet2);
 
-        descriptionMap = new HashMap<String, Set<Product>>();
+        descriptionMap = new HashMap();
         descriptionMap.put("970", productSet1);
         descriptionMap.put("Nvidia", productSet2);
     }
@@ -52,7 +52,7 @@ public class AssortmentTest
         System.out.println("findProducts with empty parameter arrays.");
 
         String[] descriptionTags = "".split(" ");
-        String[] typeTags = "".split(" ");
+        String[] typeTags = new String[0];
 
         Assortment instance = new Assortment(typeMap, descriptionMap);
         List<Product> expResult = new ArrayList();
@@ -67,7 +67,7 @@ public class AssortmentTest
         System.out.println("findProducts 1");
 
         String[] descriptionTags = "Nvidia 970".split(" ");
-        String[] typeTags = "Grafikkort".split(" ");
+        String[] typeTags = new String[] {"Grafikkort"};
 
         Assortment instance = new Assortment(typeMap, descriptionMap);
 
@@ -94,7 +94,7 @@ public class AssortmentTest
         System.out.println("findProducts 2");
 
         String[] descriptionTags = "970".split(" ");
-        String[] typeTags = "Grafikkort".split(" ");
+        String[] typeTags = new String[] {"Grafikkort"};
 
         Assortment instance = new Assortment(typeMap, descriptionMap);
 
@@ -121,7 +121,7 @@ public class AssortmentTest
         System.out.println("findProducts 3");
 
         String[] descriptionTags = "970".split(" ");
-        String[] typeTags = "".split(" ");
+        String[] typeTags = new String[0];
 
         Assortment instance = new Assortment(typeMap, descriptionMap);
 

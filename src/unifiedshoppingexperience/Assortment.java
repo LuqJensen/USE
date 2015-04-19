@@ -32,9 +32,6 @@ public class Assortment
 
         for (String typeTag : typeTags)
         {
-            if (typeTag.isEmpty())
-                continue;
-
             Set<Product> productSet = typeMap.get(typeTag);
 
             if (productSet == null)
@@ -48,14 +45,11 @@ public class Assortment
 
         // If productMap is empty at this point, type filtering was not performed
         // due to empty typeTags parameter, or empty String elements in typeTags.
-        // The need for this, rather than typeTags != 0, was discovered during unit testing.
+        // The need for this, rather than typeTags.length != 0, was discovered during unit testing.
         boolean filteredByType = !productMap.isEmpty();
 
         for (String descriptionTag : descriptionTags)
         {
-            if (descriptionTag.isEmpty())
-                continue;
-
             Set<Product> productSet = descriptionMap.get(descriptionTag);
 
             if (productSet == null)

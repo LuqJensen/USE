@@ -14,7 +14,7 @@ public class ProductHits implements Comparable<ProductHits>
         this.hits = hits;
         this.product = product;
     }
-    
+
     @Override
     public int compareTo(ProductHits ph)
     {
