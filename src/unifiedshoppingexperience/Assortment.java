@@ -19,7 +19,9 @@ public class Assortment
     // denne constructor er lavet til at teste Assortment med AssortmentTest.java (jUnit tests)
     public Assortment(Map<String, Set<Product>> typeMap, Map<String, Set<Product>> descriptionMap)
     {
-        assert(typeMap != null && descriptionMap != null);
+        if (typeMap == null || descriptionMap == null)
+            throw new NullPointerException();
+
         this.typeMap = typeMap;
         this.descriptionMap = descriptionMap;
     }
