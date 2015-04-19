@@ -13,8 +13,8 @@ public class Customer
     private String surName;
     private String email;
     private String phoneNumber;
-    ShoppingCart shoppingCart; 
-    ArrayList wishList;
+    ShoppingCart shoppingCart;
+    ArrayList<WishList> wishList;
 
     public Customer(String ID, String name, String surName, String email, String phoneNumber)
     {
@@ -27,19 +27,36 @@ public class Customer
         this.wishList = new ArrayList();
     }
 
+    public Customer(String ID)
+    {
+        this.ID = ID;
+        this.shoppingCart = new ShoppingCart();
+        this.wishList = new ArrayList();
+    }
+
     public Cart addToCart(Product product)
     {
         shoppingCart.addProduct(product);
         return shoppingCart;
     }
 
-    public Cart viewCart(int cartID)
+    public ArrayList<WishList> viewAllWishLists()
     {
-        return shoppingCart;
+        return wishList;
+    }
+
+    public Cart viewWishList(int wishListIndex)
+    {
+        return wishList.get(wishListIndex);
     }
 
     public Order createOrder(Cart cart)
     {
         return null;
+    }
+
+    public Cart viewShoppingCart()
+    {
+        return shoppingCart;
     }
 }
