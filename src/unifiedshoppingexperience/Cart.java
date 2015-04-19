@@ -14,6 +14,11 @@ public abstract class Cart
     protected int totalQuantity;
     protected int cartID;
     protected List<ProductLine> productLines;
+    
+    static
+    {
+        cartCreations = 0;
+    }
 
     public Cart()
     {
