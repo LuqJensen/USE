@@ -16,7 +16,6 @@ public abstract class Cart
     protected int totalQuantity;
     protected int cartID;
     protected Map<Product, ProductLine> productLines;
-//    protected List<ProductLine> productLines;
 
     static
     {

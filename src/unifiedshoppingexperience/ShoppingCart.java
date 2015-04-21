@@ -10,7 +10,8 @@ public class ShoppingCart extends Cart
     {
         super();
     }
-        public Cart addProduct(Product product)
+    
+    public Cart addProduct(Product product)
     {
         ProductLine productLine = productLines.get(product);
         if (productLine != null)
