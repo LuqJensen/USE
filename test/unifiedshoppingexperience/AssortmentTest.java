@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
 
 /**
  *
@@ -15,25 +16,25 @@ import static org.junit.Assert.*;
  */
 public class AssortmentTest
 {
-    Product p1, p2, p3;
-    Set<Product> productSet1;
-    Set<Product> productSet2;
-    Map<String, Set<Product>> typeMap;
-    Map<String, Set<Product>> descriptionMap;
+    private static Set<Product> productSet1;
+    private static Set<Product> productSet2;
+    private static Map<String, Set<Product>> typeMap;
+    private static Map<String, Set<Product>> descriptionMap;
 
     public AssortmentTest()
     {
-        p1 = new Product("NV970", 0.0);
-        p2 = new Product("AX970", 0.0);
-        p3 = new Product("NV660", 0.0);
-
+    }
+    
+    @BeforeClass
+    public static void setUpClass()
+    {
         productSet1 = new HashSet();
-        productSet1.add(p1);
-        productSet1.add(p2);
+        productSet1.add(ProductHelper.p1);
+        productSet1.add(ProductHelper.p2);
 
         productSet2 = new HashSet();
-        productSet2.add(p1);
-        productSet2.add(p3);
+        productSet2.add(ProductHelper.p1);
+        productSet2.add(ProductHelper.p3);
 
         typeMap = new HashMap();
         typeMap.put("Grafikkort", productSet2);
@@ -72,8 +73,8 @@ public class AssortmentTest
         Assortment instance = new Assortment(typeMap, descriptionMap);
 
         List<Product> expResult = new ArrayList();
-        expResult.add(p1);
-        expResult.add(p3);
+        expResult.add(ProductHelper.p1);
+        expResult.add(ProductHelper.p3);
         List<Product> result = instance.findProducts(descriptionTags, typeTags);
 
         for (Product p : expResult)
@@ -99,8 +100,8 @@ public class AssortmentTest
         Assortment instance = new Assortment(typeMap, descriptionMap);
 
         List<Product> expResult = new ArrayList();
-        expResult.add(p1);
-        expResult.add(p3);
+        expResult.add(ProductHelper.p1);
+        expResult.add(ProductHelper.p3);
         List<Product> result = instance.findProducts(descriptionTags, typeTags);
 
         for (Product p : expResult)
@@ -126,8 +127,8 @@ public class AssortmentTest
         Assortment instance = new Assortment(typeMap, descriptionMap);
 
         List<Product> expResult = new ArrayList();
-        expResult.add(p1);
-        expResult.add(p2);
+        expResult.add(ProductHelper.p1);
+        expResult.add(ProductHelper.p2);
         List<Product> result = instance.findProducts(descriptionTags, typeTags);
 
         for (Product p : expResult)
