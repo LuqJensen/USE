@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 
 /**
+ * Contains set up and unit tests of the Assortment class.
  *
  * @author Gruppe12
  */
@@ -26,6 +27,9 @@ public class AssortmentTest
     {
     }
 
+    /**
+     * Static one time setup for all @Tests
+     */
     @BeforeClass
     public static void setUpClass()
     {
@@ -47,12 +51,13 @@ public class AssortmentTest
     }
 
     /**
-     * Test of findProducts method, of class Assortment.
+     * Test 1 of findProducts method, of class Assortment. Given no description
+     * tags or type tags, expected result is empty.
      */
     @Test
-    public void testFindNoProducts()
+    public void testFindProducts1()
     {
-        System.out.println("findProducts with empty parameter arrays.");
+        System.out.println("findProducts 1");
 
         String[] descriptionTags = "".split(" ");
         String[] typeTags = new String[0];
@@ -63,10 +68,14 @@ public class AssortmentTest
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test 2 of findProducts method, of class Assortment. Given 2 description
+     * tags and 1 type tag, expected result is product p1 and p3.
+     */
     @Test
-    public void testFindProducts1()
+    public void testFindProducts2()
     {
-        System.out.println("findProducts 1");
+        System.out.println("findProducts 2");
 
         String[] descriptionTags = "Nvidia 970".split(" ");
         String[] typeTags = new String[]
@@ -91,10 +100,14 @@ public class AssortmentTest
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test 3 of findProducts method, of class Assortment. Given 1 description
+     * tag and 1 type tag, expected result is product p1 and p3.
+     */
     @Test
-    public void testFindProducts2()
+    public void testFindProducts3()
     {
-        System.out.println("findProducts 2");
+        System.out.println("findProducts 3");
 
         String[] descriptionTags = "970".split(" ");
         String[] typeTags = new String[]
@@ -119,10 +132,14 @@ public class AssortmentTest
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test 4 of findProducts method, of class Assortment. Given 1 description
+     * tag and no type tag, expected result is product p2 and p1.
+     */
     @Test
-    public void testFindProducts3()
+    public void testFindProducts4()
     {
-        System.out.println("findProducts 3");
+        System.out.println("findProducts 4");
 
         String[] descriptionTags = "970".split(" ");
         String[] typeTags = new String[0];
