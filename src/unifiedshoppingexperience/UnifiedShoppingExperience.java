@@ -22,7 +22,7 @@ public class UnifiedShoppingExperience
         email = "ESService@Electroshoppen.dk";
         phoneNumber = "28 52 57 40";
         customerMap = new HashMap();
-        // Hvordan vi skal have denne implementeret er jeg ikke lige sikker på. 
+        // Hvordan vi skal have denne implementeret er jeg ikke lige sikker på.
         // Constructor for Assortment er skrevet også udkommenteret neden under
         //assortment = new Assortment();
         // Constructor som nævnt ovenover:
@@ -58,7 +58,7 @@ public class UnifiedShoppingExperience
 
     public Cart addProduct(String customerID, String productModel)
     {
-        return null; //return getCustomer(customerID).addToCart(productModel);
+        return getCustomer(customerID).addToCart(assortment.getProduct(productModel));
     }
 
     public Cart getWishList(String CustomerID, int wishListIndex)

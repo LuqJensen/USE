@@ -15,12 +15,15 @@ public class Assortment
 {
     private Map<String, Set<Product>> typeMap;
     private Map<String, Set<Product>> descriptionMap;
+    private Map<String, Product> products;
 
     // denne constructor er lavet til at teste Assortment med AssortmentTest.java (jUnit tests)
     public Assortment(Map<String, Set<Product>> typeMap, Map<String, Set<Product>> descriptionMap)
     {
         if (typeMap == null || descriptionMap == null)
+        {
             throw new NullPointerException();
+        }
 
         this.typeMap = typeMap;
         this.descriptionMap = descriptionMap;
@@ -37,7 +40,9 @@ public class Assortment
             Set<Product> productSet = typeMap.get(typeTag);
 
             if (productSet == null)
+            {
                 continue;
+            }
 
             for (Product product : productSet)
             {
@@ -55,7 +60,9 @@ public class Assortment
             Set<Product> productSet = descriptionMap.get(descriptionTag);
 
             if (productSet == null)
+            {
                 continue;
+            }
 
             for (Product product : productSet)
             {
@@ -88,5 +95,10 @@ public class Assortment
         }
 
         return retval;
+    }
+
+    public Product getProduct(String productID)
+    {
+        return products.get(productID);
     }
 }
