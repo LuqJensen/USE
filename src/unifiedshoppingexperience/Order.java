@@ -12,6 +12,7 @@ public class Order
     private Date purchaseDate;
     private Date deliveryDate;
     private double amount;
+    private static int orderCreations;
 
     public Order(int orderNumber, Date purchaseDate, Date deliveryDate, double amount)
     {
