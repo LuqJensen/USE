@@ -70,4 +70,10 @@ public class UnifiedShoppingExperience
     {
         return getCustomer(CustomerID).getShoppingCart();
     }
+
+    public void findProduct(String[] descriptionTags, Integer[] typeTags)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
+
