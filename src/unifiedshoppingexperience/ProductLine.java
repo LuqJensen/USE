@@ -24,4 +24,22 @@ public class ProductLine
     {
         ++quantity;
     }
+    
+    @Override
+    public boolean equals(Object other)
+    {
+        if (other == this)
+        {
+            return true;
+        }
+
+        if (!(other instanceof ProductLine))
+        {
+            return false;
+        }
+
+        ProductLine pl = (ProductLine) other;
+
+        return pl.product.equals(this.product) && pl.quantity == this.quantity;
+    }
 }
