@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * A collection of products provides methods to handle these products.
  *
  * @author Gruppe12
  */
@@ -17,7 +18,17 @@ public class Assortment
     private Map<String, Set<Product>> descriptionMap;
     private Map<String, Product> products;
 
-    // denne constructor er lavet til at teste Assortment med AssortmentTest.java (jUnit tests)
+    /**
+     * Creates an assortment for testing purposes.
+     *
+     * @param typeMap The type map with keys pointing to a set of products,
+     * based on type of product. For example the key "graphic card" could point
+     * to a set of graphic cards.
+     * @param descriptionMap The description map with keys pointing to a set of
+     * products, based on how the product is described. For example the key
+     * "980" would point to a set of products containing "980" in it's
+     * description or title.
+     */
     public Assortment(Map<String, Set<Product>> typeMap, Map<String, Set<Product>> descriptionMap)
     {
         if (typeMap == null || descriptionMap == null)
@@ -29,6 +40,21 @@ public class Assortment
         this.descriptionMap = descriptionMap;
     }
 
+    /**
+     * A method for getting a list of products based on the type and description
+     * tags. The list is sorted by relevance based on the description tags, and
+     * filtered based on the type tags.
+     *
+     * @param descriptionTags The type map with keys pointing to a set of
+     * products, based on type of product. For example the key "graphic card"
+     * could point to a set of graphic cards.
+     * @param typeTags The description map with keys pointing to a set of
+     * products, based on how the product is described. For example the key
+     * "980" would point to a set of products containing "980" in it's
+     * description or title.
+     * @return Returns a list of products sorted by relevance based on
+     * description tags and filtered by type tags.
+     */
     public List<Product> findProducts(String[] descriptionTags, String[] typeTags)
     {
         List<Product> retval = new ArrayList();
@@ -97,8 +123,14 @@ public class Assortment
         return retval;
     }
 
-    public Product getProduct(String productID)
+    /**
+     * Gets a product based on its model.
+     *
+     * @param productModel The model of the product.
+     * @return Returns a product based on its model.
+     */
+    public Product getProduct(String productModel)
     {
-        return products.get(productID);
+        return products.get(productModel);
     }
 }
