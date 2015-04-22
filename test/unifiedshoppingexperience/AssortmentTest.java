@@ -20,11 +20,12 @@ public class AssortmentTest
     private static Set<Product> productSet2;
     private static Map<String, Set<Product>> typeMap;
     private static Map<String, Set<Product>> descriptionMap;
+    private static Assortment instance;
 
     public AssortmentTest()
     {
     }
-    
+
     @BeforeClass
     public static void setUpClass()
     {
@@ -42,6 +43,7 @@ public class AssortmentTest
         descriptionMap = new HashMap();
         descriptionMap.put("970", productSet1);
         descriptionMap.put("Nvidia", productSet2);
+        instance = new Assortment(typeMap, descriptionMap);
     }
 
     /**
@@ -55,7 +57,6 @@ public class AssortmentTest
         String[] descriptionTags = "".split(" ");
         String[] typeTags = new String[0];
 
-        Assortment instance = new Assortment(typeMap, descriptionMap);
         List<Product> expResult = new ArrayList();
         List<Product> result = instance.findProducts(descriptionTags, typeTags);
 
@@ -68,9 +69,10 @@ public class AssortmentTest
         System.out.println("findProducts 1");
 
         String[] descriptionTags = "Nvidia 970".split(" ");
-        String[] typeTags = new String[] {"Grafikkort"};
-
-        Assortment instance = new Assortment(typeMap, descriptionMap);
+        String[] typeTags = new String[]
+        {
+            "Grafikkort"
+        };
 
         List<Product> expResult = new ArrayList();
         expResult.add(ProductHelper.p1);
@@ -95,9 +97,10 @@ public class AssortmentTest
         System.out.println("findProducts 2");
 
         String[] descriptionTags = "970".split(" ");
-        String[] typeTags = new String[] {"Grafikkort"};
-
-        Assortment instance = new Assortment(typeMap, descriptionMap);
+        String[] typeTags = new String[]
+        {
+            "Grafikkort"
+        };
 
         List<Product> expResult = new ArrayList();
         expResult.add(ProductHelper.p1);
@@ -124,11 +127,9 @@ public class AssortmentTest
         String[] descriptionTags = "970".split(" ");
         String[] typeTags = new String[0];
 
-        Assortment instance = new Assortment(typeMap, descriptionMap);
-
         List<Product> expResult = new ArrayList();
-        expResult.add(ProductHelper.p1);
         expResult.add(ProductHelper.p2);
+        expResult.add(ProductHelper.p1);
         List<Product> result = instance.findProducts(descriptionTags, typeTags);
 
         for (Product p : expResult)

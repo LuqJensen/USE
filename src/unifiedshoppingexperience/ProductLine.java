@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package unifiedshoppingexperience;
 
 /**
@@ -14,17 +9,17 @@ public class ProductLine
     private int quantity;
     private Product product;
 
-    public ProductLine(int quantity, Product product)
+    public ProductLine(Product product)
     {
         this.product = product;
-        this.quantity = quantity;
+        this.quantity = 1;
     }
-    
+
     public Product getProduct()
     {
         return this.product;
     }
-    
+
     public void incrementQuantity()
     {
         ++quantity;

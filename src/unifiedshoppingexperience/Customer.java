@@ -10,17 +10,17 @@ import java.util.List;
 public class Customer
 {
     private String ID;
-    private String name;
+    private String firstName;
     private String surName;
     private String email;
     private String phoneNumber;
     ShoppingCart shoppingCart;
     ArrayList<WishList> wishLists;
 
-    public Customer(String ID, String name, String surName, String email, String phoneNumber)
+    public Customer(String ID, String firstName, String surName, String email, String phoneNumber)
     {
         this.ID = ID;
-        this.name = name;
+        this.firstName = firstName;
         this.surName = surName;
         this.email = email;
         this.phoneNumber = phoneNumber;

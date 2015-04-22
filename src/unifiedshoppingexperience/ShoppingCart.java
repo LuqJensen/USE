@@ -20,7 +20,7 @@ public class ShoppingCart extends Cart
         }
         else
         {
-            productLines.put(product, new ProductLine(1, product));
+            productLines.put(product, new ProductLine(product));
         }
 
         return this;

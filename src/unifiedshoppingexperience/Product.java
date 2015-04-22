@@ -34,7 +34,7 @@ public class Product
             return false;
         }
 
-        Product p = (Product) other;
+        Product p = (Product)other;
 
         return p.model.equals(this.model) && p.price == this.price;
     }
