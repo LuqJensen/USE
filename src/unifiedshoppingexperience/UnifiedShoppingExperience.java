@@ -1,10 +1,8 @@
 package unifiedshoppingexperience;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  *
@@ -12,7 +10,6 @@ import java.util.Set;
  */
 public class UnifiedShoppingExperience
 {
-
     private static UnifiedShoppingExperience USE = null;
 
     private String email;
@@ -54,23 +51,23 @@ public class UnifiedShoppingExperience
         return customer;
     }
 
-    public List<Product> findProduct(String[] descriptionTags, String[] typeTags)
+    public List<Product> findProducts(String[] descriptionTags, String[] typeTags)
     {
         return assortment.findProducts(descriptionTags, typeTags);
     }
 
-    public Cart addProduct(String customerID, Product product)
+    public Cart addProduct(String customerID, String productModel)
     {
-        return getCustomer(customerID).addToCart(product);
+        return null; //return getCustomer(customerID).addToCart(productModel);
     }
 
-    public Cart viewWishList(String CustomerID, int wishListID)
+    public Cart getWishList(String CustomerID, int wishListIndex)
     {
-        return getCustomer(CustomerID).viewWishList(wishListID);
+        return getCustomer(CustomerID).getWishList(wishListIndex);
     }
 
-    public Cart viewShoppingCart(String CustomerID)
+    public Cart getShoppingCart(String CustomerID)
     {
-        return getCustomer(CustomerID).viewShoppingCart();
+        return getCustomer(CustomerID).getShoppingCart();
     }
 }

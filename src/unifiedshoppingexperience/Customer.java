@@ -1,6 +1,7 @@
 package unifiedshoppingexperience;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,7 +15,7 @@ public class Customer
     private String email;
     private String phoneNumber;
     ShoppingCart shoppingCart;
-    ArrayList<WishList> wishList;
+    ArrayList<WishList> wishLists;
 
     public Customer(String ID, String name, String surName, String email, String phoneNumber)
     {
@@ -24,14 +25,14 @@ public class Customer
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.shoppingCart = new ShoppingCart();
-        this.wishList = new ArrayList();
+        this.wishLists = new ArrayList();
     }
 
     public Customer(String ID)
     {
         this.ID = ID;
         this.shoppingCart = new ShoppingCart();
-        this.wishList = new ArrayList();
+        this.wishLists = new ArrayList();
     }
 
     public Cart addToCart(Product product)
@@ -40,14 +41,14 @@ public class Customer
         return shoppingCart;
     }
 
-    public ArrayList<WishList> viewAllWishLists()
+    public List<WishList> getWishLists()
     {
-        return wishList;
+        return wishLists;
     }
 
-    public Cart viewWishList(int wishListIndex)
+    public Cart getWishList(int wishListIndex)
     {
-        return wishList.get(wishListIndex);
+        return wishLists.get(wishListIndex);
     }
 
     public Order createOrder(Cart cart)
@@ -55,7 +56,7 @@ public class Customer
         return null;
     }
 
-    public Cart viewShoppingCart()
+    public Cart getShoppingCart()
     {
         return shoppingCart;
     }

@@ -29,8 +29,8 @@ public abstract class Cart
         this.productLines = new HashMap<>();
     }
 
-    public Map<Product, ProductLine> getProducts()
+    public List<ProductLine> getProducts()
     {
-        return productLines;
+        return new ArrayList(productLines.values());
     }
 }
