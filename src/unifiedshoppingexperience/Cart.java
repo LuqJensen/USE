@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A cart containing productLines and methods to handle these products. For
- * example adding products to the cart.
+ * A cart containing productLines and methods to handle these products. For example adding products to the cart.
  *
  * @author Gruppe12
  */
@@ -25,14 +24,13 @@ public abstract class Cart
     }
 
     /**
-     * Creates a cart and increments cartCreations for the system to know total
-     * amount of carts created.
+     * Creates a cart and increments cartCreations for the system to know total amount of carts created.
      */
     public Cart()
     {
-        this.cartID = cartCreations;
-        ++cartCreations;
+        this.cartID = cartCreations + 1;
         this.productLines = new HashMap<>();
+        incrementCartCreations();
     }
 
     /**
@@ -42,5 +40,10 @@ public abstract class Cart
     public List<ProductLine> getProducts()
     {
         return new ArrayList(productLines.values());
+    }
+
+    private static void incrementCartCreations()
+    {
+        ++cartCreations;
     }
 }
