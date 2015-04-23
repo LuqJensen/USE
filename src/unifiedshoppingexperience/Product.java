@@ -8,11 +8,13 @@ public class Product
 {
     private String model;
     private double price;
+    private String type;
 
-    public Product(String model, double price)
+    public Product(String model, double price, String type)
     {
         this.model = model;
         this.price = price;
+        this.type = type;
     }
 
     @Override
@@ -37,5 +39,10 @@ public class Product
         Product p = (Product)other;
 
         return p.model.equals(this.model) && p.price == this.price;
+    }
+    
+    public String getType()
+    {
+        return type;
     }
 }
