@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1280.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="gui.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXMLDocumentController">
     <children>
       <ImageView fitHeight="95.0" fitWidth="1280.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -44,12 +44,6 @@
       <CheckBox fx:id="musKeyboardsCheckBox" layoutX="20.0" layoutY="310.0" mnemonicParsing="false" text="Mus &amp; Keyboards" />
       <CheckBox fx:id="kabinetterCheckBox" layoutX="20.0" layoutY="285.0" mnemonicParsing="false" text="Kabinetter" />
       <CheckBox fx:id="harddiskeCheckBox" layoutX="20.0" layoutY="260.0" mnemonicParsing="false" text="Harddiske" />
-      <ImageView fx:id="productImage1" fitHeight="150.0" fitWidth="200.0" layoutX="280.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="productImage2" fitHeight="150.0" fitWidth="200.0" layoutX="280.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="productImage3" fitHeight="150.0" fitWidth="200.0" layoutX="280.0" layoutY="560.0" pickOnBounds="true" preserveRatio="true" />
-      <TextArea fx:id="productDesctiptionArea1" layoutX="500.0" layoutY="240.0" prefHeight="150.0" prefWidth="200.0" />
-      <TextArea fx:id="productDesctiptionArea2" layoutX="500.0" layoutY="400.0" prefHeight="150.0" prefWidth="200.0" />
-      <TextArea fx:id="productDesctiptionArea3" layoutX="500.0" layoutY="560.0" prefHeight="150.0" prefWidth="200.0" />
       <ImageView fitHeight="50.0" fitWidth="100.0" layoutX="70.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../Desktop/stock-footage-rainbow-color-smoke-flowing-over-black-background-seamlessly-loopable.jpg" />

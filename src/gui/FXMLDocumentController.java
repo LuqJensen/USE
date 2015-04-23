@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import unifiedshoppingexperience.Product;
 import unifiedshoppingexperience.UnifiedShoppingExperience;
@@ -32,27 +33,7 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private Button findProductButton;
     @FXML
-    private CheckBox musKeyboardsCheckBox;
-    @FXML
-    private CheckBox grafikkortCheckBox;
-    @FXML
-    private CheckBox skærmeCheckBox;
-    @FXML
-    private CheckBox kabinetterCheckBox;
-    @FXML
-    private CheckBox harddiskeCheckBox;
-    @FXML
-    private ImageView productImage1;
-    @FXML
-    private ImageView productImage2;
-    @FXML
-    private ImageView productImage3;
-    @FXML
-    private TextArea productDesctiptionArea1;
-    @FXML
-    private TextArea productDesctiptionArea2;
-    @FXML
-    private TextArea productDesctiptionArea3;
+    private CheckBox musKeyboardsCheckBox, grafikkortCheckBox, skærmeCheckBox, kabinetterCheckBox, harddiskeCheckBox;
 
     private CheckBox[] allCheckBoxes;
 
@@ -88,6 +69,23 @@ public class FXMLDocumentController implements Initializable
         String[] typeTags = (String[])temp.toArray();
 
         List<Product> products = UnifiedShoppingExperience.getInstance().findProducts(descriptionTags, typeTags);
+
+        int y = 0;
+
+        for (Product p : products)
+        {
+            Image i = new Image(""); // TODO: properly pass an actual image to this object...
+            ImageView productImage = new ImageView(i);
+            productImage.setX(280);
+            productImage.setY(240 + y);
+
+            TextArea productDescription = new TextArea();
+            productDescription.setLayoutX(500);
+            productDescription.setLayoutY(240 + y);
+            productDescription.setText(p.toString());
+
+            y += 160;
+        }
     }
 
 }
