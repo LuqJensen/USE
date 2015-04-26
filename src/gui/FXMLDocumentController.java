@@ -66,7 +66,8 @@ public class FXMLDocumentController implements Initializable
             }
         }
 
-        String[] typeTags = (String[])temp.toArray();
+        // just java being java.
+        String[] typeTags = temp.toArray(new String[temp.size()]);
 
         List<Product> products = UnifiedShoppingExperience.getInstance().findProducts(descriptionTags, typeTags);
 
