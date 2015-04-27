@@ -1,9 +1,10 @@
-package unifiedshoppingexperience;
+package shared;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import unifiedshoppingexperience.Product;
 
 /**
  *
@@ -55,7 +56,11 @@ public class TestData
             "100361-2SR, SAPPHIRE TRI-X OC 290X 4GB, Grafikkort, 339.99",
             "02G-P4-3753-KR, EVGA GeForce GTX 750Ti 2GB, Grafikkort, 188.25",
             "FD-CA-DEF-R5-BK, Fractal Design Define R5 Black, Kabinetter, 121.59",
-            "CC-9011035-WW, Corsair Obsidian 750D Big Tower Black, Kabinetter, 192.54"
+            "CC-9011035-WW, Corsair Obsidian 750D Big Tower Black, Kabinetter, 192.54",
+            "ROC-11-80, ROCCAT Kone XTD - Max Customization, Mus & Keyboards, 94.49",
+            "RZ-01-01040100-R3G1, Razer Naga, Mus & Keyboards, 72.62",
+            "90LM00U0-B013L0, Asus 27\" LED G-Sync ROG SWIFT PG278QE, Skærme, 769.81",
+            "WD1003FZEX, WD Desktop Black 1TB, Harddiske, 94.44"
         };
 
         productMap = new HashMap();

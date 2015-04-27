@@ -21,6 +21,7 @@ public class Assortment
     /**
      * Creates an assortment for testing purposes.
      *
+     * @param products TODO @Ploug
      * @param typeMap The type map with keys pointing to a set of products,
      * based on type of product. For example the key "graphic card" could point
      * to a set of graphic cards.
@@ -29,13 +30,14 @@ public class Assortment
      * "980" would point to a set of products containing "980" in it's
      * description or title.
      */
-    public Assortment(Map<String, Set<Product>> typeMap, Map<String, Set<Product>> descriptionMap)
+    public Assortment(Map<String, Product> products, Map<String, Set<Product>> typeMap, Map<String, Set<Product>> descriptionMap)
     {
-        if (typeMap == null || descriptionMap == null)
+        if (products == null || typeMap == null || descriptionMap == null)
         {
             throw new NullPointerException();
         }
 
+        this.products = products;
         this.typeMap = typeMap;
         this.descriptionMap = descriptionMap;
     }

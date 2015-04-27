@@ -1,5 +1,6 @@
 package unifiedshoppingexperience;
 
+import shared.TestData;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -17,10 +18,6 @@ import org.junit.BeforeClass;
  */
 public class AssortmentTest
 {
-    private static Set<Product> productSet1;
-    private static Set<Product> productSet2;
-    private static Map<String, Set<Product>> typeMap;
-    private static Map<String, Set<Product>> descriptionMap;
     private static Assortment instance;
 
     public AssortmentTest()
@@ -33,21 +30,27 @@ public class AssortmentTest
     @BeforeClass
     public static void setUpClass()
     {
-        productSet1 = new HashSet();
+        Set<Product> productSet1 = new HashSet();
         productSet1.add(TestData.p1);
         productSet1.add(TestData.p2);
 
-        productSet2 = new HashSet();
+        Set<Product> productSet2 = new HashSet();
         productSet2.add(TestData.p1);
         productSet2.add(TestData.p3);
 
-        typeMap = new HashMap();
+        Map<String, Set<Product>> typeMap = new HashMap();
         typeMap.put("Grafikkort", productSet2);
 
-        descriptionMap = new HashMap();
+        Map<String, Set<Product>> descriptionMap = new HashMap();
         descriptionMap.put("970", productSet1);
         descriptionMap.put("Nvidia", productSet2);
-        instance = new Assortment(typeMap, descriptionMap);
+
+        Map<String, Product> productMap = new HashMap();
+        productMap.put("NV970", TestData.p1);
+        productMap.put("AX970", TestData.p2);
+        productMap.put("NV660", TestData.p3);
+
+        instance = new Assortment(productMap, typeMap, descriptionMap);
     }
 
     /**
@@ -159,5 +162,11 @@ public class AssortmentTest
         }
 
         assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testGetProduct()
+    {
+        assertEquals(instance.getProduct("NV970"), TestData.p1);
     }
 }

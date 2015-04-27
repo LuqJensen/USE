@@ -1,5 +1,6 @@
 package unifiedshoppingexperience;
 
+import shared.TestData;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;

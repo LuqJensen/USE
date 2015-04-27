@@ -3,12 +3,13 @@ package unifiedshoppingexperience;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import shared.TestData;
 
 /**
  * The controller handling communication between the presentation tier and logic
  * tier. The controller provides all the functions to the systems that are
- * relevant to the presentation tier
- * and all use cases of the project is done through the controller.
+ * relevant to the presentation tier and all use cases of the project is done
+ * through the controller.
  *
  *
  * @author Gruppe12
@@ -31,11 +32,9 @@ public class UnifiedShoppingExperience
         email = "ESService@Electroshoppen.dk";
         phoneNumber = "28 52 57 40";
         customerMap = new HashMap();
-        // Hvordan vi skal have denne implementeret er jeg ikke lige sikker på.
-        // Constructor for Assortment er skrevet også udkommenteret neden under
-        //assortment = new Assortment();
-        // Constructor som nævnt ovenover:
-        //public Assortment(Map<String, Set<Product>> typeMap, Map<String, Set<Product>> descriptionMap)
+
+        //WARNING HACKS AHOIST LADS
+        assortment = new Assortment(TestData.loadProductMap(), TestData.loadTypeMap(), TestData.loadDescriptionMap());
     }
 
     /**
