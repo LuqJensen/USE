@@ -64,6 +64,7 @@
       <Button layoutX="652.0" layoutY="175.0" mnemonicParsing="false" text="Foto &amp; Video" />
       <Button layoutX="747.0" layoutY="175.0" mnemonicParsing="false" text="Konsol &amp; Spil" />
       <Button layoutX="844.0" layoutY="175.0" mnemonicParsing="false" text="Film" />
-      <ListView fx:id="productView" layoutX="302.0" layoutY="244.0" prefHeight="538.0" prefWidth="569.0" />
+      <VBox fx:id="productView" layoutX="336.0" layoutY="252.0" prefHeight="400.0" prefWidth="200.0" spacing="20.0" />
+      <VBox fx:id="productDescriptionView" layoutX="596.0" layoutY="252.0" prefHeight="400.0" prefWidth="200.0" />
     </children>
 </AnchorPane>
