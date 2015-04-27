@@ -89,12 +89,11 @@ public class TestData
 
             if (sp == null)
             {
-                sp = new HashSet<Product>();
-
+                sp = new HashSet();
+                retVal.put(pInfo[2], sp);
             }
 
             sp.add(productMap.get(pInfo[0]));
-            retVal.put(pInfo[2], sp);
         }
 
         return retVal;
