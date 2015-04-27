@@ -5,6 +5,7 @@
  */
 package gui;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +44,21 @@ public class FXMLDocumentController implements Initializable
     private VBox productDescriptionView;
 
     private final int PICTURE_HEIGHT = 164;
+    @FXML
+    private ImageView logoView;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        try
+        {
+            logoView.setImage(new Image("/pictures/ElectroshoppenLogo.png"));
+        }
+        catch (IllegalArgumentException e)
+        {
+            e.printStackTrace();
+        }
+
         allCheckBoxes = new CheckBox[]
         {
             musKeyboardsCheckBox, grafikkortCheckBox, skærmeCheckBox, kabinetterCheckBox, harddiskeCheckBox
@@ -91,7 +103,7 @@ public class FXMLDocumentController implements Initializable
             productDescription.setPrefHeight(PICTURE_HEIGHT);
             productDescription.setEditable(false);
             productDescription.setText(p.toString());
-            
+
             productDescriptionView.getChildren().add(productDescription);
         }
 
