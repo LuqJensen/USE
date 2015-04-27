@@ -5,6 +5,8 @@
  */
 package gui;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -36,6 +39,8 @@ public class FXMLDocumentController implements Initializable
     private CheckBox musKeyboardsCheckBox, grafikkortCheckBox, skærmeCheckBox, kabinetterCheckBox, harddiskeCheckBox;
 
     private CheckBox[] allCheckBoxes;
+    @FXML
+    private ListView<?> productView;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -75,7 +80,7 @@ public class FXMLDocumentController implements Initializable
 
         for (Product p : products)
         {
-            Image i = new Image(""); // TODO: properly pass an actual image to this object...
+            Image i = new Image("./pictures/cabinet.jpg"); // TODO: properly pass an actual image to this object...
             ImageView productImage = new ImageView(i);
             productImage.setX(280);
             productImage.setY(240 + y);
