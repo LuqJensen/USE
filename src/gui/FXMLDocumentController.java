@@ -76,6 +76,14 @@ public class FXMLDocumentController implements Initializable
                 temp.add(cb.getText());
             }
         }
+        
+        if(temp.isEmpty())
+        {
+            for (CheckBox cb : allCheckBoxes)
+            {
+                temp.add(cb.getText());
+            }
+        }
 
         // just java being java.
         String[] typeTags = temp.toArray(new String[temp.size()]);

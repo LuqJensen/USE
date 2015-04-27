@@ -113,6 +113,10 @@ public class Assortment
 
         for (Product product : productMap.keySet())
         {
+            if(productMap.get(product) <1&&descriptionTags != null && descriptionTags.length>0)
+            {
+                continue;
+            }
             temp.add(new ProductHits(product, productMap.get(product)));
         }
 
