@@ -10,6 +10,9 @@ public class Product
 {
     private String model;
     private double price;
+    //Temporarily attribute for prototype
+    private String type;
+    
 
     /**
      * Creates a product with a model name and price.
@@ -17,10 +20,11 @@ public class Product
      * @param model The model name of the product.
      * @param price The price of the product.
      */
-    public Product(String model, double price)
+    public Product(String model, double price, String type)
     {
         this.model = model;
         this.price = price;
+        this.type = type;
     }
 
     /**
@@ -57,5 +61,15 @@ public class Product
         Product p = (Product) other;
 
         return p.model.equals(this.model) && p.price == this.price;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "Model: "+model+". \nPris: "+price+". \nType: "+type;
+    }
+    public String getType()
+    {
+        return type;
     }
 }
