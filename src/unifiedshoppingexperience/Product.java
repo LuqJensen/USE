@@ -12,7 +12,7 @@ public class Product
     private double price;
     //Temporarily attribute for prototype
     private String type;
-    
+    private String name;
 
     /**
      * Creates a product with a model name and price.
@@ -20,11 +20,12 @@ public class Product
      * @param model The model name of the product.
      * @param price The price of the product.
      */
-    public Product(String model, double price, String type)
+    public Product(String model, double price, String type, String name)
     {
         this.model = model;
         this.price = price;
         this.type = type;
+        this.name = name;
     }
 
     /**
@@ -62,14 +63,35 @@ public class Product
 
         return p.model.equals(this.model) && p.price == this.price;
     }
-    
+
+    /**
+     * Overrides the toString methods to provide relevant information about the
+     * product.
+     *
+     * @return Returns information about the product as string.
+     */
     @Override
     public String toString()
     {
-        return "Model: "+model+". \nPris: "+price+". \nType: "+type;
+        return "Navn: " + name + "\nModel: " + model + ". \nPris: " + price + ". \nType: " + type;
     }
+
+    /**
+     *
+     *
+     * @return Returns the type of the product as string.
+     */
     public String getType()
     {
         return type;
+    }
+
+    /**
+     *
+     * @return Returns the name of the product as string.
+     */
+    public String getName()
+    {
+        return name;
     }
 }

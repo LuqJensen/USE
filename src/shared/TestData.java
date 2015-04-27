@@ -20,9 +20,9 @@ public class TestData
 
     static
     {
-        p1 = new Product("NV970", 0.0, "Processorer");
-        p2 = new Product("AX970", 0.0, "Bundkort");
-        p3 = new Product("NV660", 0.0, "Bundkort");
+        p1 = new Product("NV970", 0.0, "Processorer", "ko lort");
+        p2 = new Product("AX970", 0.0, "Bundkort", "ko lort");
+        p3 = new Product("NV660", 0.0, "Bundkort", "ko lort");
 
         testProducts = new String[]
         {
@@ -70,7 +70,7 @@ public class TestData
         for (String s : testProducts)
         {
             String[] pInfo = s.split(", ");
-            Product p = new Product(pInfo[0], Double.parseDouble(pInfo[3]), pInfo[2]);
+            Product p = new Product(pInfo[0], Double.parseDouble(pInfo[3]), pInfo[2], pInfo[1]);
             productMap.put(pInfo[0], p);
         }
     }
