@@ -34,12 +34,12 @@ public class AssortmentTest
     public static void setUpClass()
     {
         productSet1 = new HashSet();
-        productSet1.add(ProductHelper.p1);
-        productSet1.add(ProductHelper.p2);
+        productSet1.add(TestData.p1);
+        productSet1.add(TestData.p2);
 
         productSet2 = new HashSet();
-        productSet2.add(ProductHelper.p1);
-        productSet2.add(ProductHelper.p3);
+        productSet2.add(TestData.p1);
+        productSet2.add(TestData.p3);
 
         typeMap = new HashMap();
         typeMap.put("Grafikkort", productSet2);
@@ -84,8 +84,8 @@ public class AssortmentTest
         };
 
         List<Product> expResult = new ArrayList();
-        expResult.add(ProductHelper.p1);
-        expResult.add(ProductHelper.p3);
+        expResult.add(TestData.p1);
+        expResult.add(TestData.p3);
         List<Product> result = instance.findProducts(descriptionTags, typeTags);
 
         for (Product p : expResult)
@@ -116,8 +116,8 @@ public class AssortmentTest
         };
 
         List<Product> expResult = new ArrayList();
-        expResult.add(ProductHelper.p1);
-        expResult.add(ProductHelper.p3);
+        expResult.add(TestData.p1);
+        expResult.add(TestData.p3);
         List<Product> result = instance.findProducts(descriptionTags, typeTags);
 
         for (Product p : expResult)
@@ -145,8 +145,8 @@ public class AssortmentTest
         String[] typeTags = new String[0];
 
         List<Product> expResult = new ArrayList();
-        expResult.add(ProductHelper.p2);
-        expResult.add(ProductHelper.p1);
+        expResult.add(TestData.p2);
+        expResult.add(TestData.p1);
         List<Product> result = instance.findProducts(descriptionTags, typeTags);
 
         for (Product p : expResult)

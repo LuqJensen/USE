@@ -30,10 +30,10 @@ public class ShoppingCartTest
         System.out.println("addProduct 1");
 
         List<ProductLine> expResult = new ArrayList();
-        expResult.add(new ProductLine(ProductHelper.p1));
+        expResult.add(new ProductLine(TestData.p1));
 
         ShoppingCart instance = new ShoppingCart();
-        Cart cart = instance.addProduct(ProductHelper.p1);
+        Cart cart = instance.addProduct(TestData.p1);
         List<ProductLine> result = cart.getProducts();
 
         for (ProductLine pl : expResult)
@@ -58,12 +58,12 @@ public class ShoppingCartTest
 
         List<ProductLine> expResult = new ArrayList();
         // We have no control over order of products, as Cart uses a HashMap.
-        expResult.add(new ProductLine(ProductHelper.p2));
-        expResult.add(new ProductLine(ProductHelper.p1));
+        expResult.add(new ProductLine(TestData.p2));
+        expResult.add(new ProductLine(TestData.p1));
 
         ShoppingCart instance = new ShoppingCart();
-        Cart cart = instance.addProduct(ProductHelper.p1);
-        instance.addProduct(ProductHelper.p2);
+        Cart cart = instance.addProduct(TestData.p1);
+        instance.addProduct(TestData.p2);
         List<ProductLine> result = cart.getProducts();
 
         for (ProductLine pl : expResult)
@@ -86,14 +86,14 @@ public class ShoppingCartTest
     {
         System.out.println("addProduct 3");
 
-        ProductLine pLine = new ProductLine(ProductHelper.p1);
+        ProductLine pLine = new ProductLine(TestData.p1);
         pLine.incrementQuantity();
         List<ProductLine> expResult = new ArrayList();
         expResult.add(pLine);
 
         ShoppingCart instance = new ShoppingCart();
-        Cart cart = instance.addProduct(ProductHelper.p1);
-        instance.addProduct(ProductHelper.p1);
+        Cart cart = instance.addProduct(TestData.p1);
+        instance.addProduct(TestData.p1);
         List<ProductLine> result = cart.getProducts();
 
         for (ProductLine pl : expResult)
