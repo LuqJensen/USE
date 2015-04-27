@@ -63,8 +63,16 @@
       <Button layoutX="969.0" layoutY="175.0" mnemonicParsing="false" text="Husholdning" />
       <Button layoutX="652.0" layoutY="175.0" mnemonicParsing="false" text="Foto &amp; Video" />
       <Button layoutX="747.0" layoutY="175.0" mnemonicParsing="false" text="Konsol &amp; Spil" />
+      <ScrollPane layoutX="267.0" layoutY="241.0" prefHeight="485.0" prefWidth="699.0">
+         <content>
+            <HBox prefHeight="486.0" prefWidth="698.0">
+               <children>
+                  <VBox fx:id="productView" prefHeight="486.0" prefWidth="354.0" spacing="20.0" />
+                  <VBox fx:id="productDescriptionView" prefHeight="460.0" prefWidth="328.0" spacing="20.0" />
+               </children>
+            </HBox>
+         </content>
+      </ScrollPane>
       <Button layoutX="844.0" layoutY="175.0" mnemonicParsing="false" text="Film" />
-      <VBox fx:id="productView" layoutX="336.0" layoutY="252.0" prefHeight="400.0" prefWidth="200.0" spacing="20.0" />
-      <VBox fx:id="productDescriptionView" layoutX="596.0" layoutY="252.0" prefHeight="400.0" prefWidth="200.0" />
     </children>
 </AnchorPane>

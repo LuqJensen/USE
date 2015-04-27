@@ -96,6 +96,7 @@ public class Assortment
             {
                 Integer productHits = productMap.get(product);
 
+                
                 if (productHits == null && !filteredByType)
                 {
                     productMap.put(product, 1);

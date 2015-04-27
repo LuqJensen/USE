@@ -42,6 +42,8 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private VBox productDescriptionView;
 
+    private final int PICTURE_HEIGHT = 164;
+
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -60,6 +62,10 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void findProduct(ActionEvent event)
     {
+
+        productDescriptionView.getChildren().clear();
+        productView.getChildren().clear();
+
         String[] descriptionTags = findProductSearchField.getText().split(" ");
         ArrayList<String> temp = new ArrayList();
 
@@ -75,16 +81,20 @@ public class FXMLDocumentController implements Initializable
         String[] typeTags = temp.toArray(new String[temp.size()]);
 
         List<Product> products = UnifiedShoppingExperience.getInstance().findProducts(descriptionTags, typeTags);
-
         for (Product p : products)
         {
-            Image i = new Image("/pictures/cabinet.jpg"); // TODO: properly pass an actual image to this object...
+            Image i = new Image("/pictures/" + p.getType() + ".jpg"); // TODO: properly pass an actual image to this object...
             ImageView productImage = new ImageView(i);
             productView.getChildren().add(productImage);
-            
+
             TextArea productDescription = new TextArea();
+            productDescription.setPrefHeight(PICTURE_HEIGHT);
+            productDescription.setEditable(false);
             productDescription.setText(p.toString());
+            
+            productDescriptionView.getChildren().add(productDescription);
         }
+
     }
 
 }

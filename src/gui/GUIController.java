@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import unifiedshoppingexperience.UnifiedShoppingExperience;
 
 /**
  *
@@ -29,5 +30,6 @@ public class GUIController extends Application
     public static void main(String[] args)
     {
         launch(args);
+        UnifiedShoppingExperience.getInstance();
     }
 }
