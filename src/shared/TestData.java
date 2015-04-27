@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import unifiedshoppingexperience.Product;
+import utility.CaseInsensitiveKeyMap;
 
 /**
  *
@@ -64,7 +65,7 @@ public class TestData
             "WD1003FZEX, WD Desktop Black 1TB, Harddiske, 94.44"
         };
 
-        productMap = new HashMap();
+        productMap = new CaseInsensitiveKeyMap();
 
         for (String s : testProducts)
         {
@@ -81,7 +82,7 @@ public class TestData
 
     public static Map<String, Set<Product>> loadTypeMap()
     {
-        Map<String, Set<Product>> retVal = new HashMap();
+        Map<String, Set<Product>> retVal = new CaseInsensitiveKeyMap();
         for (String s : testProducts)
         {
             String[] pInfo = s.split(", ");
@@ -101,7 +102,7 @@ public class TestData
 
     public static Map<String, Set<Product>> loadDescriptionMap()
     {
-        Map<String, Set<Product>> retVal = new HashMap();
+        Map<String, Set<Product>> retVal = new CaseInsensitiveKeyMap();
         for (String s : testProducts)
         {
             String[] pInfo = s.split(", ");

@@ -10,6 +10,7 @@ import java.util.Set;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
+import utility.CaseInsensitiveKeyMap;
 
 /**
  * Contains set up and unit tests of the Assortment class.
@@ -38,14 +39,14 @@ public class AssortmentTest
         productSet2.add(TestData.p1);
         productSet2.add(TestData.p3);
 
-        Map<String, Set<Product>> typeMap = new HashMap();
+        Map<String, Set<Product>> typeMap = new CaseInsensitiveKeyMap();
         typeMap.put("Grafikkort", productSet2);
 
-        Map<String, Set<Product>> descriptionMap = new HashMap();
+        Map<String, Set<Product>> descriptionMap = new CaseInsensitiveKeyMap();
         descriptionMap.put("970", productSet1);
         descriptionMap.put("Nvidia", productSet2);
 
-        Map<String, Product> productMap = new HashMap();
+        Map<String, Product> productMap = new CaseInsensitiveKeyMap();
         productMap.put("NV970", TestData.p1);
         productMap.put("AX970", TestData.p2);
         productMap.put("NV660", TestData.p3);

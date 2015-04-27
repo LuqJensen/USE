@@ -16,8 +16,8 @@ public class Customer
     private String surName;
     private String email;
     private String phoneNumber;
-    ShoppingCart shoppingCart;
-    ArrayList<WishList> wishLists;
+    private ShoppingCart shoppingCart;
+    private ArrayList<WishList> wishLists;
 
     /**
      * Creates a customer with full information provided about the customer.
