@@ -95,7 +95,16 @@ public class FXMLDocumentController implements Initializable
         List<Product> products = UnifiedShoppingExperience.getInstance().findProducts(descriptionTags, typeTags);
         for (Product p : products)
         {
-            Image i = new Image("/pictures/" + p.getType() + ".jpg"); // TODO: properly pass an actual image to this object...
+            Image i;
+            try
+            {
+                i = new Image("/pictures/" + p.getType() + ".jpg"); // TODO: properly pass an actual image to this object...
+            }
+            catch (IllegalArgumentException e)
+            {
+                e.printStackTrace();
+                continue;
+            }
             ImageView productImage = new ImageView(i);
             productView.getChildren().add(productImage);
 

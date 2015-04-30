@@ -83,9 +83,17 @@ public class Assortment
         // The need for this, rather than typeTags.length != 0, was discovered during unit testing.
         boolean filteredByType = !productMap.isEmpty();
 
+        boolean filteredByDescription = false;
+
         for (String descriptionTag : descriptionTags)
         {
+            if (descriptionTag.isEmpty())
+            {
+                continue;
+            }
+
             Set<Product> productSet = descriptionMap.get(descriptionTag);
+            filteredByDescription = true;
 
             if (productSet == null)
             {
@@ -96,7 +104,6 @@ public class Assortment
             {
                 Integer productHits = productMap.get(product);
 
-                
                 if (productHits == null && !filteredByType)
                 {
                     productMap.put(product, 1);
@@ -113,7 +120,14 @@ public class Assortment
 
         for (Product product : productMap.keySet())
         {
-            temp.add(new ProductHits(product, productMap.get(product)));
+            Integer hits = productMap.get(product);
+
+            if (filteredByDescription && hits < 1)
+            {
+                continue;
+            }
+
+            temp.add(new ProductHits(product, hits));
         }
 
         Collections.sort(temp);
