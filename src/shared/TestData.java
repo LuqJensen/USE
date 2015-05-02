@@ -13,16 +13,17 @@ import utility.CaseInsensitiveKeyMap;
  */
 public class TestData
 {
-
-    public static final Product p1, p2, p3;
+    public static final Product p1, p2, p3, p4, p5;
     public static final String[] testProducts;
     private static final Map<String, Product> productMap;
 
     static
     {
-        p1 = new Product("NV970", 0.0, "Processorer", "ko lort");
-        p2 = new Product("AX970", 0.0, "Bundkort", "ko lort");
-        p3 = new Product("NV660", 0.0, "Bundkort", "ko lort");
+        p1 = new Product("NV970", 300.0, "Grafikkort", "Nvidia Geforce GTX 970");
+        p2 = new Product("MSI970", 150.0, "Grafikkort", "MSI Geforce GTX 970");
+        p3 = new Product("NV660", 100.0, "Grafikkort", "Nvidia Geforce GTX 660");
+        p4 = new Product("I7-4770K", 299.99, "Processorer", "Intel Core I7 4770K");
+        p5 = new Product("I7-4670K", 129.99, "Processorer", "Intel Core I5 4670K");
 
         testProducts = new String[]
         {

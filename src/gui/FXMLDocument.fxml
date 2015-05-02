@@ -36,11 +36,7 @@
       <Button layoutX="1058.0" layoutY="255.0" mnemonicParsing="false" text="Husholdning" />
       <Button layoutX="741.0" layoutY="255.0" mnemonicParsing="false" text="Foto &amp; Video" />
       <Button layoutX="836.0" layoutY="255.0" mnemonicParsing="false" text="Konsol &amp; Spil" />
-      <ScrollPane layoutX="327.0" layoutY="299.0" prefHeight="485.0" prefWidth="815.0">
-         <content>
-            <VBox fx:id="productView" prefWidth="810.0" spacing="20.0" />
-         </content>
-      </ScrollPane>
+      <ScrollPane fx:id="contentContainer" layoutX="327.0" layoutY="299.0" prefHeight="485.0" prefWidth="815.0" />
       <Button layoutX="933.0" layoutY="255.0" mnemonicParsing="false" text="Film" />
       <ImageView fx:id="logoView" fitHeight="249.0" fitWidth="576.0" layoutX="11.0" pickOnBounds="true" preserveRatio="true" />
     </children>

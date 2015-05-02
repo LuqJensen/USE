@@ -1,12 +1,14 @@
 package unifiedshoppingexperience;
 
+import interfaces.IProduct;
+
 /**
  * Keeps information about a product, and overrides the hashCode and equals
  * method to fit properly with its purpose.
  *
  * @author Gruppe12
  */
-public class Product
+public class Product implements IProduct
 {
     private String model;
     private double price;
@@ -63,7 +65,10 @@ public class Product
 
         Product p = (Product)other;
 
-        return p.model.equals(this.model) && p.price == this.price;
+        return p.model.equals(this.model)
+               && p.price == this.price
+               && p.name.equals(this.name)
+               && p.type.equals(this.type);
     }
 
     /**
@@ -78,11 +83,18 @@ public class Product
         return "Navn: " + name + "\nModel: " + model + ". \nPris: " + price + ". \nType: " + type;
     }
 
+    @Override
+    public String getModel()
+    {
+        return model;
+    }
+
     /**
      *
      *
      * @return Returns the type of the product as string.
      */
+    @Override
     public String getType()
     {
         return type;
@@ -92,11 +104,13 @@ public class Product
      *
      * @return Returns the name of the product as string.
      */
+    @Override
     public String getName()
     {
         return name;
     }
 
+    @Override
     public double getPrice()
     {
         return price;

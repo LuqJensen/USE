@@ -1,5 +1,6 @@
 package gui;
 
+import interfaces.IProduct;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,14 +8,14 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import unifiedshoppingexperience.Product;
 import unifiedshoppingexperience.UnifiedShoppingExperience;
 
 /**
@@ -23,6 +24,7 @@ import unifiedshoppingexperience.UnifiedShoppingExperience;
  */
 public class FXMLDocumentController implements Initializable
 {
+    private static final int PICTURE_HEIGHT = 164; // UNUSED
     @FXML
     private TextField findProductSearchField;
     @FXML
@@ -32,11 +34,9 @@ public class FXMLDocumentController implements Initializable
 
     private CheckBox[] allCheckBoxes;
     @FXML
-    private VBox productView;
-
-    private final int PICTURE_HEIGHT = 164;
-    @FXML
     private ImageView logoView;
+    @FXML
+    private ScrollPane contentContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -65,7 +65,10 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void findProduct(ActionEvent event)
     {
-        productView.getChildren().clear();
+        VBox productView = new VBox();
+        // Temporary solution to prevent Text Control of ProductView to exceed parents limits...
+        productView.setPrefWidth(contentContainer.getPrefWidth() - 15.0);
+        setContent(productView);
 
         String[] descriptionTags = findProductSearchField.getText().split(" ");
         ArrayList<String> temp = new ArrayList();
@@ -81,8 +84,8 @@ public class FXMLDocumentController implements Initializable
         // just java being java.
         String[] typeTags = temp.toArray(new String[temp.size()]);
 
-        List<Product> products = UnifiedShoppingExperience.getInstance().findProducts(descriptionTags, typeTags);
-        for (Product p : products)
+        List<IProduct> products = UnifiedShoppingExperience.getInstance().findProducts(descriptionTags, typeTags);
+        for (IProduct p : products)
         {
             Image i;
             try
@@ -95,7 +98,27 @@ public class FXMLDocumentController implements Initializable
                 continue;
             }
 
-            productView.getChildren().add(new ProductView(i, p.getName(), p.toString(), p.getPrice()));
+            CallBack cb = () ->
+            {
+                addToCart(p.getModel());
+            };
+
+            productView.getChildren().add(new ProductView(cb, i, p.getName(), p.toString()/*TODO fix description param*/, p.getPrice()));
         }
+    }
+
+    private void addToCart(String productModel)
+    {
+        System.out.println(productModel + "IMPLEMENT ME PLS");
+        VBox view = new VBox();
+        // Add content to view, eg. something that resembles viewing a cart.
+        setContent(view);
+
+        // Add content to content, logic blabla...
+    }
+
+    private void setContent(Node content)
+    {
+        contentContainer.setContent(content);
     }
 }

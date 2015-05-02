@@ -1,5 +1,6 @@
 package unifiedshoppingexperience;
 
+import interfaces.IProduct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +90,7 @@ public class UnifiedShoppingExperience
      * @return Returns a list of products sorted by relevance based on
      * description tags and filtered by type tags.
      */
-    public List<Product> findProducts(String[] descriptionTags, String[] typeTags)
+    public List<IProduct> findProducts(String[] descriptionTags, String[] typeTags)
     {
         return assortment.findProducts(descriptionTags, typeTags);
     }

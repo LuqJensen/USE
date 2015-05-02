@@ -1,9 +1,9 @@
 package unifiedshoppingexperience;
 
+import interfaces.IProduct;
 import shared.TestData;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -31,25 +31,42 @@ public class AssortmentTest
     @BeforeClass
     public static void setUpClass()
     {
-        Set<Product> productSet1 = new HashSet();
-        productSet1.add(TestData.p1);
-        productSet1.add(TestData.p2);
-
-        Set<Product> productSet2 = new HashSet();
-        productSet2.add(TestData.p1);
-        productSet2.add(TestData.p3);
-
-        Map<String, Set<Product>> typeMap = new CaseInsensitiveKeyMap();
-        typeMap.put("Grafikkort", productSet2);
-
-        Map<String, Set<Product>> descriptionMap = new CaseInsensitiveKeyMap();
-        descriptionMap.put("970", productSet1);
-        descriptionMap.put("Nvidia", productSet2);
-
         Map<String, Product> productMap = new CaseInsensitiveKeyMap();
         productMap.put("NV970", TestData.p1);
-        productMap.put("AX970", TestData.p2);
+        productMap.put("MSI970", TestData.p2);
         productMap.put("NV660", TestData.p3);
+        productMap.put("I7-4770K", TestData.p4);
+        productMap.put("I5-4670K", TestData.p5);
+
+        Map<String, Set<Product>> typeMap = new CaseInsensitiveKeyMap();
+        for (Product p : productMap.values())
+        {
+            Set<Product> sp = typeMap.get(p.getType());
+
+            if (sp == null)
+            {
+                sp = new HashSet();
+                typeMap.put(p.getType(), sp);
+            }
+
+            sp.add(productMap.get(p.getModel()));
+        }
+
+        Map<String, Set<Product>> descriptionMap = new CaseInsensitiveKeyMap();
+        for (Product p : productMap.values())
+        {
+            for (String dTag : (p.getType() + " " + p.getName()).split(" "))
+            {
+                Set<Product> sp = descriptionMap.get(dTag);
+                if (sp == null)
+                {
+                    sp = new HashSet();
+                    descriptionMap.put(dTag, sp);
+                }
+
+                sp.add(productMap.get(p.getModel()));
+            }
+        }
 
         instance = new Assortment(productMap, typeMap, descriptionMap);
     }
@@ -66,15 +83,15 @@ public class AssortmentTest
         String[] descriptionTags = "".split(" ");
         String[] typeTags = new String[0];
 
-        List<Product> expResult = new ArrayList();
-        List<Product> result = instance.findProducts(descriptionTags, typeTags);
+        List<IProduct> expResult = new ArrayList();
+        List<IProduct> result = instance.findProducts(descriptionTags, typeTags);
 
         assertEquals(expResult, result);
     }
 
     /**
      * Test 2 of findProducts method, of class Assortment. Given 2 description
-     * tags and 1 type tag, expected result is product p1 and p3.
+     * tags and 1 type tag, expected result is product p1, p2, and p3.
      */
     @Test
     public void testFindProducts2()
@@ -87,50 +104,57 @@ public class AssortmentTest
             "Grafikkort"
         };
 
-        List<Product> expResult = new ArrayList();
+        List<IProduct> expResult = new ArrayList();
         expResult.add(TestData.p1);
+        expResult.add(TestData.p2);
         expResult.add(TestData.p3);
-        List<Product> result = instance.findProducts(descriptionTags, typeTags);
+        List<IProduct> result = instance.findProducts(descriptionTags, typeTags);
 
-        for (Product p : expResult)
+        System.out.println("Expected result:");
+        for (IProduct p : expResult)
         {
-            System.out.println(p);
+            System.out.println(p.getName());
         }
-        for (Product p : result)
+
+        System.out.println("Result:");
+        for (IProduct p : result)
         {
-            System.out.println(p);
+            System.out.println(p.getName());
         }
 
         assertEquals(expResult, result);
     }
 
     /**
-     * Test 3 of findProducts method, of class Assortment. Given 1 description
-     * tag and 1 type tag, expected result is product p1 and p3.
+     * Test 3 of findProducts method, of class Assortment. Given 2 description
+     * tags and 1 type tag, expected result is product p2 and p1.
      */
     @Test
     public void testFindProducts3()
     {
         System.out.println("findProducts 3");
 
-        String[] descriptionTags = "970".split(" ");
+        String[] descriptionTags = "MSI 970".split(" ");
         String[] typeTags = new String[]
         {
             "Grafikkort"
         };
 
-        List<Product> expResult = new ArrayList();
+        List<IProduct> expResult = new ArrayList();
+        expResult.add(TestData.p2);
         expResult.add(TestData.p1);
-        expResult.add(TestData.p3);
-        List<Product> result = instance.findProducts(descriptionTags, typeTags);
+        List<IProduct> result = instance.findProducts(descriptionTags, typeTags);
 
-        for (Product p : expResult)
+        System.out.println("Expected result:");
+        for (IProduct p : expResult)
         {
-            System.out.println(p);
+            System.out.println(p.getName());
         }
-        for (Product p : result)
+
+        System.out.println("Result:");
+        for (IProduct p : result)
         {
-            System.out.println(p);
+            System.out.println(p.getName());
         }
 
         assertEquals(expResult, result);
@@ -148,26 +172,71 @@ public class AssortmentTest
         String[] descriptionTags = "970".split(" ");
         String[] typeTags = new String[0];
 
-        List<Product> expResult = new ArrayList();
+        List<IProduct> expResult = new ArrayList();
         expResult.add(TestData.p2);
         expResult.add(TestData.p1);
-        List<Product> result = instance.findProducts(descriptionTags, typeTags);
+        List<IProduct> result = instance.findProducts(descriptionTags, typeTags);
 
-        for (Product p : expResult)
+        System.out.println("Expected result:");
+        for (IProduct p : expResult)
         {
-            System.out.println(p);
+            System.out.println(p.getName());
         }
-        for (Product p : result)
+
+        System.out.println("Result:");
+        for (IProduct p : result)
         {
-            System.out.println(p);
+            System.out.println(p.getName());
+        }
+
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test 4 of findProducts method, of class Assortment. Given 1 description
+     * tag and no type tag, expected result is product p2 and p1.
+     */
+    @Test
+    public void testFindProducts5()
+    {
+        System.out.println("findProducts 5");
+
+        String[] descriptionTags = "GTX".split(" ");
+        String[] typeTags = new String[]
+        {
+            "Grafikkort", "Processorer"
+        };
+
+        List<IProduct> expResult = new ArrayList();
+        expResult.add(TestData.p2);
+        expResult.add(TestData.p1);
+        expResult.add(TestData.p3);
+        List<IProduct> result = instance.findProducts(descriptionTags, typeTags);
+
+        System.out.println("Expected result:");
+        for (IProduct p : expResult)
+        {
+            System.out.println(p.getName());
+        }
+
+        System.out.println("Result:");
+        for (IProduct p : result)
+        {
+            System.out.println(p.getName());
         }
 
         assertEquals(expResult, result);
     }
 
     @Test
-    public void testGetProduct()
+    public void testGetProduct1()
     {
         assertEquals(instance.getProduct("NV970"), TestData.p1);
+    }
+
+    @Test
+    public void testGetProduct2()
+    {
+        assertEquals(instance.getProduct("NV97"), null);
     }
 }
