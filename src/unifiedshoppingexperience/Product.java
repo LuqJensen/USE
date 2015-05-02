@@ -10,7 +10,7 @@ public class Product
 {
     private String model;
     private double price;
-    //Temporarily attribute for prototype
+    //Temporary attribute for prototype
     private String type;
     private String name;
 
@@ -19,6 +19,8 @@ public class Product
      *
      * @param model The model name of the product.
      * @param price The price of the product.
+     * @param type
+     * @param name
      */
     public Product(String model, double price, String type, String name)
     {
@@ -59,7 +61,7 @@ public class Product
             return false;
         }
 
-        Product p = (Product) other;
+        Product p = (Product)other;
 
         return p.model.equals(this.model) && p.price == this.price;
     }
@@ -93,5 +95,10 @@ public class Product
     public String getName()
     {
         return name;
+    }
+
+    public double getPrice()
+    {
+        return price;
     }
 }

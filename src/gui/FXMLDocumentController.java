@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +9,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import unifiedshoppingexperience.Product;
 import unifiedshoppingexperience.UnifiedShoppingExperience;
 
 /**
  *
- * @author Lucas
+ * @author Gruppe12
  */
 public class FXMLDocumentController implements Initializable
 {
-
     @FXML
     private TextField findProductSearchField;
     @FXML
@@ -40,8 +33,6 @@ public class FXMLDocumentController implements Initializable
     private CheckBox[] allCheckBoxes;
     @FXML
     private VBox productView;
-    @FXML
-    private VBox productDescriptionView;
 
     private final int PICTURE_HEIGHT = 164;
     @FXML
@@ -74,8 +65,6 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void findProduct(ActionEvent event)
     {
-
-        productDescriptionView.getChildren().clear();
         productView.getChildren().clear();
 
         String[] descriptionTags = findProductSearchField.getText().split(" ");
@@ -98,24 +87,15 @@ public class FXMLDocumentController implements Initializable
             Image i;
             try
             {
-                i = new Image("/pictures/" + p.getType() + ".jpg"); // TODO: properly pass an actual image to this object...
+                i = new Image("/pictures/" + p.getType() + ".jpg"); // Should probably get this from some Image Manager Interface
             }
             catch (IllegalArgumentException e)
             {
                 e.printStackTrace();
                 continue;
             }
-            ImageView productImage = new ImageView(i);
-            productView.getChildren().add(productImage);
 
-            TextArea productDescription = new TextArea();
-            productDescription.setPrefHeight(PICTURE_HEIGHT);
-            productDescription.setEditable(false);
-            productDescription.setText(p.toString());
-
-            productDescriptionView.getChildren().add(productDescription);
+            productView.getChildren().add(new ProductView(i, p.getName(), p.toString(), p.getPrice()));
         }
-
     }
-
 }
