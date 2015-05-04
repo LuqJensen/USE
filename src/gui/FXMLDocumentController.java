@@ -110,10 +110,15 @@ public class FXMLDocumentController implements Initializable
     private void addToCart(String productModel)
     {
         System.out.println(productModel + "IMPLEMENT ME PLS");
+        // add to cart use case.
+    }
+
+    @FXML
+    private void seeCart()
+    {
         VBox view = new VBox();
         // Add content to view, eg. something that resembles viewing a cart.
         setContent(view);
-
         // Add content to content, logic blabla...
     }
 
