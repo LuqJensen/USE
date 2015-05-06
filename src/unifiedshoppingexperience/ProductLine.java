@@ -1,5 +1,7 @@
 package unifiedshoppingexperience;
 
+import interfaces.IProduct;
+
 /**
  * Contains a product line, which is the product and the quantity of the
  * product.
@@ -27,7 +29,7 @@ public class ProductLine
      *
      * @return Returns the product the product line describes.
      */
-    public Product getProduct()
+    public IProduct getProduct()
     {
         return this.product;
     }
@@ -62,5 +64,15 @@ public class ProductLine
         ProductLine pl = (ProductLine) other;
 
         return pl.product.equals(this.product) && pl.quantity == this.quantity;
+    }
+    
+    public int getQuantity()
+    {
+        return quantity;
+    }
+    
+    public double getTotalPrice()
+    {
+        return quantity * product.getPrice();
     }
 }
