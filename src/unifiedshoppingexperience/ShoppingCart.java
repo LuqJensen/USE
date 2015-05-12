@@ -20,9 +20,8 @@ public class ShoppingCart extends Cart
      * Adds a product to the shopping cart.
      *
      * @param product The product to be added.
-     * @return Returns the cart.
      */
-    public Cart addProduct(Product product)
+    public void addProduct(Product product)
     {
         ProductLine productLine = productLines.get(product);
         if (productLine != null)
@@ -34,6 +33,6 @@ public class ShoppingCart extends Cart
             productLines.put(product, new ProductLine(product));
         }
 
-        return this;
+        price += product.getPrice();
     }
 }

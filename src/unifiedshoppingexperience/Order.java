@@ -10,12 +10,12 @@ import java.util.List;
  */
 public class Order
 {
-    private int orderNumber;
-    private Date purchaseDate;
-    private Date deliveryDate;
-    private double amount;
+    private final int orderNumber;
+    private final Date purchaseDate;
+    private final Date deliveryDate;
+    private final double amount;
     private static int orderCreations;
-    private ProductLine[] orderLines;
+    private final ProductLine[] orderLines;
 
     static
     {
@@ -23,9 +23,11 @@ public class Order
     }
 
     /**
-     * Creates an order with all product lines, purchase and delivery date and total cost of order.
+     * Creates an order with all product lines, purchase and delivery date and
+     * total cost of order.
      *
-     * @param productLines The product lines, could for example be product lines copied from a cart.
+     * @param productLines The product lines, could for example be product lines
+     * copied from a cart.
      * @param purchaseDate The date the payment was accepted.
      * @param deliveryDate The date the order was delivered to the customer.
      * @param amount The total cost of the order.
@@ -39,7 +41,7 @@ public class Order
         this.orderNumber = orderCreations + 1;
         int productLinesAmount = productLines.size();
         orderLines = new ProductLine[productLinesAmount];
-        for (int i = 0; i < productLinesAmount; i++)
+        for (int i = 0; i < productLinesAmount; ++i)
         {
             orderLines[i] = productLines.get(i);
         }

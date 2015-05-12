@@ -11,7 +11,7 @@ import interfaces.IProduct;
 public class ProductLine
 {
     private int quantity;
-    private Product product;
+    private final Product product;
 
     /**
      * Creates a product line starting at a quantity of 1.
@@ -61,16 +61,16 @@ public class ProductLine
             return false;
         }
 
-        ProductLine pl = (ProductLine) other;
+        ProductLine pl = (ProductLine)other;
 
         return pl.product.equals(this.product) && pl.quantity == this.quantity;
     }
-    
+
     public int getQuantity()
     {
         return quantity;
     }
-    
+
     public double getTotalPrice()
     {
         return quantity * product.getPrice();

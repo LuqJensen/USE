@@ -34,8 +34,8 @@ public class ShoppingCartTest
         expResult.add(new ProductLine(TestData.p1));
 
         ShoppingCart instance = new ShoppingCart();
-        Cart cart = instance.addProduct(TestData.p1);
-        List<ProductLine> result = cart.getProducts();
+        instance.addProduct(TestData.p1);
+        List<ProductLine> result = instance.getProducts();
 
         for (ProductLine pl : expResult)
         {
@@ -63,9 +63,9 @@ public class ShoppingCartTest
         expResult.add(new ProductLine(TestData.p1));
 
         ShoppingCart instance = new ShoppingCart();
-        Cart cart = instance.addProduct(TestData.p1);
+        instance.addProduct(TestData.p1);
         instance.addProduct(TestData.p2);
-        List<ProductLine> result = cart.getProducts();
+        List<ProductLine> result = instance.getProducts();
 
         for (ProductLine pl : expResult)
         {
@@ -93,9 +93,9 @@ public class ShoppingCartTest
         expResult.add(pLine);
 
         ShoppingCart instance = new ShoppingCart();
-        Cart cart = instance.addProduct(TestData.p1);
         instance.addProduct(TestData.p1);
-        List<ProductLine> result = cart.getProducts();
+        instance.addProduct(TestData.p1);
+        List<ProductLine> result = instance.getProducts();
 
         for (ProductLine pl : expResult)
         {

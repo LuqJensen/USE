@@ -115,4 +115,10 @@ public class Product implements IProduct
     {
         return price;
     }
+
+    @Override
+    public String getDescription()
+    {
+        return String.format("Model: %s\nType: %s", model, type);
+    }
 }
