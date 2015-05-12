@@ -13,36 +13,46 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXMLDocumentController">
     <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff17" height="268.0" layoutX="33.0" layoutY="378.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="266.0" />
-      <TextField fx:id="findProductSearchField" layoutX="677.0" layoutY="162.0" onAction="#findProductEnter" prefHeight="57.0" prefWidth="313.0" promptText="Søg i Electroshoppen">
-         <font>
-            <Font size="18.0" />
-         </font></TextField>
-      <Button fx:id="findProductButton" layoutX="991.0" layoutY="160.0" mnemonicParsing="false" onAction="#findProduct" prefHeight="57.0" prefWidth="97.0" text="Søg">
-         <font>
-            <Font name="Aparajita Bold" size="28.0" />
-         </font></Button>
-      <CheckBox fx:id="grafikkortCheckBox" layoutX="94.0" layoutY="596.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Grafikkort" />
-      <CheckBox fx:id="skærmeCheckBox" layoutX="89.0" layoutY="503.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Skærme" />
-      <CheckBox fx:id="musKeyboardsCheckBox" layoutX="115.0" layoutY="451.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Mus &amp; Keyboards" />
-      <CheckBox fx:id="kabinetterCheckBox" layoutX="95.0" layoutY="396.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Kabinetter" />
-      <CheckBox fx:id="harddiskeCheckBox" layoutX="94.0" layoutY="548.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Harddiske" />
-      <Button layoutX="467.0" layoutY="255.0" mnemonicParsing="false" text="PC &amp; Tablets" />
-      <Button layoutX="391.0" layoutY="255.0" mnemonicParsing="false" text="Hardware" />
-      <Button layoutX="328.0" layoutY="255.0" mnemonicParsing="false" text="Forside" />
-      <Button layoutX="563.0" layoutY="255.0" mnemonicParsing="false" text="TV &amp; Radio" />
-      <Button layoutX="647.0" layoutY="255.0" mnemonicParsing="false" text="Mobil &amp; GPS" />
-      <Button layoutX="976.0" layoutY="255.0" mnemonicParsing="false" text="Hvidevarer" />
-      <Button layoutX="1058.0" layoutY="255.0" mnemonicParsing="false" text="Husholdning" />
-      <Button layoutX="741.0" layoutY="255.0" mnemonicParsing="false" text="Foto &amp; Video" />
-      <Button layoutX="836.0" layoutY="255.0" mnemonicParsing="false" text="Konsol &amp; Spil" />
-      <ScrollPane fx:id="contentContainer" layoutX="327.0" layoutY="299.0" prefHeight="485.0" prefWidth="815.0" />
-      <Button layoutX="933.0" layoutY="255.0" mnemonicParsing="false" text="Film" />
-      <ImageView fx:id="logoView" fitHeight="249.0" fitWidth="576.0" layoutX="11.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="73.0" fitWidth="84.0" layoutX="1130.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../pictures/cart.png" />
-         </image>
-      </ImageView>
+      <ScrollPane prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff17" height="268.0" layoutX="33.0" layoutY="378.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="266.0" />
+                  <TextField fx:id="findProductSearchField" layoutX="677.0" layoutY="162.0" onAction="#findProductEnter" prefHeight="57.0" prefWidth="313.0" promptText="Søg i Electroshoppen">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="findProductButton" layoutX="991.0" layoutY="160.0" mnemonicParsing="false" onAction="#findProduct" prefHeight="57.0" prefWidth="97.0" text="Søg">
+                     <font>
+                        <Font name="Aparajita Bold" size="28.0" />
+                     </font>
+                  </Button>
+                  <CheckBox fx:id="grafikkortCheckBox" layoutX="94.0" layoutY="596.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Grafikkort" />
+                  <CheckBox fx:id="skærmeCheckBox" layoutX="89.0" layoutY="503.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Skærme" />
+                  <CheckBox fx:id="musKeyboardsCheckBox" layoutX="115.0" layoutY="451.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Mus &amp; Keyboards" />
+                  <CheckBox fx:id="kabinetterCheckBox" layoutX="95.0" layoutY="396.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Kabinetter" />
+                  <CheckBox fx:id="harddiskeCheckBox" layoutX="94.0" layoutY="548.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Harddiske" />
+                  <Button layoutX="467.0" layoutY="255.0" mnemonicParsing="false" text="PC &amp; Tablets" />
+                  <Button layoutX="391.0" layoutY="255.0" mnemonicParsing="false" text="Hardware" />
+                  <Button layoutX="328.0" layoutY="255.0" mnemonicParsing="false" text="Forside" />
+                  <Button layoutX="563.0" layoutY="255.0" mnemonicParsing="false" text="TV &amp; Radio" />
+                  <Button layoutX="647.0" layoutY="255.0" mnemonicParsing="false" text="Mobil &amp; GPS" />
+                  <Button layoutX="976.0" layoutY="255.0" mnemonicParsing="false" text="Hvidevarer" />
+                  <Button layoutX="1058.0" layoutY="255.0" mnemonicParsing="false" text="Husholdning" />
+                  <Button layoutX="741.0" layoutY="255.0" mnemonicParsing="false" text="Foto &amp; Video" />
+                  <Button layoutX="836.0" layoutY="255.0" mnemonicParsing="false" text="Konsol &amp; Spil" />
+                  <ScrollPane fx:id="contentContainer" fitToWidth="true" layoutX="327.0" layoutY="299.0" prefHeight="485.0" prefWidth="815.0" />
+                  <Button layoutX="933.0" layoutY="255.0" mnemonicParsing="false" text="Film" />
+                  <ImageView fx:id="logoView" fitHeight="249.0" fitWidth="576.0" layoutX="11.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="73.0" fitWidth="84.0" layoutX="1130.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/cart.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
     </children>
 </AnchorPane>

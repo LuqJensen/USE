@@ -1,20 +1,20 @@
 package gui;
 
-import javafx.event.ActionEvent;
+import interfaces.IProduct;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import unifiedshoppingexperience.ProductLine; // TODO INTERFACE THIS
 
 /**
  *
@@ -22,63 +22,74 @@ import javafx.scene.text.Text;
  */
 public class ProductLineView extends BorderPane
 {
- // Keep references to GridPane and AnchorPane, allows for flexibility later on.
-    GridPane gp;
-    CallBack callBack;
-    HBox hb;
+    // Keep references to GridPane and AnchorPane, allows for flexibility later on.
+    GridPane gpLeft;
+    GridPane gpRight;
 
-    public ProductLineView(CallBack callBack, Image productImage, String productName, String productDescription, Double productPrice, int productQuantity, double totalPrice)
+    public ProductLineView(Image productImage, ProductLine pl, int columnSpacing)
     {
         // BorderPane
         super();
 
-        this.callBack = callBack;
+        IProduct product = pl.getProduct();
 
-        // GridPane
-        gp = new GridPane();
-        gp.setHgap(10.0);
-        gp.setVgap(10.0);
-        gp.setPadding(new Insets(5, 5, 10, 5)); // Offsets are 5 from top, 5 from right, 10 from bottom, 5 from left.
+        // GridPane left
+        gpLeft = new GridPane();
+        gpLeft.setHgap(10.0);
+        gpLeft.setVgap(10.0);
+        gpLeft.setPadding(new Insets(5, 5, 5, 5)); // Offsets are 5 from top, 5 from right, 5 from bottom, 5 from left.
         // Pin GridPane to right side of the BorderPane.
-        this.setLeft(gp);
-        
-        //HBox
-        hb = new HBox();
-        hb.setSpacing(110);
-        hb.setAlignment(Pos.CENTER_RIGHT);
-        hb.setPadding(new Insets(5, 5, 10, 5));
-        this.setRight(hb);
+        this.setLeft(gpLeft);
 
-        // Add image to grid[0, 0] and let it stretch to grid[1, 3]
-        ImageView pi = new ImageView(productImage);
-        pi.setFitWidth(147);
-        pi.setPreserveRatio(true);
-        
-        gp.add(pi, 0, 0, 1, 3);
+        ImageView image = new ImageView(productImage);
+        image.setFitWidth(147);
+        image.setPreserveRatio(true);
+        // Add image to grid[0, 0] and let it stretch to grid[1, 2]
+        gpLeft.add(image, 0, 0, 1, 2);
 
-        Text title = new Text(productName);
+        Text title = new Text(product.getName());
+        // Wrap text at 200 pixel width.
+        title.setWrappingWidth(200);
         title.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         // Pin title to top of its grid.
         GridPane.setValignment(title, VPos.TOP);
         // Add title to grid[1, 0] and let it stretch to grid[2, 1]
-        gp.add(title, 1, 0, 3, 1);
+        gpLeft.add(title, 1, 0);
 
-        Text description = new Text(productDescription);
+        Text description = new Text(product.getDescription());
         // Pin description to top of its grid.
         GridPane.setValignment(description, VPos.TOP);
         // Add description to grid[1, 1] and let it stretch to grid[2, 2]
-        gp.add(description, 1, 1);
-        // Pin btn to top of its grid.
-        
-        Text quantity = new Text(Integer.toString(productQuantity));
-        hb.getChildren().add(quantity);
-        
-        Text price = new Text(productPrice.toString() + ",-");
-        price.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        hb.getChildren().add(price);
-        
-        Text sum = new Text(totalPrice + ",-");
-        sum.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        hb.getChildren().add(sum);
+        gpLeft.add(description, 1, 1);
+
+        //GridPane right
+        gpRight = new GridPane();
+        gpRight.setPadding(new Insets(5, 5, 5, 5));
+        gpRight.setAlignment(Pos.CENTER_RIGHT);
+        //gpRight.setGridLinesVisible(true); use for visual debugging of grids.
+        this.setRight(gpRight);
+        // Adds 3 columns: amount, price, totalprice, to the gridpane with spacing = COLUMN_SPACING.
+        for (int i = 0; i < 3; ++i)
+        {
+            gpRight.getColumnConstraints().add(new ColumnConstraints(columnSpacing));
+        }
+
+        Label quantity = new Label(Integer.toString(pl.getQuantity()));
+        quantity.setFont(Font.font("Arial", FontWeight.NORMAL, 12));
+
+        Label price = new Label(PriceFormatter.format(product.getPrice()));
+        price.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
+
+        Label totalPrice = new Label(PriceFormatter.format(pl.getTotalPrice()));
+        totalPrice.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+        gpRight.add(quantity, 0, 0);
+        GridPane.setHalignment(quantity, HPos.RIGHT);
+
+        gpRight.add(price, 1, 0);
+        GridPane.setHalignment(price, HPos.RIGHT);
+
+        gpRight.add(totalPrice, 2, 0);
+        GridPane.setHalignment(totalPrice, HPos.RIGHT);
     }
 }
