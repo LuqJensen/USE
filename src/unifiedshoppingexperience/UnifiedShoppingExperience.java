@@ -1,5 +1,7 @@
 package unifiedshoppingexperience;
 
+import interfaces.CallBack;
+import interfaces.ICustomer;
 import interfaces.IProduct;
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +23,9 @@ public class UnifiedShoppingExperience
 
     private String email;
     private String phoneNumber;
-    private Map<String, Customer> customerMap;
     private Assortment assortment;
+    private CustomerCollection cc;
+    private PaymentManager pm;
 
     /**
      * Creates the controller. The controller cant be called directly from
@@ -32,7 +35,8 @@ public class UnifiedShoppingExperience
     {
         email = "ESService@Electroshoppen.dk";
         phoneNumber = "28 52 57 40";
-        customerMap = new HashMap();
+        cc = new CustomerCollection();
+        pm = new PaymentManager();
 
         //WARNING HACKS AHOIST LADS
         assortment = new Assortment(TestData.loadProductMap(), TestData.loadTypeMap(), TestData.loadDescriptionMap());
@@ -62,17 +66,9 @@ public class UnifiedShoppingExperience
      * @param customerID The ID given to a customer within the system.
      * @return Returns a customer, based on the ID.
      */
-    private Customer getCustomer(String customerID)
+    private ICustomer getCustomer(String customerID)
     {
-        Customer customer = customerMap.get(customerID);
-
-        if (customer == null)
-        {
-            customer = new Customer(customerID);
-            customerMap.put(customerID, customer);
-        }
-
-        return customer;
+        return cc.getCustomer(customerID);
     }
 
     /**
@@ -106,7 +102,7 @@ public class UnifiedShoppingExperience
      */
     public Cart addProduct(String customerID, String productModel)
     {
-        return getCustomer(customerID).addToCart(assortment.getProduct(productModel));
+        return cc.getCustomer(customerID).addToCart(assortment.getProduct(productModel));
     }
 
     /**
@@ -118,7 +114,7 @@ public class UnifiedShoppingExperience
      */
     public Cart getWishList(String CustomerID, int wishListIndex)
     {
-        return getCustomer(CustomerID).getWishList(wishListIndex);
+        return cc.getCustomer(CustomerID).getWishList(wishListIndex);
     }
 
     /**
@@ -129,6 +125,37 @@ public class UnifiedShoppingExperience
      */
     public Cart getShoppingCart(String CustomerID)
     {
-        return getCustomer(CustomerID).getShoppingCart();
+        return cc.getCustomer(CustomerID).getShoppingCart();
     }
+    
+    public CreateOrderErrors createOrder(String customerID)
+    {
+        Customer c = cc.getCustomer(customerID);
+        if(c.getEmail() == null)
+        {
+            return CreateOrderErrors.NO_EMAIL;
+        }
+        return c.createOrder();      
+    }
+    
+     public void setEmail(String customerID, String email)
+     {
+         cc.getCustomer(customerID).setEmail(email);
+     }
+     
+     public String finishSale(String customerID, int orderID, String paymentMethod, Address address, CallBack eventTrigger)
+     {
+         Order o = cc.getCustomer(customerID).getOrder(orderID);
+         
+         o.setPaymentMethod(paymentMethod);
+         o.setAdress(address);
+         
+         CallBack confirmPayment = o.getCallBack(eventTrigger);
+         
+         ProductLine[] productLines = o.getProductLines();
+         
+         double price = o.getPrice();
+         
+         return pm.getPaymentProcessor(paymentMethod, confirmPayment, orderID, productLines, price);
+     }
 }
