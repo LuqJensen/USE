@@ -1,7 +1,8 @@
 package unifiedshoppingexperience;
 
+import interfaces.CallBack;
 import java.util.Date;
-import java.util.List;
+import shared.OrderStatus;
 
 /**
  * Keeps information about an order.
@@ -10,12 +11,15 @@ import java.util.List;
  */
 public class Order
 {
+    private static int orderCreations;
     private final int orderNumber;
     private final Date purchaseDate;
     private final Date deliveryDate;
     private final double amount;
-    private static int orderCreations;
     private final ProductLine[] orderLines;
+    private String paymentMethod;
+    private Address deliveryAddress;
+    private OrderStatus status;
 
     static
     {
@@ -28,28 +32,54 @@ public class Order
      *
      * @param productLines The product lines, could for example be product lines
      * copied from a cart.
-     * @param purchaseDate The date the payment was accepted.
-     * @param deliveryDate The date the order was delivered to the customer.
      * @param amount The total cost of the order.
      */
-    public Order(List<ProductLine> productLines, Date purchaseDate, Date deliveryDate, double amount)
+    public Order(ProductLine[] productLines, double amount)
     {
-
-        this.purchaseDate = purchaseDate;
-        this.deliveryDate = deliveryDate;
+        this.purchaseDate = new Date();
+        this.deliveryDate = new Date();
         this.amount = amount;
         this.orderNumber = orderCreations + 1;
-        int productLinesAmount = productLines.size();
-        orderLines = new ProductLine[productLinesAmount];
-        for (int i = 0; i < productLinesAmount; ++i)
-        {
-            orderLines[i] = productLines.get(i);
-        }
+        this.orderLines = productLines;
+        this.status = OrderStatus.UNPAID;
+        this.paymentMethod = null;
+        this.deliveryAddress = null;
         incrementOrderCreations();
     }
 
     private static void incrementOrderCreations()
     {
         ++orderCreations;
+    }
+
+    public void setPaymentMethod(String paymentMethod)
+    {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public void setAddress(Address address)
+    {
+        this.deliveryAddress = address;
+    }
+
+    public ProductLine[] getProductLines() // getOrderLines?
+    {
+        return orderLines;
+    }
+
+    public CallBack getCallBack(CallBack eventTrigger)
+    {
+        // TODO IMPLEMENT this.
+        return null;
+    }
+
+    public int getID()
+    {
+        return orderNumber;
+    }
+
+    public double getPrice() // maybe rename to getAmount()?
+    {
+        return amount;
     }
 }

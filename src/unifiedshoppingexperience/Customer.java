@@ -2,7 +2,10 @@ package unifiedshoppingexperience;
 
 import interfaces.ICustomer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import shared.CreateOrderErrors;
 
 /**
  * Contains information about a customer and provides methods to handle the
@@ -19,6 +22,7 @@ public class Customer implements ICustomer
     private String phoneNumber;
     private ShoppingCart shoppingCart;
     private ArrayList<WishList> wishLists;
+    private Map<Integer, Order> orders;
     private PersonalizedData pData;
 
     /**
@@ -39,6 +43,7 @@ public class Customer implements ICustomer
         this.phoneNumber = phoneNumber;
         this.shoppingCart = new ShoppingCart();
         this.wishLists = new ArrayList();
+        this.orders = new HashMap();
         this.pData = new PersonalizedData();
     }
 
@@ -52,6 +57,8 @@ public class Customer implements ICustomer
         this.ID = ID;
         this.shoppingCart = new ShoppingCart();
         this.wishLists = new ArrayList();
+        this.orders = new HashMap();
+        this.pData = new PersonalizedData();
     }
 
     /**
@@ -91,12 +98,18 @@ public class Customer implements ICustomer
     /**
      * Creates a order based on a carts data.
      *
-     * @param cart The cart to make into an order.
      * @return Returns the order that was created.
      */
-    public Order createOrder(Cart cart)
+    public CreateOrderErrors createOrder()
     {
-        return null;
+        if (this.email == null)
+        {
+            return CreateOrderErrors.NO_EMAIL;
+        }
+
+        Order order = new Order(shoppingCart.getProducts().toArray(new ProductLine[0]), shoppingCart.getPrice());
+        orders.put(order.getID(), order);
+        return CreateOrderErrors.UNPAID;
     }
 
     /**
@@ -109,13 +122,17 @@ public class Customer implements ICustomer
         return shoppingCart;
     }
 
+    public Order getOrder(Integer orderID)
+    {
+        return orders.get(orderID);
+    }
+
     @Override
     public String getFirstName()
     {
         return firstName;
     }
 
-    @Override
     public void setFirstName(String firstName)
     {
         this.firstName = firstName;
@@ -127,7 +144,6 @@ public class Customer implements ICustomer
         return surName;
     }
 
-    @Override
     public void setSurname(String surName)
     {
         this.surName = surName;
@@ -139,7 +155,6 @@ public class Customer implements ICustomer
         return email;
     }
 
-    @Override
     public void setEmail(String email)
     {
         this.email = email;
@@ -151,7 +166,6 @@ public class Customer implements ICustomer
         return phoneNumber;
     }
 
-    @Override
     public void setPhoneNumber(String phoneNumber)
     {
         this.phoneNumber = phoneNumber;

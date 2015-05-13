@@ -18,6 +18,14 @@ public class CustomerCollection
 
     public Customer getCustomer(String customerID)
     {
-        return customerMap.get(customerID);
+        Customer c = customerMap.get(customerID);
+
+        if (c == null)
+        {
+            c = new Customer(customerID);
+            customerMap.put(customerID, c);
+        }
+
+        return c;
     }
 }

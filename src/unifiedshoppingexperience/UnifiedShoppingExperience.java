@@ -1,9 +1,9 @@
 package unifiedshoppingexperience;
 
+import interfaces.CallBack;
 import interfaces.IProduct;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import shared.CreateOrderErrors;
 import shared.TestData;
 
 /**
@@ -21,8 +21,9 @@ public class UnifiedShoppingExperience
 
     private String email;
     private String phoneNumber;
-    private Map<String, Customer> customerMap;
+    private CustomerCollection customers;
     private Assortment assortment;
+    private PaymentManager paymentManager;
 
     /**
      * Creates the controller. The controller cant be called directly from
@@ -32,14 +33,15 @@ public class UnifiedShoppingExperience
     {
         email = "ESService@Electroshoppen.dk";
         phoneNumber = "28 52 57 40";
-        customerMap = new HashMap();
+        customers = new CustomerCollection();
 
         //WARNING HACKS AHOIST LADS
         assortment = new Assortment(TestData.loadProductMap(), TestData.loadTypeMap(), TestData.loadDescriptionMap());
+        paymentManager = new PaymentManager();
     }
 
     /**
-     * Gets a instance of the controller. There can only be one instance
+     * Gets an instance of the controller. There can only be one instance
      * (Singleton) of the class, if there was already made an instance, that
      * instance is returned.
      *
@@ -55,24 +57,9 @@ public class UnifiedShoppingExperience
         return USE;
     }
 
-    /**
-     * Gets a customer based on the ID, if the ID doesn't point to any customer,
-     * a new customer is created based on this ID.
-     *
-     * @param customerID The ID given to a customer within the system.
-     * @return Returns a customer, based on the ID.
-     */
-    private Customer getCustomer(String customerID)
+    public CreateOrderErrors createOrder(String customerID)
     {
-        Customer customer = customerMap.get(customerID);
-
-        if (customer == null)
-        {
-            customer = new Customer(customerID);
-            customerMap.put(customerID, customer);
-        }
-
-        return customer;
+        return customers.getCustomer(customerID).createOrder();
     }
 
     /**
@@ -102,33 +89,48 @@ public class UnifiedShoppingExperience
      * @param customerID The customerID of the customer that is adding a
      * product.
      * @param productModel The model name of the product.
-     * @return Returns the cart the product was added to.
      */
-    public Cart addProduct(String customerID, String productModel)
+    public void addProduct(String customerID, String productModel)
     {
-        return getCustomer(customerID).addToCart(assortment.getProduct(productModel));
+        customers.getCustomer(customerID).addToCart(assortment.getProduct(productModel));
     }
 
     /**
      * Gets a specified wish list of a specified customer.
      *
-     * @param CustomerID The customer that owns the returned wish list.
+     * @param customerID The customer that owns the returned wish list.
      * @param wishListIndex The index of the wish list.
      * @return Returns the specified wish list.
      */
-    public Cart getWishList(String CustomerID, int wishListIndex)
+    public Cart getWishList(String customerID, int wishListIndex)
     {
-        return getCustomer(CustomerID).getWishList(wishListIndex);
+        return customers.getCustomer(customerID).getWishList(wishListIndex);
     }
 
     /**
      * Gets the shopping cart of a specified customer.
      *
-     * @param CustomerID The customers ID.
+     * @param customerID The customers ID.
      * @return Returns the shopping cart owned by the specified customer.
      */
-    public Cart getShoppingCart(String CustomerID)
+    public Cart getShoppingCart(String customerID)
     {
-        return getCustomer(CustomerID).getShoppingCart();
+        return customers.getCustomer(customerID).getShoppingCart();
+    }
+
+    public String finishSale(String customerID, int orderID, String paymentMethod, Address address, CallBack eventTrigger)
+    {
+        Order o = customers.getCustomer(customerID).getOrder(orderID);
+
+        o.setPaymentMethod(paymentMethod);
+        o.setAddress(address);
+
+        CallBack confirmPayment = o.getCallBack(eventTrigger);
+
+        ProductLine[] productLines = o.getProductLines();
+
+        double price = o.getPrice();
+
+        return paymentManager.getPaymentProcessor(paymentMethod, confirmPayment, orderID, productLines, price);
     }
 }
