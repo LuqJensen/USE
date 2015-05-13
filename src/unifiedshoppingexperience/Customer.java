@@ -1,5 +1,6 @@
 package unifiedshoppingexperience;
 
+import interfaces.ICustomer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  *
  * @author Gruppe 12
  */
-public class Customer
+public class Customer implements ICustomer
 {
     private String ID;
     private String firstName;
@@ -18,6 +19,7 @@ public class Customer
     private String phoneNumber;
     private ShoppingCart shoppingCart;
     private ArrayList<WishList> wishLists;
+    private PersonalizedData pData;
 
     /**
      * Creates a customer with full information provided about the customer.
@@ -37,6 +39,7 @@ public class Customer
         this.phoneNumber = phoneNumber;
         this.shoppingCart = new ShoppingCart();
         this.wishLists = new ArrayList();
+        this.pData = new PersonalizedData();
     }
 
     /**
@@ -104,5 +107,59 @@ public class Customer
     public Cart getShoppingCart()
     {
         return shoppingCart;
+    }
+
+    @Override
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    @Override
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
+    @Override
+    public String getSurname()
+    {
+        return surName;
+    }
+
+    @Override
+    public void setSurname(String surName)
+    {
+        this.surName = surName;
+    }
+
+    @Override
+    public String getEmail()
+    {
+        return email;
+    }
+
+    @Override
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    @Override
+    public String getPhoneNumber()
+    {
+        return phoneNumber;
+    }
+
+    @Override
+    public void setPhoneNumber(String phoneNumber)
+    {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String getPersonalizedData()
+    {
+        return pData.toString();
     }
 }
