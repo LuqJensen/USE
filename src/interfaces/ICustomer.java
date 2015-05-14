@@ -15,4 +15,8 @@ public interface ICustomer
     String getPhoneNumber();
 
     String getPersonalizedData();
+
+    String getHomeAddress();
+
+    String getDefaultDeliveryAddress();
 }
