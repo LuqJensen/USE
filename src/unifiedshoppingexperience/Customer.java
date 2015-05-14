@@ -24,31 +24,11 @@ public class Customer implements ICustomer
     private ArrayList<WishList> wishLists;
     private Map<Integer, Order> orders;
     private PersonalizedData pData;
+    private Address homeAddress;
+    private Address defaultDeliveryAddress;
 
     /**
-     * Creates a customer with full information provided about the customer.
-     *
-     * @param ID The ID of the customer within the system.
-     * @param firstName The first name of the customer.
-     * @param surName The last name of the customer.
-     * @param email The email of the customer.
-     * @param phoneNumber The phone number of the customer.
-     */
-    public Customer(String ID, String firstName, String surName, String email, String phoneNumber)
-    {
-        this.ID = ID;
-        this.firstName = firstName;
-        this.surName = surName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.shoppingCart = new ShoppingCart();
-        this.wishLists = new ArrayList();
-        this.orders = new HashMap();
-        this.pData = new PersonalizedData();
-    }
-
-    /**
-     * Creates a customer based on the least amount of needed information.
+     * Creates a customer with a ID
      *
      * @param ID The ID of the customer within the system.
      */
@@ -175,5 +155,27 @@ public class Customer implements ICustomer
     public String getPersonalizedData()
     {
         return pData.toString();
+    }
+
+    public void setHomeAddress(String streetName, String houseNumber, int zipCode, String city)
+    {
+        homeAddress = new Address(streetName, houseNumber, zipCode, city);
+    }
+
+    @Override
+    public String getHomeAddress()
+    {
+        return homeAddress.toString(); // should maybe return a DTO
+    }
+
+    public void setDefaultDeliveryAddress(String streetName, String houseNumber, int zipCode, String city)
+    {
+        defaultDeliveryAddress = new Address(streetName, houseNumber, zipCode, city);
+    }
+
+    @Override
+    public String getDefaultDeliveryAddress()
+    {
+        return defaultDeliveryAddress.toString();  //  should maybe return a DTO
     }
 }
