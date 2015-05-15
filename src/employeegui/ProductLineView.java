@@ -1,4 +1,4 @@
-package gui;
+package employeegui;
 
 import utility.PriceFormatter;
 import interfaces.IProduct;
@@ -19,7 +19,7 @@ import unifiedshoppingexperience.ProductLine; // TODO INTERFACE THIS
 
 /**
  *
- * @author Simon Flensted
+ * @author Gruppe 12.
  */
 public class ProductLineView extends BorderPane
 {

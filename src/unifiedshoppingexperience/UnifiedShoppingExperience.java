@@ -1,6 +1,7 @@
 package unifiedshoppingexperience;
 
 import interfaces.CallBack;
+import interfaces.ICustomer;
 import interfaces.IProduct;
 import java.util.List;
 import shared.CreateOrderErrors;
@@ -116,6 +117,11 @@ public class UnifiedShoppingExperience
     public Cart getShoppingCart(String customerID)
     {
         return customers.getCustomer(customerID).getShoppingCart();
+    }
+
+    public ICustomer getCustomer(String customerID)
+    {
+        return customers.getCustomer(customerID);
     }
 
     public String finishSale(String customerID, int orderID, String paymentMethod, Address address, CallBack eventTrigger)
