@@ -27,9 +27,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import shared.CreateOrderErrors;
 import unifiedshoppingexperience.Cart;
 import unifiedshoppingexperience.ProductLine;
 import unifiedshoppingexperience.UnifiedShoppingExperience;
+import javafx.scene.control.TextInputControl;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,7 +41,8 @@ import unifiedshoppingexperience.UnifiedShoppingExperience;
  */
 public class FXMLDocumentController implements Initializable
 {
-    private String costumerID = "C12345";
+
+    private String customerID = "C12345";
     private static final int PICTURE_HEIGHT = 164; // UNUSED
     @FXML
     private TextField findProductSearchField;
@@ -120,21 +125,33 @@ public class FXMLDocumentController implements Initializable
         }
     }
 
-    private void toCheckout()
+    private void proceedToCheckout()
     {
         // TODO: implement "Gå til kassen" use case.
+        CreateOrderErrors orderError = UnifiedShoppingExperience.getInstance().createOrder(customerID);
+
+        if (orderError == CreateOrderErrors.UNPAID)
+        {
+            //ændre side - gennemfør betaling
+        }
+        else if (orderError == CreateOrderErrors.NO_EMAIL)
+        {
+            String email = JOptionPane.showInputDialog(new JFrame(), "Skriv email:");
+            
+            UnifiedShoppingExperience.getInstance().setEmail(customerID, email);
+        }
     }
 
     private void addToCart(String productModel)
     {
-        UnifiedShoppingExperience.getInstance().addProduct(costumerID, productModel);
+        UnifiedShoppingExperience.getInstance().addProduct(customerID, productModel);
         seeCart();
     }
 
     private void seeCart()
     {
         final int COLUMN_SPACING = 140;
-        Cart c = UnifiedShoppingExperience.getInstance().getShoppingCart(costumerID);
+        Cart c = UnifiedShoppingExperience.getInstance().getShoppingCart(customerID);
 
         // GridPane
         Label quantity = new Label("Antal");
@@ -188,7 +205,7 @@ public class FXMLDocumentController implements Initializable
         Button proceed = new Button("Gå til kassen");
         proceed.setOnAction((ActionEvent event) ->
         {
-            toCheckout();
+            proceedToCheckout();
         });
         proceed.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
@@ -214,4 +231,5 @@ public class FXMLDocumentController implements Initializable
     {
         contentContainer.setContent(content);
     }
+
 }
