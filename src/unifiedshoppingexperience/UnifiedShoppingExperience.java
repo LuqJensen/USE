@@ -136,9 +136,7 @@ public class UnifiedShoppingExperience
 
         ProductLine[] productLines = o.getProductLines();
 
-        double price = o.getPrice();
-
-        return paymentManager.getPaymentProcessor(paymentMethod, confirmPayment, orderID, productLines, price);
+        return paymentManager.getPaymentProcessor(paymentMethod, confirmPayment, orderID, productLines, o.getPrice());
     }
 
     public CreateOrderErrors setEmail(String customerID, String email)
