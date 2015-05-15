@@ -1,5 +1,6 @@
 package gui;
 
+import utility.PriceFormatter;
 import interfaces.CallBack;
 import interfaces.IProduct;
 import java.net.URL;
@@ -109,6 +110,7 @@ public class FXMLDocumentController implements Initializable
                 continue;
             }
 
+            //Lambda used to replace a anonymous class
             CallBack cb = () ->
             {
                 addToCart(p.getModel());

@@ -1,5 +1,9 @@
-package gui;
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package employeegui;
 import utility.PriceFormatter;
 import interfaces.CallBack;
 import interfaces.IProduct;
@@ -70,7 +74,7 @@ public class ProductView extends BorderPane
         gp.add(description, 1, 1);
 
         Button btn = new Button();
-        btn.setText("Køb");
+        btn.setText("Tilføj til Salg");
         btn.setStyle("-fx-base: #ffd000;");
         btn.setOnAction((ActionEvent event) ->
         {
