@@ -1,6 +1,7 @@
 package unifiedshoppingexperience;
 
 import interfaces.IProduct;
+import java.math.BigDecimal;
 
 /**
  * Keeps information about a product, and overrides the hashCode and equals
@@ -11,7 +12,7 @@ import interfaces.IProduct;
 public class Product implements IProduct
 {
     private String model;
-    private double price;
+    private BigDecimal price;
     //Temporary attribute for prototype
     private String type;
     private String name;
@@ -24,7 +25,7 @@ public class Product implements IProduct
      * @param type
      * @param name
      */
-    public Product(String model, double price, String type, String name)
+    public Product(String model, BigDecimal price, String type, String name)
     {
         this.model = model;
         this.price = price;
@@ -111,7 +112,7 @@ public class Product implements IProduct
     }
 
     @Override
-    public double getPrice()
+    public BigDecimal getPrice()
     {
         return price;
     }

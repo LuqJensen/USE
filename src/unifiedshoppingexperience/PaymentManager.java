@@ -1,15 +1,14 @@
 package unifiedshoppingexperience;
 
 import interfaces.CallBack;
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import thirdpartypaymentprocessor.PaypalDummy;
 
 /**
  *
@@ -17,66 +16,90 @@ import java.util.Map;
  */
 public class PaymentManager
 {
-
     Map<Integer, CallBack> callBackMap;
-    Map<Integer, Double> orderPriceMap;
+    Map<Integer, BigDecimal> orderPriceMap;
 
     public PaymentManager()
     {
         this.callBackMap = new HashMap();
+        this.orderPriceMap = new HashMap();
+        Thread t = new Thread()
+        {
+            @Override
+            public void run()
+            {
+                startServer();
+            }
+        };
+        t.start();
     }
 
-    public void startServer() throws IOException
+    public void startServer()
     {
-        ServerSocket listener = new ServerSocket(43595);
-        try
+        try (ServerSocket listener = new ServerSocket(43593))
         {
             while (true)
             {
-                Socket socket = listener.accept();
-                try
+                try (Socket socket = listener.accept())
                 {
-
                     DataInputStream in = new DataInputStream(socket.getInputStream());
                     int orderID = in.readInt();
-                    double price = in.readDouble();
-                    if (price == orderPriceMap.get(orderID))
+                    BigDecimal postPrice = new BigDecimal(in.readDouble());
+
+                    BigDecimal prePrice = orderPriceMap.get(orderID);
+
+                    if (prePrice == null)
+                    {
+                        System.out.printf("Error: price of order %s is null.\n", orderID);
+                    }
+                    else if (prePrice.compareTo(postPrice) == 0)
                     {
                         CallBack confirmPayment = callBackMap.get(orderID);
+
+                        if (confirmPayment == null)
+                        {
+                            System.out.printf("Error: order callback of order %s is null.\n", orderID);
+                            continue;
+                        }
+
                         confirmPayment.call();
+                        System.out.printf("Order %s was successfully paid.\n", orderID);
                     }
-
+                    else
+                    {
+                        System.out.printf("Order %s was not paid, preprocessed price: %s, postprocessed price: %s.\n", orderID, prePrice, postPrice);
+                    }
                 }
-                finally
+                catch (IOException ex)
                 {
-                    socket.close();
+                    ex.printStackTrace();
                 }
-
             }
         }
-        finally
+        catch (IOException ex)
         {
-            listener.close();
+            ex.printStackTrace();
         }
     }
 
-    public String getPaymentProcessor(String paymentMethod, CallBack confirmPayment, int orderID, ProductLine[] productLines, double price)
+    public String getPaymentProcessor(String paymentMethod, CallBack confirmPayment, int orderID, ProductLine[] productLines, BigDecimal price)
     {
 
         StringBuilder URLBuilder = new StringBuilder();
         URLBuilder.append("www.paypal.com/payment/");
         URLBuilder.append(orderID + "%%");
         StringBuilder productNamesBuilder = new StringBuilder();
-        for (int i = 0; i < productLines.length; i++)
+        for (ProductLine productLine : productLines)
         {
-            URLBuilder.append(productLines[i].getProduct().getModel() + "%");
-            productNamesBuilder.append(productLines[i].getProduct().getName() + "%");
+            URLBuilder.append(productLine.getProduct().getModel() + "%");
+            productNamesBuilder.append(productLine.getProduct().getName() + "%");
         }
         URLBuilder.append("%");
         URLBuilder.append(productNamesBuilder + "%");
 
         URLBuilder.append(price);
         callBackMap.put(orderID, confirmPayment);
+        orderPriceMap.put(orderID, price);
         return URLBuilder.toString();
     }
 
@@ -84,8 +107,15 @@ public class PaymentManager
     {
         PaymentManager hda = new PaymentManager();
         ProductLine[] hej = new ProductLine[2];
-        hej[0] = new ProductLine(new Product("AMDRocks", 200, "type1", "AMD R Best"));
-        hej[1] = new ProductLine(new Product("nvidia", 200, "type2", "sucks"));
-        System.out.println(hda.getPaymentProcessor("visaDankort", null, 123, hej, 300));
+        hej[0] = new ProductLine(new Product("AMDRocks", new BigDecimal(200.0), "type1", "AMD R Best"));
+        hej[1] = new ProductLine(new Product("nvidia", new BigDecimal(200.0), "type2", "sucks"));
+        Order order = new Order(hej, new BigDecimal(400.0));
+        CallBack cb = () ->
+        {
+            System.out.println(order);
+        };
+        String URL = hda.getPaymentProcessor("visaDankort", cb, 123, hej, new BigDecimal(400.0));
+        PaypalDummy pd = new PaypalDummy();
+        pd.confirm(URL.substring(URL.lastIndexOf("/") + 1));
     }
 }

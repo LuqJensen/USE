@@ -33,6 +33,6 @@ public class ShoppingCart extends Cart
             productLines.put(product, new ProductLine(product));
         }
 
-        price += product.getPrice();
+        price.add(product.getPrice());
     }
 }

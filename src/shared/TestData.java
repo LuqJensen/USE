@@ -1,5 +1,6 @@
 package shared;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -19,11 +20,11 @@ public class TestData
 
     static
     {
-        p1 = new Product("NV970", 300.0, "Grafikkort", "Nvidia Geforce GTX 970");
-        p2 = new Product("MSI970", 150.0, "Grafikkort", "MSI Geforce GTX 970");
-        p3 = new Product("NV660", 100.0, "Grafikkort", "Nvidia Geforce GTX 660");
-        p4 = new Product("I7-4770K", 299.99, "Processorer", "Intel Core I7 4770K");
-        p5 = new Product("I7-4670K", 129.99, "Processorer", "Intel Core I5 4670K");
+        p1 = new Product("NV970", new BigDecimal(300.0), "Grafikkort", "Nvidia Geforce GTX 970");
+        p2 = new Product("MSI970", new BigDecimal(150.0), "Grafikkort", "MSI Geforce GTX 970");
+        p3 = new Product("NV660", new BigDecimal(100.0), "Grafikkort", "Nvidia Geforce GTX 660");
+        p4 = new Product("I7-4770K", new BigDecimal(299.99), "Processorer", "Intel Core I7 4770K");
+        p5 = new Product("I7-4670K", new BigDecimal(129.99), "Processorer", "Intel Core I5 4670K");
 
         testProducts = new String[]
         {
@@ -71,7 +72,7 @@ public class TestData
         for (String s : testProducts)
         {
             String[] pInfo = s.split(", ");
-            Product p = new Product(pInfo[0], Double.parseDouble(pInfo[3]), pInfo[2], pInfo[1]);
+            Product p = new Product(pInfo[0], new BigDecimal((pInfo[3])), pInfo[2], pInfo[1]);
             productMap.put(pInfo[0], p);
         }
     }

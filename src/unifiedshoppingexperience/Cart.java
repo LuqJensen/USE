@@ -1,5 +1,6 @@
 package unifiedshoppingexperience;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Map;
 public abstract class Cart
 {
     protected static int cartCreations;
-    protected double price;
+    protected BigDecimal price;
     protected int totalQuantity;
     protected int cartID;
     protected Map<Product, ProductLine> productLines;
@@ -49,7 +50,7 @@ public abstract class Cart
         ++cartCreations;
     }
 
-    public double getPrice()
+    public BigDecimal getPrice()
     {
         return price;
     }

@@ -1,5 +1,7 @@
 package interfaces;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Gruppe12
@@ -12,7 +14,7 @@ public interface IProduct
 
     public String getType();
 
-    public double getPrice();
+    public BigDecimal getPrice();
 
     public String getDescription();
 }

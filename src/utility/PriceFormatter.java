@@ -5,6 +5,7 @@
  */
 package utility;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -28,5 +29,10 @@ public class PriceFormatter
     public static String format(Double val)
     {
         return df.format(val);
+    }
+
+    public static String format(BigDecimal val)
+    {
+        return df.format(val.doubleValue());
     }
 }

@@ -1,6 +1,7 @@
 package unifiedshoppingexperience;
 
 import interfaces.CallBack;
+import java.math.BigDecimal;
 import java.util.Date;
 import shared.OrderStatus;
 
@@ -15,7 +16,7 @@ public class Order
     private final int orderNumber;
     private final Date purchaseDate;
     private final Date deliveryDate;
-    private final double amount;
+    private final BigDecimal amount;
     private final ProductLine[] orderLines;
     private String paymentMethod;
     private Address deliveryAddress;
@@ -34,7 +35,7 @@ public class Order
      * copied from a cart.
      * @param amount The total cost of the order.
      */
-    public Order(ProductLine[] productLines, double amount)
+    public Order(ProductLine[] productLines, BigDecimal amount)
     {
         this.purchaseDate = new Date();
         this.deliveryDate = new Date();
@@ -78,7 +79,7 @@ public class Order
         return orderNumber;
     }
 
-    public double getPrice() // maybe rename to getAmount()?
+    public BigDecimal getPrice() // maybe rename to getAmount()?
     {
         return amount;
     }

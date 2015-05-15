@@ -1,6 +1,7 @@
 package unifiedshoppingexperience;
 
 import interfaces.IProduct;
+import java.math.BigDecimal;
 
 /**
  * Contains a product line, which is the product and the quantity of the
@@ -71,8 +72,8 @@ public class ProductLine
         return quantity;
     }
 
-    public double getTotalPrice()
+    public BigDecimal getTotalPrice()
     {
-        return quantity * product.getPrice();
+        return product.getPrice().multiply(new BigDecimal(quantity));
     }
 }
