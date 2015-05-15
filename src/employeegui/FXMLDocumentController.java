@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package employeegui;
 
 import interfaces.CallBack;
@@ -64,6 +59,12 @@ public class FXMLDocumentController implements Initializable
     private ScrollPane saleContentScrollPane;
     @FXML
     private TabPane tabPane;
+    @FXML
+    private Button findCustomerButton;
+    @FXML
+    private TextField findCustomerTextField;
+    @FXML
+    private ScrollPane customerScrollPane;
 
     /**
      * Initializes the controller class.
@@ -193,7 +194,7 @@ public class FXMLDocumentController implements Initializable
         }
 
         // VBox
-        Button proceed = new Button("Gå til kassen");
+        Button proceed = new Button("Til Betaling");
         proceed.setOnAction((ActionEvent event) ->
         {
             toCheckout();
@@ -215,7 +216,21 @@ public class FXMLDocumentController implements Initializable
         bp.setTop(productLineDescription);
         bp.setCenter(productLineView);
         bp.setBottom(bottomVBox);
-        setContent(bp);
+        saleContentScrollPane.setContent(bp);
+    }
+
+    private void toCheckout()
+    {
+    }
+
+    @FXML
+    private void findCustomer(ActionEvent event)
+    {
+    }
+
+    @FXML
+    private void findCustomerEnter(ActionEvent event)
+    {
     }
 
 }

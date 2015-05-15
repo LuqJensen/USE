@@ -36,7 +36,24 @@
           </Tab>
           <Tab fx:id="findCustomerTab" text="Find Kunde">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="findCustomerButton" layoutX="319.0" layoutY="20.0" mnemonicParsing="false" onAction="#findCustomer" prefHeight="57.0" prefWidth="97.0" text="Søg">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                        <TextField fx:id="findCustomerTextField" layoutX="6.0" layoutY="20.0" onAction="#findCustomerEnter" prefHeight="57.0" prefWidth="313.0" promptText="Find produkter">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TextField>
+                        <ScrollPane fx:id="customerScrollPane" layoutX="6.0" layoutY="83.0" prefHeight="361.0" prefWidth="626.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                          </content>
+                        </ScrollPane>
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab fx:id="saleTab" text="Opret Salg">
