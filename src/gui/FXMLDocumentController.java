@@ -204,7 +204,7 @@ public class FXMLDocumentController implements Initializable
             model.setFont(Font.font("Arial", FontWeight.BOLD, 12));
 
             Label productName = new Label("Produktnavn");
-            model.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+            productName.setFont(Font.font("Arial", FontWeight.BOLD, 12));
 
             Label quantity = new Label("Antal");
             quantity.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -216,7 +216,7 @@ public class FXMLDocumentController implements Initializable
             totalPrice.setFont(Font.font("Arial", FontWeight.BOLD, 12));
 
             GridPane orderLineDescription = new GridPane();
-            orderLineDescription.setPadding(new Insets(5, 5, 5, 5));
+            orderLineDescription.setPadding(new Insets(5, 15, 5, 5));
 
             // Adds 2 columns for model and title with spacing = COLUMN_SPACING.
             for (int i = 0; i < 2; ++i)
@@ -225,7 +225,7 @@ public class FXMLDocumentController implements Initializable
             }
 
             // Adds a single empty column between title and quantity.
-            orderLineDescription.getColumnConstraints().add(new ColumnConstraints(85.0));
+            orderLineDescription.getColumnConstraints().add(new ColumnConstraints(75.0));
 
             for (int i = 0; i < 3; ++i)
             {

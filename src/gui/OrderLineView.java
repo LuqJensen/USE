@@ -43,7 +43,7 @@ public class OrderLineView extends GridPane
         Label totalPrice = new Label(PriceFormatter.format(pl.getTotalPrice()));
         totalPrice.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
 
-        this.setPadding(new Insets(5, 5, 5, 5));
+        this.setPadding(new Insets(5, 15, 5, 5));
         this.setAlignment(Pos.CENTER_RIGHT);
 
         for (int i = 0; i < 2; ++i)
@@ -51,7 +51,7 @@ public class OrderLineView extends GridPane
             this.getColumnConstraints().add(new ColumnConstraints(columnSpacing));
         }
 
-        this.getColumnConstraints().add(new ColumnConstraints(85.0));
+        this.getColumnConstraints().add(new ColumnConstraints(75.0));
         // Adds 3 columns: amount, price, totalprice, to the gridpane with spacing = COLUMN_SPACING.
         for (int i = 0; i < 3; ++i)
         {
