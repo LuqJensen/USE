@@ -1,7 +1,9 @@
 package employeegui;
 
 import interfaces.CallBack;
-import interfaces.IProduct;
+import interfaces.CartDTO;
+import interfaces.ProductDTO;
+import interfaces.ProductLineDTO;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +29,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import unifiedshoppingexperience.Cart;
-import unifiedshoppingexperience.ProductLine;
 import unifiedshoppingexperience.UnifiedShoppingExperience;
 import utility.PriceFormatter;
 
@@ -109,8 +109,8 @@ public class FXMLDocumentController implements Initializable
         // just java being java.
         String[] typeTags = temp.toArray(new String[temp.size()]);
 
-        List<IProduct> products = UnifiedShoppingExperience.getInstance().findProducts(descriptionTags, typeTags);
-        for (IProduct p : products)
+        List<ProductDTO> products = UnifiedShoppingExperience.getInstance().findProducts(descriptionTags, typeTags);
+        for (ProductDTO p : products)
         {
             Image i;
             try
@@ -143,7 +143,7 @@ public class FXMLDocumentController implements Initializable
     {
         tabPane.getSelectionModel().select(saleTab);
         final int COLUMN_SPACING = 140;
-        Cart c = UnifiedShoppingExperience.getInstance().getShoppingCart(customerID);
+        CartDTO c = UnifiedShoppingExperience.getInstance().getShoppingCart(customerID);
 
         // GridPane
         Label quantity = new Label("Antal");
@@ -176,9 +176,9 @@ public class FXMLDocumentController implements Initializable
 
         // VBox
         VBox productLineView = new VBox();
-        for (ProductLine pl : c.getProducts())
+        for (ProductLineDTO pl : c.getProducts())
         {
-            IProduct p = pl.getProduct();
+            ProductDTO p = pl.getProduct();
             Image i;
             try
             {

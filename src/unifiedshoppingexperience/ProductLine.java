@@ -1,6 +1,7 @@
 package unifiedshoppingexperience;
 
-import interfaces.IProduct;
+import interfaces.ProductDTO;
+import interfaces.ProductLineDTO;
 import java.math.BigDecimal;
 
 /**
@@ -9,7 +10,7 @@ import java.math.BigDecimal;
  *
  * @author Gruppe12
  */
-public class ProductLine
+public class ProductLine implements ProductLineDTO
 {
     private int quantity;
     private final Product product;
@@ -30,7 +31,8 @@ public class ProductLine
      *
      * @return Returns the product the product line describes.
      */
-    public IProduct getProduct()
+    @Override
+    public ProductDTO getProduct()
     {
         return this.product;
     }
@@ -62,7 +64,7 @@ public class ProductLine
             return false;
         }
 
-        ProductLine pl = (ProductLine)other;
+        ProductLine pl = (ProductLine) other;
 
         return pl.product.equals(this.product) && pl.quantity == this.quantity;
     }

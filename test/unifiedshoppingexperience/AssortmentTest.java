@@ -1,6 +1,6 @@
 package unifiedshoppingexperience;
 
-import interfaces.IProduct;
+import interfaces.ProductDTO;
 import shared.TestData;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,8 +83,8 @@ public class AssortmentTest
         String[] descriptionTags = "".split(" ");
         String[] typeTags = new String[0];
 
-        List<IProduct> expResult = new ArrayList();
-        List<IProduct> result = instance.findProducts(descriptionTags, typeTags);
+        List<ProductDTO> expResult = new ArrayList();
+        List<ProductDTO> result = instance.findProducts(descriptionTags, typeTags);
 
         assertEquals(expResult, result);
     }
@@ -104,20 +104,20 @@ public class AssortmentTest
             "Grafikkort"
         };
 
-        List<IProduct> expResult = new ArrayList();
+        List<ProductDTO> expResult = new ArrayList();
         expResult.add(TestData.p1);
         expResult.add(TestData.p2);
         expResult.add(TestData.p3);
-        List<IProduct> result = instance.findProducts(descriptionTags, typeTags);
+        List<ProductDTO> result = instance.findProducts(descriptionTags, typeTags);
 
         System.out.println("Expected result:");
-        for (IProduct p : expResult)
+        for (ProductDTO p : expResult)
         {
             System.out.println(p.getName());
         }
 
         System.out.println("Result:");
-        for (IProduct p : result)
+        for (ProductDTO p : result)
         {
             System.out.println(p.getName());
         }
@@ -140,19 +140,19 @@ public class AssortmentTest
             "Grafikkort"
         };
 
-        List<IProduct> expResult = new ArrayList();
+        List<ProductDTO> expResult = new ArrayList();
         expResult.add(TestData.p2);
         expResult.add(TestData.p1);
-        List<IProduct> result = instance.findProducts(descriptionTags, typeTags);
+        List<ProductDTO> result = instance.findProducts(descriptionTags, typeTags);
 
         System.out.println("Expected result:");
-        for (IProduct p : expResult)
+        for (ProductDTO p : expResult)
         {
             System.out.println(p.getName());
         }
 
         System.out.println("Result:");
-        for (IProduct p : result)
+        for (ProductDTO p : result)
         {
             System.out.println(p.getName());
         }
@@ -172,19 +172,19 @@ public class AssortmentTest
         String[] descriptionTags = "970".split(" ");
         String[] typeTags = new String[0];
 
-        List<IProduct> expResult = new ArrayList();
+        List<ProductDTO> expResult = new ArrayList();
         expResult.add(TestData.p2);
         expResult.add(TestData.p1);
-        List<IProduct> result = instance.findProducts(descriptionTags, typeTags);
+        List<ProductDTO> result = instance.findProducts(descriptionTags, typeTags);
 
         System.out.println("Expected result:");
-        for (IProduct p : expResult)
+        for (ProductDTO p : expResult)
         {
             System.out.println(p.getName());
         }
 
         System.out.println("Result:");
-        for (IProduct p : result)
+        for (ProductDTO p : result)
         {
             System.out.println(p.getName());
         }
@@ -207,20 +207,20 @@ public class AssortmentTest
             "Grafikkort", "Processorer"
         };
 
-        List<IProduct> expResult = new ArrayList();
+        List<ProductDTO> expResult = new ArrayList();
         expResult.add(TestData.p2);
         expResult.add(TestData.p1);
         expResult.add(TestData.p3);
-        List<IProduct> result = instance.findProducts(descriptionTags, typeTags);
+        List<ProductDTO> result = instance.findProducts(descriptionTags, typeTags);
 
         System.out.println("Expected result:");
-        for (IProduct p : expResult)
+        for (ProductDTO p : expResult)
         {
             System.out.println(p.getName());
         }
 
         System.out.println("Result:");
-        for (IProduct p : result)
+        for (ProductDTO p : result)
         {
             System.out.println(p.getName());
         }

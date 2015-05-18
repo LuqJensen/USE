@@ -1,6 +1,6 @@
 package unifiedshoppingexperience;
 
-import interfaces.IProduct;
+import interfaces.ProductDTO;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -58,9 +58,9 @@ public class Assortment
      * @return Returns a list of products sorted by relevance based on
      * description tags and filtered by type tags.
      */
-    public List<IProduct> findProducts(String[] descriptionTags, String[] typeTags)
+    public List<ProductDTO> findProducts(String[] descriptionTags, String[] typeTags)
     {
-        List<IProduct> retval = new ArrayList();
+        List<ProductDTO> retval = new ArrayList();
 
         Map<Product, Integer> productMap = new HashMap();
 

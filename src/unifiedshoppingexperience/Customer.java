@@ -1,6 +1,6 @@
 package unifiedshoppingexperience;
 
-import interfaces.ICustomer;
+import interfaces.CustomerDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +13,7 @@ import shared.CreateOrderErrors;
  *
  * @author Gruppe 12
  */
-public class Customer implements ICustomer
+public class Customer implements CustomerDTO
 {
     private String ID;
     private String firstName;

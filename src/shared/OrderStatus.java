@@ -13,5 +13,5 @@ public enum OrderStatus
 {
     UNPAID,
     PAID,
-    DELIVERED
+    DISPATCHED
 }

@@ -2,7 +2,7 @@ package gui;
 
 import utility.PriceFormatter;
 import interfaces.CallBack;
-import interfaces.IProduct;
+import interfaces.ProductDTO;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Insets;
@@ -27,7 +27,7 @@ public class ProductView extends BorderPane
     AnchorPane ap;
     CallBack callBack;
 
-    public ProductView(CallBack callBack, Image productImage, IProduct product)
+    public ProductView(CallBack callBack, Image productImage, ProductDTO product)
     {
         // BorderPane
         super();

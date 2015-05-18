@@ -1,6 +1,6 @@
 package unifiedshoppingexperience;
 
-import interfaces.IProduct;
+import interfaces.ProductDTO;
 import java.math.BigDecimal;
 
 /**
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  *
  * @author Gruppe12
  */
-public class Product implements IProduct
+public class Product implements ProductDTO
 {
     private String model;
     private BigDecimal price;
