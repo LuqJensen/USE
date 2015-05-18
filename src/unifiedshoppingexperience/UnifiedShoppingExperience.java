@@ -18,7 +18,6 @@ import shared.TestData;
  */
 public class UnifiedShoppingExperience
 {
-
     private static UnifiedShoppingExperience USE = null;
 
     private String email;
@@ -139,11 +138,20 @@ public class UnifiedShoppingExperience
         return paymentManager.getPaymentProcessor(paymentMethod, confirmPayment, orderID, productLines, o.getPrice());
     }
 
-    public CreateOrderErrors setEmail(String customerID, String email)
+    public boolean setEmail(String customerID, String email)
     {
+        if (email == null || email.isEmpty())
+        {
+            return false;
+        }
+
+        if (!email.contains("@") || !email.contains("."))
+        {
+            return false;
+        }
+
         Customer customer = customers.getCustomer(customerID);
         customer.setEmail(email);
-        return customer.createOrder();
-
+        return true;
     }
 }

@@ -32,6 +32,7 @@ public abstract class Cart
     public Cart()
     {
         this.cartID = cartCreations + 1;
+        this.price = new BigDecimal(0.0);
         this.productLines = new HashMap();
         incrementCartCreations();
     }

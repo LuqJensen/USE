@@ -39,7 +39,7 @@ import utility.PriceFormatter;
  */
 public class FXMLDocumentController implements Initializable
 {
-    private String costumerID = "C12345";
+    private String customerID = "C12345";
     @FXML
     private ScrollPane findProductsScrollPane;
     @FXML
@@ -85,7 +85,7 @@ public class FXMLDocumentController implements Initializable
 
     private void addToCart(String productModel)
     {
-        UnifiedShoppingExperience.getInstance().addProduct(costumerID, productModel);
+        UnifiedShoppingExperience.getInstance().addProduct(customerID, productModel);
         goToSale();
     }
 
@@ -143,7 +143,7 @@ public class FXMLDocumentController implements Initializable
     {
         tabPane.getSelectionModel().select(saleTab);
         final int COLUMN_SPACING = 140;
-        Cart c = UnifiedShoppingExperience.getInstance().getShoppingCart(costumerID);
+        Cart c = UnifiedShoppingExperience.getInstance().getShoppingCart(customerID);
 
         // GridPane
         Label quantity = new Label("Antal");

@@ -33,6 +33,8 @@ public class ShoppingCart extends Cart
             productLines.put(product, new ProductLine(product));
         }
 
-        price.add(product.getPrice());
+        // BigDecimal is immutable, must assign return value of method to the variable,
+        // if not, the calculation is lost.
+        price = price.add(product.getPrice());
     }
 }

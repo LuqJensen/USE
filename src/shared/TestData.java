@@ -72,7 +72,7 @@ public class TestData
         for (String s : testProducts)
         {
             String[] pInfo = s.split(", ");
-            Product p = new Product(pInfo[0], new BigDecimal((pInfo[3])), pInfo[2], pInfo[1]);
+            Product p = new Product(pInfo[0], new BigDecimal(pInfo[3]), pInfo[2], pInfo[1]);
             productMap.put(pInfo[0], p);
         }
     }

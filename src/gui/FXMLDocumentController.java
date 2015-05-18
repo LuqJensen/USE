@@ -137,14 +137,23 @@ public class FXMLDocumentController implements Initializable
         else if (orderError == CreateOrderErrors.NO_EMAIL)
         {
             String email = JOptionPane.showInputDialog(new JFrame(), "Skriv email:");
-            
-            UnifiedShoppingExperience.getInstance().setEmail(customerID, email);
+
+            if (UnifiedShoppingExperience.getInstance().setEmail(customerID, email))
+            {
+                proceedToCheckout();
+            }
         }
     }
 
     private void addToCart(String productModel)
     {
         UnifiedShoppingExperience.getInstance().addProduct(customerID, productModel);
+        seeCart();
+    }
+
+    @FXML
+    private void seeCartButton(ActionEvent event)
+    {
         seeCart();
     }
 

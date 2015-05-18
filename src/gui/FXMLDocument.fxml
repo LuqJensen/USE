@@ -45,11 +45,15 @@
                   <ScrollPane fx:id="contentContainer" fitToWidth="true" layoutX="327.0" layoutY="299.0" prefHeight="485.0" prefWidth="815.0" />
                   <Button layoutX="933.0" layoutY="255.0" mnemonicParsing="false" text="Film" />
                   <ImageView fx:id="logoView" fitHeight="249.0" fitWidth="576.0" layoutX="11.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="73.0" fitWidth="84.0" layoutX="1130.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../pictures/cart.png" />
-                     </image>
-                  </ImageView>
+                  <Button layoutX="1049.0" layoutY="58.0" mnemonicParsing="false" onAction="#seeCartButton" text="Indkøbskurv">
+                     <graphic>
+                        <ImageView fitHeight="73.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pictures/cart.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </AnchorPane>
          </content>
