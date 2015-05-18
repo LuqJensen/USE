@@ -6,7 +6,7 @@ import java.math.BigDecimal;
  *
  * @author Gruppe12
  */
-public interface IProduct
+public interface ProductDTO
 {
     public String getModel();
 

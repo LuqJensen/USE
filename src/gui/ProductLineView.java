@@ -1,7 +1,8 @@
 package gui;
 
 import utility.PriceFormatter;
-import interfaces.IProduct;
+import interfaces.ProductDTO;
+import interfaces.ProductLineDTO;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,7 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import unifiedshoppingexperience.ProductLine; // TODO INTERFACE THIS
 
 /**
  *
@@ -27,12 +27,12 @@ public class ProductLineView extends BorderPane
     GridPane gpLeft;
     GridPane gpRight;
 
-    public ProductLineView(Image productImage, ProductLine pl, int columnSpacing)
+    public ProductLineView(Image productImage, ProductLineDTO pl, int columnSpacing)
     {
         // BorderPane
         super();
 
-        IProduct product = pl.getProduct();
+        ProductDTO product = pl.getProduct();
 
         // GridPane left
         gpLeft = new GridPane();

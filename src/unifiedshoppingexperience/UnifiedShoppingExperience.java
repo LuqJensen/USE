@@ -1,8 +1,8 @@
 package unifiedshoppingexperience;
 
 import interfaces.CallBack;
-import interfaces.ICustomer;
-import interfaces.IProduct;
+import interfaces.CustomerDTO;
+import interfaces.ProductDTO;
 import java.util.List;
 import shared.CreateOrderErrors;
 import shared.TestData;
@@ -78,7 +78,7 @@ public class UnifiedShoppingExperience
      * @return Returns a list of products sorted by relevance based on
      * description tags and filtered by type tags.
      */
-    public List<IProduct> findProducts(String[] descriptionTags, String[] typeTags)
+    public List<ProductDTO> findProducts(String[] descriptionTags, String[] typeTags)
     {
         return assortment.findProducts(descriptionTags, typeTags);
     }
@@ -119,7 +119,7 @@ public class UnifiedShoppingExperience
         return customers.getCustomer(customerID).getShoppingCart();
     }
 
-    public ICustomer getCustomer(String customerID)
+    public CustomerDTO getCustomer(String customerID)
     {
         return customers.getCustomer(customerID);
     }

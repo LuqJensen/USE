@@ -4,7 +4,7 @@ package interfaces;
  *
  * @author Gruppe 12
  */
-public interface ICustomer
+public interface CustomerDTO
 {
     String getFirstName();
 

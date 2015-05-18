@@ -1,5 +1,7 @@
 package unifiedshoppingexperience;
 
+import interfaces.CartDTO;
+import interfaces.ProductLineDTO;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +14,7 @@ import java.util.Map;
  *
  * @author Gruppe12
  */
-public abstract class Cart
+public abstract class Cart implements CartDTO
 {
     protected static int cartCreations;
     protected BigDecimal price;
@@ -41,7 +43,7 @@ public abstract class Cart
      *
      * @return Returns all the product lines in the cart.
      */
-    public List<ProductLine> getProducts()
+    public List<ProductLineDTO> getProducts()
     {
         return new ArrayList(productLines.values());
     }

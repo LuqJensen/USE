@@ -1,6 +1,7 @@
 package unifiedshoppingexperience;
 
 import interfaces.CallBack;
+import interfaces.OrderDTO;
 import java.math.BigDecimal;
 import java.util.Date;
 import shared.OrderStatus;
@@ -10,12 +11,13 @@ import shared.OrderStatus;
  *
  * @author Gruppe12
  */
-public class Order
+public class Order implements OrderDTO
 {
+
     private static int orderCreations;
     private final int orderNumber;
-    private final Date purchaseDate;
-    private final Date deliveryDate;
+    private Date purchaseDate;
+    private Date dispatchedDate;
     private final BigDecimal price;
     private final ProductLine[] orderLines;
     private String paymentMethod;
@@ -37,14 +39,14 @@ public class Order
      */
     public Order(ProductLine[] productLines, BigDecimal price)
     {
-        this.purchaseDate = new Date();
-        this.deliveryDate = new Date();
         this.price = price;
         this.orderNumber = orderCreations + 1;
         this.orderLines = productLines;
         this.status = OrderStatus.UNPAID;
+        this.purchaseDate = null;
         this.paymentMethod = null;
         this.deliveryAddress = null;
+        this.dispatchedDate = null;
         incrementOrderCreations();
     }
 
@@ -56,6 +58,16 @@ public class Order
     public void setPaymentMethod(String paymentMethod)
     {
         this.paymentMethod = paymentMethod;
+    }
+
+    public void setDispatchedDate()
+    {
+        dispatchedDate = new Date();
+    }
+
+    public void setDispatchedDate(Date date)
+    {
+        dispatchedDate = date;
     }
 
     public void setAddress(Address address)
@@ -72,19 +84,58 @@ public class Order
     {
         CallBack cb = () ->
         {
+            purchaseDate = new Date();
             this.status = OrderStatus.PAID;
             eventTrigger.call();
         };
         return cb;
     }
 
+    @Override
     public int getID()
     {
         return orderNumber;
     }
 
+    @Override
     public BigDecimal getPrice()
     {
         return price;
+    }
+
+    @Override
+    public Date getPurchaseDate()
+    {
+        return purchaseDate;
+    }
+
+    @Override
+    public Date getDispatchedDate()
+    {
+        return dispatchedDate;
+    }
+
+    @Override
+    public int getOrderNumber()
+    {
+        return orderNumber;
+    }
+
+    @Override
+    public String getPaymentMethod()
+    {
+        return paymentMethod;
+    }
+
+    @Override
+    public String getAddress()
+    {
+        return deliveryAddress.toString();
+    }
+
+    @Override
+    public OrderStatus getStatus()
+    {
+        return status;
     }
 }
