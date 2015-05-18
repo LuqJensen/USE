@@ -1,5 +1,7 @@
 package interfaces;
 
+import unifiedshoppingexperience.Order;
+
 /**
  *
  * @author Gruppe 12
@@ -19,4 +21,6 @@ public interface CustomerDTO
     String getHomeAddress();
 
     String getDefaultDeliveryAddress();
+
+    Order getOrder(Integer orderID);
 }

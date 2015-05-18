@@ -4,7 +4,7 @@ import interfaces.CallBack;
 import interfaces.CustomerDTO;
 import interfaces.ProductDTO;
 import java.util.List;
-import shared.CreateOrderErrors;
+import shared.CreateOrderResult;
 import shared.TestData;
 
 /**
@@ -58,7 +58,7 @@ public class UnifiedShoppingExperience
         return USE;
     }
 
-    public CreateOrderErrors createOrder(String customerID)
+    public CreateOrderResult createOrder(String customerID)
     {
         return customers.getCustomer(customerID).createOrder();
     }

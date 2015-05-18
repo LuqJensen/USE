@@ -11,6 +11,7 @@ public class Address
     private String houseNumber;
     private int zipCode;
     private String city;
+    private String country;
 
     /**
      * Creates an address.
@@ -20,11 +21,18 @@ public class Address
      * @param zipCode Zip code of the address, example: "6700".
      * @param city City of the address, example: "Copenhagen".
      */
-    public Address(String streetName, String houseNumber, int zipCode, String city)
+    public Address(String streetName, String houseNumber, int zipCode, String city, String country)
     {
         this.streetName = streetName;
         this.houseNumber = houseNumber;
         this.zipCode = zipCode;
         this.city = city;
+        this.country = country;
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format("%s %s\n%s %s\n%s", streetName, houseNumber, zipCode, city, country);
     }
 }

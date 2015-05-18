@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import shared.CreateOrderErrors;
+import shared.CreateOrderResult;
 
 /**
  * Contains information about a customer and provides methods to handle the
@@ -80,16 +81,16 @@ public class Customer implements CustomerDTO
      *
      * @return Returns the order that was created.
      */
-    public CreateOrderErrors createOrder()
+    public CreateOrderResult createOrder()
     {
         if (this.email == null)
         {
-            return CreateOrderErrors.NO_EMAIL;
+            return new CreateOrderResult(CreateOrderErrors.NO_EMAIL);
         }
 
         Order order = new Order(shoppingCart.getProducts().toArray(new ProductLine[0]), shoppingCart.getPrice());
         orders.put(order.getID(), order);
-        return CreateOrderErrors.UNPAID;
+        return new CreateOrderResult(CreateOrderErrors.UNPAID, order.getID());
     }
 
     /**
@@ -102,6 +103,7 @@ public class Customer implements CustomerDTO
         return shoppingCart;
     }
 
+    @Override
     public Order getOrder(Integer orderID)
     {
         return orders.get(orderID);
@@ -159,7 +161,7 @@ public class Customer implements CustomerDTO
 
     public void setHomeAddress(String streetName, String houseNumber, int zipCode, String city)
     {
-        homeAddress = new Address(streetName, houseNumber, zipCode, city);
+        homeAddress = new Address(streetName, houseNumber, zipCode, city, null);
     }
 
     @Override
@@ -170,12 +172,17 @@ public class Customer implements CustomerDTO
 
     public void setDefaultDeliveryAddress(String streetName, String houseNumber, int zipCode, String city)
     {
-        defaultDeliveryAddress = new Address(streetName, houseNumber, zipCode, city);
+        defaultDeliveryAddress = new Address(streetName, houseNumber, zipCode, city, null);
     }
 
     @Override
     public String getDefaultDeliveryAddress()
     {
+        if (defaultDeliveryAddress == null)
+        {
+            return null;
+        }
+
         return defaultDeliveryAddress.toString();  //  should maybe return a DTO
     }
 }
