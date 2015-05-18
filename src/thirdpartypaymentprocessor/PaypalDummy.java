@@ -54,7 +54,7 @@ public class PaypalDummy
         try
         {
             int orderID = Integer.parseInt(split[0]);
-            double price = Double.parseDouble(split[3]);
+            double price = Double.parseDouble(split[4]);
             confirm(orderID, price);
         }
         catch (NumberFormatException ex)

@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -38,6 +39,7 @@ import unifiedshoppingexperience.UnifiedShoppingExperience;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import shared.CreateOrderResult;
+import thirdpartypaymentprocessor.PaypalDummy;
 import unifiedshoppingexperience.Address;
 import unifiedshoppingexperience.ProductLine;
 
@@ -291,7 +293,52 @@ public class FXMLDocumentController implements Initializable
 
     private void finishSale(int orderID, String paymentMethod, Address address)
     {
+        CallBack cb = () ->
+        {
+            // We cant execute UI methods from the business thread, so we tell the UI thread to run this when it pleases.
+            Platform.runLater(() ->
+            {
+                saleFinished(orderID);
+            });
+        };
 
+        String URL = UnifiedShoppingExperience.getInstance().finishSale(customerID, orderID, paymentMethod, address, cb);
+        goToURL(URL);
+    }
+
+    private void goToURL(String URL)
+    {
+        // We now pretend that we redirect the customer to the given URL of the decided third party payment processor.
+        // In reality we show a dummy window that lets the customer finish or cancel the payment.
+        // Thus we simulate being connected to a third party payment processor.
+        String[] input = URL.split("%%");
+        StringBuilder sb = new StringBuilder();
+        String[] productNames = input[2].split("%");
+        String[] quantities = input[3].split("%");
+
+        sb.append("Velkommen til PaypalDummy!\nTryk OK for at gennemføre dit køb, eller CANCEL for annullere.\n\n");
+        sb.append(String.format("Produkt: %s\n", input[1].replace("%", ", ")));
+        sb.append("Vare:");
+
+        for (int i = 0; i < productNames.length; ++i)
+        {
+            sb.append(String.format(" %s x%s,", productNames[i], quantities[i]));
+        }
+
+        sb.append(String.format("\nTotal DKK: %s", input[4]));
+
+        int result = JOptionPane.showConfirmDialog(new JFrame(), sb.toString(), URL, 2);
+        if (result == 0)
+        {
+            PaypalDummy pd = new PaypalDummy();
+            // In any realistic case the third party payment proessor will filter the URL and send back only what we need.
+            pd.confirm(URL.substring(URL.lastIndexOf("/") + 1));
+        }
+    }
+
+    private void saleFinished(int orderID)
+    {
+        setContent(new BorderPane());
     }
 
     private void addToCart(String productModel)

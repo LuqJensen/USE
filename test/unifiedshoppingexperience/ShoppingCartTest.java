@@ -1,5 +1,6 @@
 package unifiedshoppingexperience;
 
+import interfaces.ProductLineDTO;
 import shared.TestData;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,18 +31,18 @@ public class ShoppingCartTest
     {
         System.out.println("addProduct 1");
 
-        List<ProductLine> expResult = new ArrayList();
+        List<ProductLineDTO> expResult = new ArrayList();
         expResult.add(new ProductLine(TestData.p1));
 
         ShoppingCart instance = new ShoppingCart();
         instance.addProduct(TestData.p1);
-        List<ProductLine> result = instance.getProducts();
+        List<ProductLineDTO> result = instance.getProducts();
 
-        for (ProductLine pl : expResult)
+        for (ProductLineDTO pl : expResult)
         {
             System.out.println(pl);
         }
-        for (ProductLine pl : result)
+        for (ProductLineDTO pl : result)
         {
             System.out.println(pl);
         }
@@ -57,7 +58,7 @@ public class ShoppingCartTest
     {
         System.out.println("addProduct 2");
 
-        List<ProductLine> expResult = new ArrayList();
+        List<ProductLineDTO> expResult = new ArrayList();
         // We have no control over order of products, as Cart uses a HashMap.
         expResult.add(new ProductLine(TestData.p2));
         expResult.add(new ProductLine(TestData.p1));
@@ -65,13 +66,13 @@ public class ShoppingCartTest
         ShoppingCart instance = new ShoppingCart();
         instance.addProduct(TestData.p1);
         instance.addProduct(TestData.p2);
-        List<ProductLine> result = instance.getProducts();
+        List<ProductLineDTO> result = instance.getProducts();
 
-        for (ProductLine pl : expResult)
+        for (ProductLineDTO pl : expResult)
         {
             System.out.println(pl);
         }
-        for (ProductLine pl : result)
+        for (ProductLineDTO pl : result)
         {
             System.out.println(pl);
         }
@@ -89,19 +90,19 @@ public class ShoppingCartTest
 
         ProductLine pLine = new ProductLine(TestData.p1);
         pLine.incrementQuantity();
-        List<ProductLine> expResult = new ArrayList();
+        List<ProductLineDTO> expResult = new ArrayList();
         expResult.add(pLine);
 
         ShoppingCart instance = new ShoppingCart();
         instance.addProduct(TestData.p1);
         instance.addProduct(TestData.p1);
-        List<ProductLine> result = instance.getProducts();
+        List<ProductLineDTO> result = instance.getProducts();
 
-        for (ProductLine pl : expResult)
+        for (ProductLineDTO pl : expResult)
         {
             System.out.println(pl);
         }
-        for (ProductLine pl : result)
+        for (ProductLineDTO pl : result)
         {
             System.out.println(pl);
         }
