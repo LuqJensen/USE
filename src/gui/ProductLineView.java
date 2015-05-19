@@ -19,7 +19,7 @@ import javafx.scene.text.Text;
 
 /**
  *
- * @author Simon Flensted
+ * @author Gruppe12
  */
 public class ProductLineView extends BorderPane
 {

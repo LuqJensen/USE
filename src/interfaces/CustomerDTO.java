@@ -4,7 +4,7 @@ import shared.Address;
 
 /**
  *
- * @author Gruppe 12
+ * @author Gruppe12
  */
 public interface CustomerDTO
 {

@@ -103,8 +103,10 @@ public class PaymentManager
         StringBuilder URLBuilder = new StringBuilder();
         URLBuilder.append("www.paypal.com/payment/");
         URLBuilder.append(orderID + "%%");
+
         StringBuilder productNamesBuilder = new StringBuilder();
         StringBuilder productQuantityBuilder = new StringBuilder();
+
         for (ProductLine productLine : productLines)
         {
             URLBuilder.append(productLine.getProduct().getModel() + "%");
@@ -114,13 +116,15 @@ public class PaymentManager
         URLBuilder.append("%");
         URLBuilder.append(productNamesBuilder + "%");
         URLBuilder.append(productQuantityBuilder + "%");
-
         URLBuilder.append(price);
+
         callBackMap.put(orderID, confirmPayment);
         orderPriceMap.put(orderID, price);
         return URLBuilder.toString();
     }
 
+    // This is more of an integration test than a unit test.
+    // This test has succeeded if the hashcode of order is printed to System.out.
     public static void main(String[] test)
     {
         PaymentManager hda = new PaymentManager();

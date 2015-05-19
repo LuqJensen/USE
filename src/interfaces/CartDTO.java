@@ -1,6 +1,3 @@
-/*
- *  © Frederik Ploug-Johansen
- */
 package interfaces;
 
 import java.math.BigDecimal;
@@ -8,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author Frederik
+ * @author Gruppe12
  */
 public interface CartDTO
 {

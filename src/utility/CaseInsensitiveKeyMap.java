@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package utility;
 
 import java.util.HashMap;
 
 /**
  *
- * @author Lucas
+ * @author Gruppe12
  */
 public class CaseInsensitiveKeyMap<T> extends HashMap<String, T>
 {

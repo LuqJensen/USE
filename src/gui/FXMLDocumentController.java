@@ -53,13 +53,9 @@ import utility.TryParse;
  */
 public class FXMLDocumentController implements Initializable
 {
-
     private String customerID = "C12345";
-    private static final int PICTURE_HEIGHT = 164; // UNUSED
     @FXML
     private TextField findProductSearchField;
-    @FXML
-    private Button findProductButton;
     @FXML
     private CheckBox musKeyboardsCheckBox, grafikkortCheckBox, skærmeCheckBox, kabinetterCheckBox, harddiskeCheckBox;
 
@@ -724,5 +720,4 @@ public class FXMLDocumentController implements Initializable
     {
         contentContainer.setContent(content);
     }
-
 }

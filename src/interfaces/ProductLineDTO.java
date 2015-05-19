@@ -1,13 +1,10 @@
-/*
- *  © Frederik Ploug-Johansen
- */
 package interfaces;
 
 import java.math.BigDecimal;
 
 /**
  *
- * @author Frederik
+ * @author Gruppe12
  */
 public interface ProductLineDTO
 {

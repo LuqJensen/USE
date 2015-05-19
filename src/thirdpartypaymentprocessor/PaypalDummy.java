@@ -63,15 +63,4 @@ public class PaypalDummy
             System.exit(1);
         }
     }
-
-    public static void main(String[] args)
-    {
-        if (args.length != 1)
-        {
-            System.exit(1);
-        }
-
-        PaypalDummy pd = new PaypalDummy();
-        pd.confirm(args[0]);
-    }
 }
