@@ -1,5 +1,6 @@
 package unifiedshoppingexperience;
 
+import shared.Address;
 import interfaces.CallBack;
 import interfaces.OrderDTO;
 import java.math.BigDecimal;

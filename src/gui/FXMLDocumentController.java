@@ -32,6 +32,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -43,7 +44,8 @@ import javax.swing.JOptionPane;
 import shared.CreateOrderResult;
 import shared.OrderStatus;
 import thirdpartypaymentprocessor.PaypalDummy;
-import unifiedshoppingexperience.Address;
+import shared.Address;
+import utility.TryParse;
 
 /**
  *
@@ -144,16 +146,118 @@ public class FXMLDocumentController implements Initializable
         if (orderResult.getError() == CreateOrderErrors.UNPAID)
         {
             CustomerDTO customer = UnifiedShoppingExperience.getInstance().getCustomer(customerID);
+            Address address = customer.getDefaultDeliveryAddress();
+
+            Label currentStreetName = new Label();
+
+            Label currentHouseNumber = new Label();
+
+            Label currentZipcode = new Label();
+
+            Label currentCity = new Label();
+
+            Label currentCountry = new Label();
+
+            if (address != null)
+            {
+                currentStreetName.setText(address.getStreetName());
+                currentHouseNumber.setText(address.getHouseNumber());
+                currentZipcode.setText(Integer.toString(address.getZipCode()));
+                currentCity.setText(address.getCity());
+                currentCountry.setText(address.getCountry());
+            }
+
+            HBox streetAndNumber = new HBox();
+            streetAndNumber.setSpacing(5.0);
+            streetAndNumber.getChildren().addAll(currentStreetName, currentHouseNumber);
+
+            HBox zipAndCity = new HBox();
+            zipAndCity.setSpacing(5.0);
+            zipAndCity.getChildren().addAll(currentZipcode, currentCity);
 
             // GridPane
             Label addressHeader = new Label("Vælg leveringsaddresse:");
             addressHeader.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-            String address = customer.getDefaultDeliveryAddress();
+
+            // BorderPane
+            BorderPane addressCreation = new BorderPane();
 
             Button setNewDeliveryAddress = new Button();
             setNewDeliveryAddress.setText("Ny LeveringsAdresse");
             setNewDeliveryAddress.setMinWidth(100.0);
-            // TODO button functionality... maybe add an edit address button aswell...
+            setNewDeliveryAddress.setOnAction((ActionEvent event) ->
+            {
+                GridPane newAddressGrid = new GridPane();
+                addressCreation.setBottom(newAddressGrid);
+
+                for (int i = 0; i < 2; ++i)
+                {
+                    newAddressGrid.getColumnConstraints().add(new ColumnConstraints(COLUMN_SPACING));
+                }
+
+                Label newAddressHeader = new Label("Ny adresse");
+                newAddressHeader.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+                Label streetNameHeader = new Label("Gadenavn:");
+                streetNameHeader.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+
+                TextField streetName = new TextField();
+
+                Label houseNumberHeader = new Label("Husnummer:");
+                houseNumberHeader.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+
+                TextField houseNumber = new TextField();
+
+                Label zipcodeHeader = new Label("Postnr:");
+                zipcodeHeader.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+
+                TextField zipcode = new TextField();
+
+                Label cityHeader = new Label("By:");
+                cityHeader.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+
+                TextField city = new TextField();
+
+                Label countryHeader = new Label("Land:");
+                countryHeader.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+
+                TextField country = new TextField();
+
+                Button save = new Button();
+                save.setText("Gem");
+                save.setOnAction((ActionEvent event2) ->
+                {
+                    currentStreetName.setText(streetName.getText());
+                    currentHouseNumber.setText(houseNumber.getText());
+                    currentZipcode.setText(zipcode.getText());
+                    currentCity.setText(city.getText());
+                    currentCountry.setText(country.getText());
+                    addressCreation.setBottom(null);
+                });
+
+                Button cancel = new Button();
+                cancel.setText("Afbryd");
+                cancel.setOnAction((ActionEvent event2) ->
+                {
+                    addressCreation.setBottom(null);
+                });
+
+                newAddressGrid.add(newAddressHeader, 0, 0, 2, 1);
+                newAddressGrid.add(streetNameHeader, 0, 1);
+                newAddressGrid.add(streetName, 1, 1);
+                newAddressGrid.add(houseNumberHeader, 0, 2);
+                newAddressGrid.add(houseNumber, 1, 2);
+                newAddressGrid.add(zipcodeHeader, 0, 3);
+                newAddressGrid.add(zipcode, 1, 3);
+                newAddressGrid.add(cityHeader, 0, 4);
+                newAddressGrid.add(city, 1, 4);
+                newAddressGrid.add(countryHeader, 0, 5);
+                newAddressGrid.add(country, 1, 5);
+                newAddressGrid.add(save, 0, 6);
+                newAddressGrid.add(cancel, 1, 6);
+            });
+
+            addressCreation.setCenter(setNewDeliveryAddress);
 
             GridPane addressGrid = new GridPane();
             addressGrid.setPadding(new Insets(10, 10, 10, 0));
@@ -163,16 +267,11 @@ public class FXMLDocumentController implements Initializable
                 addressGrid.getColumnConstraints().add(new ColumnConstraints(200));
             }
 
-            int columns = 0;
-            addressGrid.add(addressHeader, columns, 0, 2, 1);
-
-            if (address != null)
-            {
-                Text defaultDeliveryAddress = new Text(address);
-                addressGrid.add(defaultDeliveryAddress, columns++, 1);
-            }
-
-            addressGrid.add(setNewDeliveryAddress, columns, 1);
+            addressGrid.add(addressHeader, 0, 0, 2, 1);
+            addressGrid.add(streetAndNumber, 0, 1);
+            addressGrid.add(zipAndCity, 0, 2);
+            addressGrid.add(currentCountry, 0, 3);
+            addressGrid.add(addressCreation, 1, 1, 1, 2);
 
             // VBox
             Label paymentMethodHeader = new Label("Vælg betalingsmetode:");
@@ -263,9 +362,25 @@ public class FXMLDocumentController implements Initializable
             finishSale.setStyle("-fx-base: #ffd000;");
             finishSale.setOnAction((ActionEvent event) ->
             {
-                // Address logic not implemented, so null is passed atm.
+                String deliveryAddressStreet = currentStreetName.getText();
+                String deliveryAddressHouseNumber = currentHouseNumber.getText();
+                String deliveryAddressZipcode = currentZipcode.getText();
+                String deliveryAddressCity = currentCity.getText();
+                String deliveryAddressCountry = currentCountry.getText();
+
+                if (deliveryAddressStreet.isEmpty() || deliveryAddressHouseNumber.isEmpty()
+                    || deliveryAddressZipcode.isEmpty() || deliveryAddressCity.isEmpty()
+                    || deliveryAddressCountry.isEmpty() || !TryParse.tryParseInteger(deliveryAddressZipcode))
+                {
+                    JOptionPane.showConfirmDialog(new JFrame(), "Angiv venlist en gyldig adresse.", "", 0);
+                    return;
+                }
+
                 String paymentMethod = ((RadioButton)tg.getSelectedToggle()).getText();
-                finishSale(orderResult.getOrderID(), paymentMethod, null);
+
+                finishSale(orderResult.getOrderID(), paymentMethod, new Address(deliveryAddressStreet,
+                                                                                deliveryAddressHouseNumber, Integer.parseInt(deliveryAddressZipcode),
+                                                                                deliveryAddressCity, deliveryAddressCountry));
             });
 
             // GridPane
@@ -475,7 +590,9 @@ public class FXMLDocumentController implements Initializable
 
         // Thus the total price is always the same as the price for the products.
         Label sumHeader = new Label("Totalt:");
+        sumHeader.setFont(Font.font("Arial", FontWeight.BOLD, 12));
         Label sum = new Label(PriceFormatter.formatDKK(order.getPrice()));
+        sum.setFont(Font.font("Arial", FontWeight.BOLD, 12));
 
         // Tax amount is not implemented on order, so we do a hack of calc here.
         Label taxHeader = new Label("Heraf Moms:");

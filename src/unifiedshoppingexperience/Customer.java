@@ -1,5 +1,6 @@
 package unifiedshoppingexperience;
 
+import shared.Address;
 import interfaces.CustomerDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -176,13 +177,8 @@ public class Customer implements CustomerDTO
     }
 
     @Override
-    public String getDefaultDeliveryAddress()
+    public Address getDefaultDeliveryAddress()
     {
-        if (defaultDeliveryAddress == null)
-        {
-            return null;
-        }
-
-        return defaultDeliveryAddress.toString();  //  should maybe return a DTO
+        return defaultDeliveryAddress;
     }
 }

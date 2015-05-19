@@ -1,5 +1,6 @@
 package unifiedshoppingexperience;
 
+import shared.Address;
 import interfaces.CallBack;
 import interfaces.CustomerDTO;
 import interfaces.ProductDTO;

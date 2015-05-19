@@ -1,4 +1,4 @@
-package unifiedshoppingexperience;
+package shared;
 
 /**
  * Keeps information about any address.
@@ -34,5 +34,30 @@ public class Address
     public String toString()
     {
         return String.format("%s %s\n%s %s\n%s", streetName, houseNumber, zipCode, city, country);
+    }
+
+    public String getCity()
+    {
+        return city;
+    }
+
+    public String getCountry()
+    {
+        return country;
+    }
+
+    public String getHouseNumber()
+    {
+        return houseNumber;
+    }
+
+    public String getStreetName()
+    {
+        return streetName;
+    }
+
+    public int getZipCode()
+    {
+        return zipCode;
     }
 }

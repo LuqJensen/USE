@@ -1,5 +1,7 @@
 package interfaces;
 
+import shared.Address;
+
 /**
  *
  * @author Gruppe 12
@@ -18,7 +20,7 @@ public interface CustomerDTO
 
     String getHomeAddress();
 
-    String getDefaultDeliveryAddress();
+    Address getDefaultDeliveryAddress();
 
     OrderDTO getOrder(Integer orderID);
 }
