@@ -28,8 +28,6 @@ public interface OrderDTO
 
     public ProductLineDTO[] getProductLines();
 
-    public CallBack getCallBack(CallBack eventTrigger);
-
     public int getID();
 
     public BigDecimal getPrice();

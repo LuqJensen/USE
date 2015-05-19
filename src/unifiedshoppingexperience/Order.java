@@ -75,6 +75,7 @@ public class Order implements OrderDTO
         this.deliveryAddress = address;
     }
 
+    @Override
     public ProductLine[] getProductLines() // getOrderLines?
     {
         return orderLines;
@@ -130,6 +131,10 @@ public class Order implements OrderDTO
     @Override
     public String getAddress()
     {
+        if (deliveryAddress == null)
+        {
+            return null;
+        }
         return deliveryAddress.toString();
     }
 

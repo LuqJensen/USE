@@ -4,8 +4,10 @@ import utility.PriceFormatter;
 import interfaces.CallBack;
 import interfaces.CartDTO;
 import interfaces.CustomerDTO;
+import interfaces.OrderDTO;
 import interfaces.ProductDTO;
 import interfaces.ProductLineDTO;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +41,9 @@ import unifiedshoppingexperience.UnifiedShoppingExperience;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import shared.CreateOrderResult;
+import shared.OrderStatus;
 import thirdpartypaymentprocessor.PaypalDummy;
 import unifiedshoppingexperience.Address;
-import unifiedshoppingexperience.ProductLine;
 
 /**
  *
@@ -251,9 +253,9 @@ public class FXMLDocumentController implements Initializable
 
             // VBox
             VBox orderLineView = new VBox();
-            for (ProductLine pl : customer.getOrder(orderResult.getOrderID()).getProductLines())
+            for (ProductLineDTO pl : customer.getOrder(orderResult.getOrderID()).getProductLines())
             {
-                orderLineView.getChildren().add(new OrderLineView(pl, COLUMN_SPACING)); // pass IProductLine as param instead.
+                orderLineView.getChildren().add(new OrderLineView(pl, COLUMN_SPACING));
             }
 
             Button finishSale = new Button();
@@ -278,7 +280,6 @@ public class FXMLDocumentController implements Initializable
             gp.add(orderLineDescription, 0, 4, 2, 1);
             gp.add(orderLineView, 0, 5, 2, 1);
             setContent(gp);
-
         }
         else if (orderResult.getError() == CreateOrderErrors.NO_EMAIL)
         {
@@ -298,7 +299,7 @@ public class FXMLDocumentController implements Initializable
             // We cant execute UI methods from the business thread, so we tell the UI thread to run this when it pleases.
             Platform.runLater(() ->
             {
-                saleFinished(orderID);
+                showOrder(orderID);
             });
         };
 
@@ -336,9 +337,178 @@ public class FXMLDocumentController implements Initializable
         }
     }
 
-    private void saleFinished(int orderID)
+    private void showOrder(int orderID)
     {
-        setContent(new BorderPane());
+        final int COLUMN_SPACING = 140;
+        CustomerDTO customer = UnifiedShoppingExperience.getInstance().getCustomer(customerID);
+        OrderDTO order = customer.getOrder(orderID);
+
+        // GridPane
+        Label orderStatusHeader = new Label("Ordrestatus:");
+        orderStatusHeader.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+        Label orderStatus = new Label();
+
+        if (order.getStatus() == OrderStatus.PAID)
+        {
+            orderStatus = new Label("Betalt");
+        }
+        else if (order.getStatus() == OrderStatus.DISPATCHED)
+        {
+            orderStatus = new Label("Afsendt");
+        }
+
+        Label orderIDHeader = new Label("Ordrenummer:");
+        orderIDHeader.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+        Label orderIDLabel = new Label(Integer.toString(orderID));
+
+        Label orderDateHeader = new Label("Ordre placeret:");
+        orderDateHeader.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+        Label orderDate = new Label(order.getPurchaseDate().toString());
+
+        Label orderPaymentHeader = new Label("Betalingsmetode:");
+        orderPaymentHeader.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+        Label orderPayment = new Label(order.getPaymentMethod());
+
+        Label orderOwnerHeader = new Label("Bestiller: ");
+        orderOwnerHeader.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+        Label orderOwner = new Label(customer.getFirstName() + " " + customer.getSurname());
+
+        Label orderAddressHeader = new Label("Leveres til:");
+        orderAddressHeader.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+        Text orderAddress = new Text(order.getAddress());
+
+        GridPane orderInfoGrid = new GridPane();
+        orderInfoGrid.setPadding(new Insets(10, 10, 10, 0));
+
+        // Adds 2 columns for header and data with spacing = COLUMN_SPACING.
+        for (int i = 0; i < 2; ++i)
+        {
+            orderInfoGrid.getColumnConstraints().add(new ColumnConstraints(COLUMN_SPACING));
+        }
+
+        orderInfoGrid.add(orderStatusHeader, 0, 0);
+        orderInfoGrid.add(orderStatus, 1, 0);
+        orderInfoGrid.add(orderIDHeader, 0, 1);
+        orderInfoGrid.add(orderIDLabel, 1, 1);
+        orderInfoGrid.add(orderDateHeader, 0, 2);
+        orderInfoGrid.add(orderDate, 1, 2, 2, 1);
+        orderInfoGrid.add(orderPaymentHeader, 0, 3);
+        orderInfoGrid.add(orderPayment, 1, 3);
+        orderInfoGrid.add(orderOwnerHeader, 0, 4);
+        orderInfoGrid.add(orderOwner, 1, 4, 2, 1);
+        orderInfoGrid.add(orderAddressHeader, 0, 5);
+        orderInfoGrid.add(orderAddress, 1, 5, 2, 1);
+
+        // GridPane
+        Label orderDetailsHeader = new Label("Ordredetaljer:");
+        orderDetailsHeader.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+        Label model = new Label("Varenr.");
+        model.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+
+        Label productName = new Label("Beskrivelse");
+        productName.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+
+        Label quantity = new Label("Antal");
+        quantity.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+
+        Label price = new Label("Pris");
+        price.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+
+        Label totalPrice = new Label("Sum");
+        totalPrice.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+
+        GridPane orderLineDescription = new GridPane();
+        orderLineDescription.setPadding(new Insets(5, 15, 5, 5));
+
+        // Adds 2 columns for model and title with spacing = COLUMN_SPACING.
+        for (int i = 0; i < 2; ++i)
+        {
+            orderLineDescription.getColumnConstraints().add(new ColumnConstraints(COLUMN_SPACING));
+        }
+
+        // Adds a single empty column between title and quantity.
+        orderLineDescription.getColumnConstraints().add(new ColumnConstraints(75.0));
+
+        for (int i = 0; i < 3; ++i)
+        {
+            orderLineDescription.getColumnConstraints().add(new ColumnConstraints(COLUMN_SPACING));
+        }
+
+        orderLineDescription.add(orderDetailsHeader, 0, 0);
+
+        orderLineDescription.add(model, 0, 1);
+        GridPane.setHalignment(quantity, HPos.LEFT);
+
+        orderLineDescription.add(productName, 1, 1);
+        GridPane.setHalignment(quantity, HPos.LEFT);
+
+        orderLineDescription.add(quantity, 3, 1);
+        GridPane.setHalignment(quantity, HPos.RIGHT);
+
+        orderLineDescription.add(price, 4, 1);
+        GridPane.setHalignment(price, HPos.RIGHT);
+
+        orderLineDescription.add(totalPrice, 5, 1);
+        GridPane.setHalignment(totalPrice, HPos.RIGHT);
+
+        // VBox
+        VBox orderLineView = new VBox();
+        for (ProductLineDTO pl : order.getProductLines())
+        {
+            orderLineView.getChildren().add(new OrderLineView(pl, COLUMN_SPACING));
+        }
+
+        // GridPane
+        Label productsPriceHeader = new Label("Varer:");
+        Label productsPrice = new Label(PriceFormatter.formatDKK(order.getPrice()));
+
+        // Delivery price is not implemented on order.
+        Label deliveryPriceHeader = new Label("Fragt:");
+        Label deliveryPrice = new Label(PriceFormatter.formatDKK(new BigDecimal("0.0")));
+
+        // Thus the total price is always the same as the price for the products.
+        Label sumHeader = new Label("Totalt:");
+        Label sum = new Label(PriceFormatter.formatDKK(order.getPrice()));
+
+        // Tax amount is not implemented on order, so we do a hack of calc here.
+        Label taxHeader = new Label("Heraf Moms:");
+        Label tax = new Label(PriceFormatter.formatDKK(order.getPrice().multiply(new BigDecimal("0.2"))));
+
+        GridPane priceInfo = new GridPane();
+        priceInfo.setAlignment(Pos.BOTTOM_RIGHT);
+        priceInfo.setVgap(10);
+
+        for (int i = 0; i < 2; ++i)
+        {
+            priceInfo.getColumnConstraints().add(new ColumnConstraints(COLUMN_SPACING));
+        }
+
+        priceInfo.add(productsPriceHeader, 0, 0);
+        priceInfo.add(productsPrice, 1, 0);
+        priceInfo.add(deliveryPriceHeader, 0, 1);
+        priceInfo.add(deliveryPrice, 1, 1);
+        priceInfo.add(sumHeader, 0, 2);
+        priceInfo.add(sum, 1, 2);
+        priceInfo.add(taxHeader, 0, 3);
+        priceInfo.add(tax, 1, 3);
+
+        // GridPane
+        GridPane gp = new GridPane();
+        gp.setPadding(new Insets(10, 10, 10, 10));
+        gp.setVgap(20);
+
+        gp.add(orderInfoGrid, 0, 0);
+        gp.add(orderLineDescription, 0, 1, 2, 1);
+        gp.add(orderLineView, 0, 2, 2, 1);
+        gp.add(priceInfo, 1, 3);
+        setContent(gp);
     }
 
     private void addToCart(String productModel)
