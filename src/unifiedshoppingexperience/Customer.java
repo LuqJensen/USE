@@ -25,7 +25,7 @@ public class Customer implements CustomerDTO
     private ShoppingCart shoppingCart;
     private ArrayList<WishList> wishLists;
     private Map<Integer, Order> orders;
-    private PersonalizedData pData;
+    private String personalizedData;
     private Address homeAddress;
     private Address defaultDeliveryAddress;
 
@@ -40,7 +40,6 @@ public class Customer implements CustomerDTO
         this.shoppingCart = new ShoppingCart();
         this.wishLists = new ArrayList();
         this.orders = new HashMap();
-        this.pData = new PersonalizedData();
     }
 
     /**
@@ -88,7 +87,6 @@ public class Customer implements CustomerDTO
         {
             return new CreateOrderResult(CreateOrderErrors.NO_EMAIL);
         }
-
         Order order = new Order(shoppingCart.getProducts().toArray(new ProductLine[0]), shoppingCart.getPrice());
         orders.put(order.getID(), order);
         return new CreateOrderResult(CreateOrderErrors.UNPAID, order.getID());
@@ -157,12 +155,17 @@ public class Customer implements CustomerDTO
     @Override
     public String getPersonalizedData()
     {
-        return pData.toString();
+        return personalizedData;
     }
 
-    public void setHomeAddress(String streetName, String houseNumber, int zipCode, String city)
+    public void setHomeAddress(Address address)
     {
-        homeAddress = new Address(streetName, houseNumber, zipCode, city, null);
+        setHomeAddress(address.getStreetName(), address.getHouseNumber(), address.getZipCode(), address.getCity(), address.getCountry());
+    }
+
+    public void setHomeAddress(String streetName, String houseNumber, int zipCode, String city, String country)
+    {
+        homeAddress = new Address(streetName, houseNumber, zipCode, city, country);
     }
 
     @Override
@@ -171,14 +174,25 @@ public class Customer implements CustomerDTO
         return homeAddress.toString(); // should maybe return a DTO
     }
 
-    public void setDefaultDeliveryAddress(String streetName, String houseNumber, int zipCode, String city)
+    public void setDefaultDeliveryAddress(Address address)
     {
-        defaultDeliveryAddress = new Address(streetName, houseNumber, zipCode, city, null);
+        setDefaultDeliveryAddress(address.getStreetName(), address.getHouseNumber(), address.getZipCode(), address.getCity(), address.getCountry());
+    }
+
+    public void setDefaultDeliveryAddress(String streetName, String houseNumber, int zipCode, String city, String country)
+    {
+        defaultDeliveryAddress = new Address(streetName, houseNumber, zipCode, city, country);
     }
 
     @Override
     public Address getDefaultDeliveryAddress()
     {
         return defaultDeliveryAddress;
+    }
+
+    @Override
+    public String getID()
+    {
+        return ID;
     }
 }

@@ -8,6 +8,9 @@ import shared.Address;
  */
 public interface CustomerDTO
 {
+
+    String getID();
+
     String getFirstName();
 
     String getSurname();

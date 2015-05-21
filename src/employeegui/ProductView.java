@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package employeegui;
+
 import utility.PriceFormatter;
 import interfaces.CallBack;
 import interfaces.ProductDTO;
@@ -74,7 +75,7 @@ public class ProductView extends BorderPane
         gp.add(description, 1, 1);
 
         Button btn = new Button();
-        btn.setText("Tilføj til Salg");
+        btn.setText("Tilføj til kurv");
         btn.setStyle("-fx-base: #ffd000;");
         btn.setOnAction((ActionEvent event) ->
         {

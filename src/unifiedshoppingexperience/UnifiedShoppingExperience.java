@@ -120,6 +120,11 @@ public class UnifiedShoppingExperience
         return customers.getCustomer(customerID).getShoppingCart();
     }
 
+    public CustomerDTO getRegisteredCustomer(String email)
+    {
+        return customers.getRegisteredCustomer(email);
+    }
+
     public CustomerDTO getCustomer(String customerID)
     {
         return customers.getCustomer(customerID);
@@ -127,8 +132,10 @@ public class UnifiedShoppingExperience
 
     public String finishSale(String customerID, int orderID, String paymentMethod, Address address, CallBack eventTrigger)
     {
-        Order o = customers.getCustomer(customerID).getOrder(orderID);
+        Customer c = customers.getCustomer(customerID);
+        Order o = c.getOrder(orderID);
 
+        c.setDefaultDeliveryAddress(address);
         o.setPaymentMethod(paymentMethod);
         o.setAddress(address);
 
@@ -151,8 +158,7 @@ public class UnifiedShoppingExperience
             return false;
         }
 
-        Customer customer = customers.getCustomer(customerID);
-        customer.setEmail(email);
+        customers.setEmail(email, customerID);
         return true;
     }
 }

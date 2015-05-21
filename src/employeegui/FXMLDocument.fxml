@@ -9,13 +9,13 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="employeegui.FXMLDocumentController">
    <children>
-      <TabPane fx:id="tabPane" layoutX="41.0" layoutY="40.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="tabPane" layoutX="41.0" layoutY="40.0" prefHeight="480.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab fx:id="findProductTab" text="Find Produkter">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ScrollPane fx:id="findProductsScrollPane" layoutY="92.0" prefHeight="359.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="92.0" />
+                        <ScrollPane fx:id="findProductsScrollPane" layoutY="92.0" prefHeight="362.0" prefWidth="640.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="92.0" />
                         <TextField fx:id="findProductSearchField" layoutX="14.0" layoutY="14.0" onAction="#findProductEnter" prefHeight="57.0" prefWidth="313.0" promptText="Find produkter">
                            <font>
                               <Font size="18.0" />
@@ -26,41 +26,37 @@
                               <Font size="18.0" />
                            </font>
                         </Button>
-                        <CheckBox fx:id="harddiskeCheckBox" layoutX="553.0" layoutY="34.0" mnemonicParsing="false" text="Harddiske" />
-                        <CheckBox fx:id="kabinetterCheckBox" layoutX="553.0" layoutY="17.0" mnemonicParsing="false" text="Kabinetter" />
-                        <CheckBox fx:id="musKeyboardsCheckBox" layoutX="433.0" layoutY="51.0" mnemonicParsing="false" text="Mus &amp; Keyboards" />
-                        <CheckBox fx:id="skærmeCheckBox" layoutX="433.0" layoutY="34.0" mnemonicParsing="false" text="Skærme" />
-                        <CheckBox fx:id="grafikkortCheckBox" layoutX="433.0" layoutY="17.0" mnemonicParsing="false" text="Grafikkort" />
+                        <CheckBox fx:id="harddiskeCheckBox" layoutX="553.0" layoutY="34.0" mnemonicParsing="false" onAction="#checkboxAction" text="Harddiske" />
+                        <CheckBox fx:id="kabinetterCheckBox" layoutX="553.0" layoutY="17.0" mnemonicParsing="false" onAction="#checkboxAction" text="Kabinetter" />
+                        <CheckBox fx:id="musKeyboardsCheckBox" layoutX="433.0" layoutY="51.0" mnemonicParsing="false" onAction="#checkboxAction" text="Mus &amp; Keyboards" />
+                        <CheckBox fx:id="skærmeCheckBox" layoutX="433.0" layoutY="34.0" mnemonicParsing="false" onAction="#checkboxAction" text="Skærme" />
+                        <CheckBox fx:id="grafikkortCheckBox" layoutX="433.0" layoutY="17.0" mnemonicParsing="false" onAction="#checkboxAction" text="Grafikkort" />
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="findCustomerTab" text="Find Kunde">
+          <Tab fx:id="customerpageTab" text="Kundeside">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="findCustomerButton" layoutX="319.0" layoutY="20.0" mnemonicParsing="false" onAction="#findCustomer" prefHeight="57.0" prefWidth="97.0" text="Søg">
+                        <Button fx:id="findCustomerButton" layoutX="319.0" layoutY="20.0" mnemonicParsing="false" onAction="#findCustomer" prefHeight="57.0" prefWidth="134.0" text="Find kunde">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Button>
-                        <TextField fx:id="findCustomerTextField" layoutX="6.0" layoutY="20.0" onAction="#findCustomerEnter" prefHeight="57.0" prefWidth="313.0" promptText="Find produkter">
+                        <TextField fx:id="findCustomerTextField" layoutX="6.0" layoutY="20.0" onAction="#findCustomerEnter" prefHeight="57.0" prefWidth="313.0" promptText="Kundens email">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </TextField>
-                        <ScrollPane fx:id="customerScrollPane" layoutX="6.0" layoutY="83.0" prefHeight="361.0" prefWidth="626.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                          </content>
-                        </ScrollPane>
+                        <ScrollPane fx:id="customerScrollPane" layoutX="6.0" layoutY="83.0" prefHeight="361.0" prefWidth="626.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="saleTab" text="Opret Salg">
+            <Tab fx:id="saleTab" text="Indkøbskurv/Ønskeliste">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ScrollPane fx:id="saleContentScrollPane" layoutY="92.0" prefHeight="359.0" prefWidth="640.0" />
+                        <ScrollPane fx:id="saleContentScrollPane" layoutY="1.0" prefHeight="450.0" prefWidth="640.0" />
                      </children></AnchorPane>
               </content>
             </Tab>

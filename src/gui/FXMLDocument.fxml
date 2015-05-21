@@ -28,22 +28,22 @@
                         <Font name="Aparajita Bold" size="28.0" />
                      </font>
                   </Button>
-                  <CheckBox fx:id="grafikkortCheckBox" layoutX="94.0" layoutY="596.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Grafikkort" />
-                  <CheckBox fx:id="skærmeCheckBox" layoutX="89.0" layoutY="503.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Skærme" />
-                  <CheckBox fx:id="musKeyboardsCheckBox" layoutX="115.0" layoutY="451.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Mus &amp; Keyboards" />
-                  <CheckBox fx:id="kabinetterCheckBox" layoutX="95.0" layoutY="396.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Kabinetter" />
-                  <CheckBox fx:id="harddiskeCheckBox" layoutX="94.0" layoutY="548.0" mnemonicParsing="false" scaleX="2.0" scaleY="2.0" text="Harddiske" />
-                  <Button layoutX="467.0" layoutY="255.0" mnemonicParsing="false" text="PC &amp; Tablets" />
-                  <Button layoutX="391.0" layoutY="255.0" mnemonicParsing="false" text="Hardware" />
-                  <Button layoutX="328.0" layoutY="255.0" mnemonicParsing="false" text="Forside" />
-                  <Button layoutX="563.0" layoutY="255.0" mnemonicParsing="false" text="TV &amp; Radio" />
-                  <Button layoutX="647.0" layoutY="255.0" mnemonicParsing="false" text="Mobil &amp; GPS" />
-                  <Button layoutX="976.0" layoutY="255.0" mnemonicParsing="false" text="Hvidevarer" />
-                  <Button layoutX="1058.0" layoutY="255.0" mnemonicParsing="false" text="Husholdning" />
-                  <Button layoutX="741.0" layoutY="255.0" mnemonicParsing="false" text="Foto &amp; Video" />
-                  <Button layoutX="836.0" layoutY="255.0" mnemonicParsing="false" text="Konsol &amp; Spil" />
+                  <CheckBox fx:id="grafikkortCheckBox" layoutX="94.0" layoutY="596.0" mnemonicParsing="false" onAction="#checkboxActivated" scaleX="2.0" scaleY="2.0" text="Grafikkort" />
+                  <CheckBox fx:id="skærmeCheckBox" layoutX="89.0" layoutY="503.0" mnemonicParsing="false" onAction="#checkboxActivated" scaleX="2.0" scaleY="2.0" text="Skærme" />
+                  <CheckBox fx:id="musKeyboardsCheckBox" layoutX="115.0" layoutY="451.0" mnemonicParsing="false" onAction="#checkboxActivated" scaleX="2.0" scaleY="2.0" text="Mus &amp; Keyboards" />
+                  <CheckBox fx:id="kabinetterCheckBox" layoutX="95.0" layoutY="396.0" mnemonicParsing="false" onAction="#checkboxActivated" scaleX="2.0" scaleY="2.0" text="Kabinetter" />
+                  <CheckBox fx:id="harddiskeCheckBox" layoutX="94.0" layoutY="548.0" mnemonicParsing="false" onAction="#checkboxActivated" scaleX="2.0" scaleY="2.0" text="Harddiske" />
+                  <Button fx:id="pcTabletsButton" layoutX="467.0" layoutY="255.0" mnemonicParsing="false" text="PC &amp; Tablets" />
+                  <Button fx:id="hardwareButton" layoutX="391.0" layoutY="255.0" mnemonicParsing="false" text="Hardware" />
+                  <Button fx:id="forsideButton" layoutX="328.0" layoutY="255.0" mnemonicParsing="false" text="Forside" />
+                  <Button fx:id="tvRadioButton" layoutX="563.0" layoutY="255.0" mnemonicParsing="false" text="TV &amp; Radio" />
+                  <Button fx:id="mobilGpsButton" layoutX="647.0" layoutY="255.0" mnemonicParsing="false" text="Mobil &amp; GPS" />
+                  <Button fx:id="hvidevarerButton" layoutX="976.0" layoutY="255.0" mnemonicParsing="false" text="Hvidevarer" />
+                  <Button fx:id="husholdningButton" layoutX="1058.0" layoutY="255.0" mnemonicParsing="false" text="Husholdning" />
+                  <Button fx:id="fotoVideoButton" layoutX="741.0" layoutY="255.0" mnemonicParsing="false" text="Foto &amp; Video" />
+                  <Button fx:id="konsolSpilButton" layoutX="836.0" layoutY="255.0" mnemonicParsing="false" text="Konsol &amp; Spil" />
                   <ScrollPane fx:id="contentContainer" fitToWidth="true" layoutX="327.0" layoutY="299.0" prefHeight="485.0" prefWidth="815.0" />
-                  <Button layoutX="933.0" layoutY="255.0" mnemonicParsing="false" text="Film" />
+                  <Button fx:id="filmButton" layoutX="933.0" layoutY="255.0" mnemonicParsing="false" text="Film" />
                   <ImageView fx:id="logoView" fitHeight="249.0" fitWidth="576.0" layoutX="11.0" pickOnBounds="true" preserveRatio="true" />
                   <Button layoutX="1049.0" layoutY="58.0" mnemonicParsing="false" onAction="#seeCartButton" text="Indkøbskurv">
                      <graphic>
@@ -53,6 +53,11 @@
                            </image>
                         </ImageView>
                      </graphic>
+                  </Button>
+                  <Button layoutX="1050.0" layoutY="3.0" mnemonicParsing="false" onAction="#kundekontoAction" prefHeight="39.0" prefWidth="167.0" text="Kundekonto">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
                   </Button>
                </children>
             </AnchorPane>
