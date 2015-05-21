@@ -1,6 +1,7 @@
 package unifiedshoppingexperience;
 
 import interfaces.CallBack;
+import interfaces.ProductLineDTO;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -98,7 +99,7 @@ public class PaymentManager
         }
     }
 
-    public String getPaymentProcessor(String paymentMethod, CallBack confirmPayment, int orderID, ProductLine[] productLines, BigDecimal price)
+    public String getPaymentProcessor(String paymentMethod, CallBack confirmPayment, int orderID, ProductLineDTO[] productLines, BigDecimal price)
     {
         StringBuilder URLBuilder = new StringBuilder();
         URLBuilder.append("www.paypal.com/payment/");
@@ -107,7 +108,7 @@ public class PaymentManager
         StringBuilder productNamesBuilder = new StringBuilder();
         StringBuilder productQuantityBuilder = new StringBuilder();
 
-        for (ProductLine productLine : productLines)
+        for (ProductLineDTO productLine : productLines)
         {
             URLBuilder.append(productLine.getProduct().getModel() + "%");
             productNamesBuilder.append(productLine.getProduct().getName() + "%");
@@ -128,10 +129,12 @@ public class PaymentManager
     public static void main(String[] test)
     {
         PaymentManager hda = new PaymentManager();
+        ShoppingCart cart = new ShoppingCart();
         ProductLine[] testProductLines = new ProductLine[2];
-        testProductLines[0] = new ProductLine(new Product("AMDRocks", new BigDecimal(200.0), "type1", "AMD R Best"));
-        testProductLines[1] = new ProductLine(new Product("nvidia", new BigDecimal(200.0), "type2", "sucks"));
-        Order order = new Order(testProductLines, new BigDecimal(400.0));
+        cart.addProduct(new Product("AMDRocks", new BigDecimal(200.0), "type1", "AMD R Best"));
+        cart.addProduct(new Product("nvidia", new BigDecimal(200.0), "type2", "sucks"));
+
+        Order order = new Order(cart, new BigDecimal(400.0));
         CallBack cb = () ->
         {
             System.out.println(order);

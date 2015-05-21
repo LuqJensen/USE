@@ -1,5 +1,9 @@
 package unifiedshoppingexperience;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import persistence.DatabaseConnection;
+
 /**
  * Contains appropriate methods for handling Shopping cart related actions such
  * as adding a product.
@@ -14,6 +18,11 @@ public class ShoppingCart extends Cart
     public ShoppingCart()
     {
         super();
+    }
+
+    public ShoppingCart(DatabaseConnection db, ResultSet rs) throws SQLException
+    {
+        super(db, rs);
     }
 
     /**

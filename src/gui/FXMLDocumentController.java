@@ -7,7 +7,6 @@ import interfaces.CustomerDTO;
 import interfaces.OrderDTO;
 import interfaces.ProductDTO;
 import interfaces.ProductLineDTO;
-import java.awt.Component;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,13 +30,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -58,7 +54,7 @@ import utility.TryParse;
  */
 public class FXMLDocumentController implements Initializable
 {
-    private final String CUSTOMER_ID = "C12345";
+    private final String CUSTOMER_ID = "c123456";
 
     @FXML
     private TextField findProductSearchField;
@@ -187,9 +183,9 @@ public class FXMLDocumentController implements Initializable
             CustomerDTO customer = UnifiedShoppingExperience.getInstance().getCustomer(CUSTOMER_ID);
             Address address = customer.getDefaultDeliveryAddress();
 
-            Label currentStreetName = new Label();
+            Label currentInhabitantName = new Label();
 
-            Label currentHouseNumber = new Label();
+            Label currentStreetName = new Label();
 
             Label currentZipcode = new Label();
 
@@ -199,16 +195,12 @@ public class FXMLDocumentController implements Initializable
 
             if (address != null)
             {
+                currentInhabitantName.setText(address.getInhabitantName());
                 currentStreetName.setText(address.getStreetName());
-                currentHouseNumber.setText(address.getHouseNumber());
                 currentZipcode.setText(Integer.toString(address.getZipCode()));
                 currentCity.setText(address.getCity());
                 currentCountry.setText(address.getCountry());
             }
-
-            HBox streetAndNumber = new HBox();
-            streetAndNumber.setSpacing(5.0);
-            streetAndNumber.getChildren().addAll(currentStreetName, currentHouseNumber);
 
             HBox zipAndCity = new HBox();
             zipAndCity.setSpacing(5.0);
@@ -237,15 +229,15 @@ public class FXMLDocumentController implements Initializable
                 Label newAddressHeader = new Label("Ny adresse");
                 newAddressHeader.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 
+                Label inhabitantHeader = new Label("Navn:");
+                inhabitantHeader.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+
+                TextField inhabitant = new TextField();
+
                 Label streetNameHeader = new Label("Gadenavn:");
                 streetNameHeader.setFont(Font.font("Arial", FontWeight.BOLD, 12));
 
                 TextField streetName = new TextField();
-
-                Label houseNumberHeader = new Label("Husnummer:");
-                houseNumberHeader.setFont(Font.font("Arial", FontWeight.BOLD, 12));
-
-                TextField houseNumber = new TextField();
 
                 Label zipcodeHeader = new Label("Postnr:");
                 zipcodeHeader.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -266,8 +258,8 @@ public class FXMLDocumentController implements Initializable
                 save.setText("Gem");
                 save.setOnAction((ActionEvent event2) ->
                 {
+                    currentInhabitantName.setText(inhabitant.getText());
                     currentStreetName.setText(streetName.getText());
-                    currentHouseNumber.setText(houseNumber.getText());
                     currentZipcode.setText(zipcode.getText());
                     currentCity.setText(city.getText());
                     currentCountry.setText(country.getText());
@@ -282,10 +274,10 @@ public class FXMLDocumentController implements Initializable
                 });
 
                 newAddressGrid.add(newAddressHeader, 0, 0, 2, 1);
-                newAddressGrid.add(streetNameHeader, 0, 1);
-                newAddressGrid.add(streetName, 1, 1);
-                newAddressGrid.add(houseNumberHeader, 0, 2);
-                newAddressGrid.add(houseNumber, 1, 2);
+                newAddressGrid.add(inhabitantHeader, 0, 1);
+                newAddressGrid.add(inhabitant, 1, 1);
+                newAddressGrid.add(streetNameHeader, 0, 2);
+                newAddressGrid.add(streetName, 1, 2);
                 newAddressGrid.add(zipcodeHeader, 0, 3);
                 newAddressGrid.add(zipcode, 1, 3);
                 newAddressGrid.add(cityHeader, 0, 4);
@@ -307,9 +299,10 @@ public class FXMLDocumentController implements Initializable
             }
 
             addressGrid.add(addressHeader, 0, 0, 2, 1);
-            addressGrid.add(streetAndNumber, 0, 1);
-            addressGrid.add(zipAndCity, 0, 2);
-            addressGrid.add(currentCountry, 0, 3);
+            addressGrid.add(currentInhabitantName, 0, 1);
+            addressGrid.add(currentStreetName, 0, 2);
+            addressGrid.add(zipAndCity, 0, 3);
+            addressGrid.add(currentCountry, 0, 4);
             addressGrid.add(addressCreation, 1, 1, 1, 2);
 
             // VBox
@@ -401,25 +394,25 @@ public class FXMLDocumentController implements Initializable
             finishSale.setStyle("-fx-base: #ffd000;");
             finishSale.setOnAction((ActionEvent event) ->
             {
+                String deliveryAddressInhabitant = currentInhabitantName.getText();
                 String deliveryAddressStreet = currentStreetName.getText();
-                String deliveryAddressHouseNumber = currentHouseNumber.getText();
                 String deliveryAddressZipcode = currentZipcode.getText();
                 String deliveryAddressCity = currentCity.getText();
                 String deliveryAddressCountry = currentCountry.getText();
 
-                if (deliveryAddressStreet.isEmpty() || deliveryAddressHouseNumber.isEmpty()
-                        || deliveryAddressZipcode.isEmpty() || deliveryAddressCity.isEmpty()
-                        || deliveryAddressCountry.isEmpty() || !TryParse.tryParseInteger(deliveryAddressZipcode))
+                if (deliveryAddressInhabitant.isEmpty() || deliveryAddressStreet.isEmpty()
+                    || deliveryAddressZipcode.isEmpty() || deliveryAddressCity.isEmpty()
+                    || deliveryAddressCountry.isEmpty() || !TryParse.tryParseInteger(deliveryAddressZipcode))
                 {
                     JOptionPane.showMessageDialog(new JFrame(), "Angiv venlist en gyldig adresse.");
                     return;
                 }
 
-                String paymentMethod = ((RadioButton) tg.getSelectedToggle()).getText();
+                String paymentMethod = ((RadioButton)tg.getSelectedToggle()).getText();
 
-                finishSale(orderResult.getOrderID(), paymentMethod, new Address(deliveryAddressStreet,
-                        deliveryAddressHouseNumber, Integer.parseInt(deliveryAddressZipcode),
-                        deliveryAddressCity, deliveryAddressCountry));
+                finishSale(orderResult.getOrderID(), paymentMethod, new Address(deliveryAddressInhabitant, deliveryAddressStreet,
+                                                                                Integer.parseInt(deliveryAddressZipcode),
+                                                                                deliveryAddressCity, deliveryAddressCountry));
             });
 
             // GridPane

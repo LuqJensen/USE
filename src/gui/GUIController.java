@@ -1,10 +1,12 @@
 package gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -21,6 +23,11 @@ public class GUIController extends Application
 
         stage.setScene(scene);
         stage.show();
+
+        stage.setOnCloseRequest((WindowEvent event) ->
+        {
+            System.exit(0);
+        });
     }
 
     /**

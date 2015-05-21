@@ -26,6 +26,12 @@ public class ProductLine implements ProductLineDTO
         this.quantity = 1;
     }
 
+    public ProductLine(Product product, Integer quantity)
+    {
+        this.product = product;
+        this.quantity = quantity;
+    }
+
     /**
      * Gets the product the product line describes.
      *
@@ -64,16 +70,18 @@ public class ProductLine implements ProductLineDTO
             return false;
         }
 
-        ProductLine pl = (ProductLine) other;
+        ProductLine pl = (ProductLine)other;
 
         return pl.product.equals(this.product) && pl.quantity == this.quantity;
     }
 
+    @Override
     public int getQuantity()
     {
         return quantity;
     }
 
+    @Override
     public BigDecimal getTotalPrice()
     {
         return product.getPrice().multiply(new BigDecimal(quantity));

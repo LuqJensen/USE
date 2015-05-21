@@ -4,9 +4,11 @@ import shared.Address;
 import interfaces.CallBack;
 import interfaces.CustomerDTO;
 import interfaces.ProductDTO;
+import interfaces.ProductLineDTO;
+import java.sql.SQLException;
 import java.util.List;
+import persistence.DatabaseConnection;
 import shared.CreateOrderResult;
-import shared.TestData;
 
 /**
  * The controller handling communication between the presentation tier and logic
@@ -26,6 +28,7 @@ public class UnifiedShoppingExperience
     private CustomerCollection customers;
     private Assortment assortment;
     private PaymentManager paymentManager;
+    private DatabaseConnection db;
 
     /**
      * Creates the controller. The controller cant be called directly from
@@ -35,11 +38,62 @@ public class UnifiedShoppingExperience
     {
         email = "ESService@Electroshoppen.dk";
         phoneNumber = "28 52 57 40";
-        customers = new CustomerCollection();
 
-        //WARNING HACKS AHOIST LADS
-        assortment = new Assortment(TestData.loadProductMap(), TestData.loadTypeMap(), TestData.loadDescriptionMap());
         paymentManager = new PaymentManager();
+
+        try
+        {
+            db = new DatabaseConnection();
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("Could not connect to database, please check your settings.");
+            ex.printStackTrace();
+            System.exit(1);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            System.out.println("Could not find postgresql jdbc drivers. Please ensure that you have properly installed postgres.");
+            System.exit(1);
+        }
+
+        try
+        {
+            db.prepareSequentialTasks();
+            customers = new CustomerCollection(db);
+            assortment = new Assortment(db);
+            db.unprepareSequentialTasks();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        Runtime.getRuntime().addShutdownHook(new Thread()
+        {
+            @Override
+            public void run()
+            {
+                shutdown();
+            }
+        });
+
+        shutdown();
+    }
+
+    public void shutdown()
+    {
+        try
+        {
+            db.prepareSequentialTasks();
+            customers.save(db);
+            assortment = new Assortment(db);
+            db.unprepareSequentialTasks();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -141,7 +195,7 @@ public class UnifiedShoppingExperience
 
         CallBack confirmPayment = o.getCallBack(eventTrigger);
 
-        ProductLine[] productLines = o.getProductLines();
+        ProductLineDTO[] productLines = o.getProductLines();
 
         return paymentManager.getPaymentProcessor(paymentMethod, confirmPayment, orderID, productLines, o.getPrice());
     }

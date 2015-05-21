@@ -21,8 +21,6 @@ public interface CustomerDTO
 
     String getPersonalizedData();
 
-    String getHomeAddress();
-
     Address getDefaultDeliveryAddress();
 
     OrderDTO getOrder(Integer orderID);
