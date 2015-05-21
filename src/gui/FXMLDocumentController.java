@@ -7,6 +7,7 @@ import interfaces.CustomerDTO;
 import interfaces.OrderDTO;
 import interfaces.ProductDTO;
 import interfaces.ProductLineDTO;
+import java.awt.Component;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -29,10 +31,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -53,7 +58,8 @@ import utility.TryParse;
  */
 public class FXMLDocumentController implements Initializable
 {
-    private String customerID = "C12345";
+    private final String CUSTOMER_ID = "C12345";
+
     @FXML
     private TextField findProductSearchField;
     @FXML
@@ -64,10 +70,42 @@ public class FXMLDocumentController implements Initializable
     private ImageView logoView;
     @FXML
     private ScrollPane contentContainer;
+    @FXML
+    private Button pcTabletsButton;
+    @FXML
+    private Button hardwareButton;
+    @FXML
+    private Button forsideButton;
+    @FXML
+    private Button mobilGpsButton;
+    @FXML
+    private Button hvidevarerButton;
+    @FXML
+    private Button husholdningButton;
+    @FXML
+    private Button fotoVideoButton;
+    @FXML
+    private Button konsolSpilButton;
+    @FXML
+    private Button filmButton;
+    @FXML
+    private Button tvRadioButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        // tab buttons not implemented, so they are disabled.
+        pcTabletsButton.setDisable(true);
+        hardwareButton.setDisable(true);
+        mobilGpsButton.setDisable(true);
+        hvidevarerButton.setDisable(true);
+        husholdningButton.setDisable(true);
+        fotoVideoButton.setDisable(true);
+        tvRadioButton.setDisable(true);
+        forsideButton.setDisable(true);
+        konsolSpilButton.setDisable(true);
+        filmButton.setDisable(true);
+
         try
         {
             logoView.setImage(new Image("/pictures/ElectroshoppenLogo.png"));
@@ -86,11 +124,10 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void findProductEnter(ActionEvent event)
     {
-        findProduct(event);
+        findProduct();
     }
 
-    @FXML
-    private void findProduct(ActionEvent event)
+    private void findProduct()
     {
         VBox productView = new VBox();
         setContent(productView);
@@ -133,15 +170,21 @@ public class FXMLDocumentController implements Initializable
         }
     }
 
+    @FXML
+    private void findProduct(ActionEvent event)
+    {
+        findProduct();
+    }
+
     private void proceedToCheckout()
     {
         final int COLUMN_SPACING = 140;
 
-        CreateOrderResult orderResult = UnifiedShoppingExperience.getInstance().createOrder(customerID);
+        CreateOrderResult orderResult = UnifiedShoppingExperience.getInstance().createOrder(CUSTOMER_ID);
 
         if (orderResult.getError() == CreateOrderErrors.UNPAID)
         {
-            CustomerDTO customer = UnifiedShoppingExperience.getInstance().getCustomer(customerID);
+            CustomerDTO customer = UnifiedShoppingExperience.getInstance().getCustomer(CUSTOMER_ID);
             Address address = customer.getDefaultDeliveryAddress();
 
             Label currentStreetName = new Label();
@@ -365,18 +408,18 @@ public class FXMLDocumentController implements Initializable
                 String deliveryAddressCountry = currentCountry.getText();
 
                 if (deliveryAddressStreet.isEmpty() || deliveryAddressHouseNumber.isEmpty()
-                    || deliveryAddressZipcode.isEmpty() || deliveryAddressCity.isEmpty()
-                    || deliveryAddressCountry.isEmpty() || !TryParse.tryParseInteger(deliveryAddressZipcode))
+                        || deliveryAddressZipcode.isEmpty() || deliveryAddressCity.isEmpty()
+                        || deliveryAddressCountry.isEmpty() || !TryParse.tryParseInteger(deliveryAddressZipcode))
                 {
-                    JOptionPane.showConfirmDialog(new JFrame(), "Angiv venlist en gyldig adresse.", "", 0);
+                    JOptionPane.showMessageDialog(new JFrame(), "Angiv venlist en gyldig adresse.");
                     return;
                 }
 
-                String paymentMethod = ((RadioButton)tg.getSelectedToggle()).getText();
+                String paymentMethod = ((RadioButton) tg.getSelectedToggle()).getText();
 
                 finishSale(orderResult.getOrderID(), paymentMethod, new Address(deliveryAddressStreet,
-                                                                                deliveryAddressHouseNumber, Integer.parseInt(deliveryAddressZipcode),
-                                                                                deliveryAddressCity, deliveryAddressCountry));
+                        deliveryAddressHouseNumber, Integer.parseInt(deliveryAddressZipcode),
+                        deliveryAddressCity, deliveryAddressCountry));
             });
 
             // GridPane
@@ -396,7 +439,7 @@ public class FXMLDocumentController implements Initializable
         {
             String email = JOptionPane.showInputDialog(new JFrame(), "Skriv email:");
 
-            if (UnifiedShoppingExperience.getInstance().setEmail(customerID, email))
+            if (UnifiedShoppingExperience.getInstance().setEmail(CUSTOMER_ID, email))
             {
                 proceedToCheckout();
             }
@@ -414,7 +457,7 @@ public class FXMLDocumentController implements Initializable
             });
         };
 
-        String URL = UnifiedShoppingExperience.getInstance().finishSale(customerID, orderID, paymentMethod, address, cb);
+        String URL = UnifiedShoppingExperience.getInstance().finishSale(CUSTOMER_ID, orderID, paymentMethod, address, cb);
         goToURL(URL);
     }
 
@@ -451,7 +494,7 @@ public class FXMLDocumentController implements Initializable
     private void showOrder(int orderID)
     {
         final int COLUMN_SPACING = 140;
-        CustomerDTO customer = UnifiedShoppingExperience.getInstance().getCustomer(customerID);
+        CustomerDTO customer = UnifiedShoppingExperience.getInstance().getCustomer(CUSTOMER_ID);
         OrderDTO order = customer.getOrder(orderID);
 
         // GridPane
@@ -626,7 +669,7 @@ public class FXMLDocumentController implements Initializable
 
     private void addToCart(String productModel)
     {
-        UnifiedShoppingExperience.getInstance().addProduct(customerID, productModel);
+        UnifiedShoppingExperience.getInstance().addProduct(CUSTOMER_ID, productModel);
         seeCart();
     }
 
@@ -639,7 +682,7 @@ public class FXMLDocumentController implements Initializable
     private void seeCart()
     {
         final int COLUMN_SPACING = 140;
-        CartDTO c = UnifiedShoppingExperience.getInstance().getShoppingCart(customerID);
+        CartDTO c = UnifiedShoppingExperience.getInstance().getShoppingCart(CUSTOMER_ID);
 
         // GridPane
         Label quantity = new Label("Antal");
@@ -720,4 +763,90 @@ public class FXMLDocumentController implements Initializable
     {
         contentContainer.setContent(content);
     }
+
+    @FXML
+    private void kundekontoAction(ActionEvent event)
+    {
+        GridPane gp = new GridPane();
+        Button changeAccountInfo = new Button("Ændre kontoinformation");
+        Button claim = new Button("Reklamation");
+        Button seeWishlists = new Button("Se ønskelister");
+        Button seeOrder = new Button("Se ordre");
+        //Disabled because it isnt implemented.
+        changeAccountInfo.setDisable(true);
+        claim.setDisable(true);
+        seeWishlists.setDisable(true);
+        seeOrder.setDisable(true);
+
+        CustomerDTO customer = UnifiedShoppingExperience.getInstance().getCustomer(CUSTOMER_ID);
+
+        GridPane gpInfo = new GridPane();
+
+        Label deliveryAddress = new Label("                   ");
+        Label name = new Label("");
+        Label email = new Label(customer.getEmail());
+        Label phoneNumber = new Label(customer.getPhoneNumber());
+
+        Label fatEmail = new Label("Email: ");
+        Label fatName = new Label("Navn: ");
+        Label fatAddress = new Label("Adresse: ");
+        Label fatPhoneNumber = new Label("Telefonnummer: ");
+
+        if (customer.getDefaultDeliveryAddress() != null)
+        {
+            deliveryAddress = new Label(customer.getDefaultDeliveryAddress().toString());
+        }
+
+        if (customer.getFirstName() != null || customer.getSurname() != null)
+        {
+            name = new Label(customer.getFirstName() + customer.getSurname());
+        }
+
+        Label header = new Label("Kundekonto");
+
+        header.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+        fatAddress.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        fatEmail.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        fatName.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        fatPhoneNumber.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+        /*
+         Spacing
+         */
+        gp.add(header, 0, 0);
+        gp.add(changeAccountInfo, 0, 2);
+        gp.add(claim, 0, 3);
+        gp.add(seeWishlists, 0, 4);
+        gp.add(seeOrder, 0, 5);
+        GridPane.setValignment(fatAddress, VPos.TOP);
+
+        fatAddress.setPadding(new Insets(2));
+        fatName.setPadding(new Insets(2));
+        fatEmail.setPadding(new Insets(2));
+        fatPhoneNumber.setPadding(new Insets(2));
+        deliveryAddress.setPadding(new Insets(2));
+        name.setPadding(new Insets(2));
+        email.setPadding(new Insets(2));
+        phoneNumber.setPadding(new Insets(2));
+        gpInfo.add(fatAddress, 0, 0);
+        gpInfo.add(fatName, 0, 1);
+        gpInfo.add(fatEmail, 0, 2);
+        gpInfo.add(fatPhoneNumber, 0, 3);
+        gpInfo.add(deliveryAddress, 1, 0);
+        gpInfo.add(name, 1, 1);
+        gpInfo.add(email, 1, 2);
+        gpInfo.add(phoneNumber, 1, 3);
+        gp.add(gpInfo, 0, 1);
+        gpInfo.setGridLinesVisible(true);
+        gp.setVgap(15);
+        setContent(gp);
+
+    }
+
+    @FXML
+    private void checkboxActivated(ActionEvent event)
+    {
+        findProduct();
+    }
+
 }

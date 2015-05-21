@@ -1,7 +1,9 @@
 package employeegui;
 
+import gui.ProductLineView;
 import interfaces.CallBack;
 import interfaces.CartDTO;
+import interfaces.CustomerDTO;
 import interfaces.ProductDTO;
 import interfaces.ProductLineDTO;
 import java.net.URL;
@@ -14,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -29,6 +32,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javax.swing.JOptionPane;
 import unifiedshoppingexperience.UnifiedShoppingExperience;
 import utility.PriceFormatter;
 
@@ -39,7 +43,8 @@ import utility.PriceFormatter;
  */
 public class FXMLDocumentController implements Initializable
 {
-    private String customerID = "C12345";
+
+    private CustomerDTO currentCustomer;
     @FXML
     private ScrollPane findProductsScrollPane;
     @FXML
@@ -52,8 +57,6 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private Tab findProductTab;
     @FXML
-    private Tab findCustomerTab;
-    @FXML
     private Tab saleTab;
     @FXML
     private ScrollPane saleContentScrollPane;
@@ -65,6 +68,8 @@ public class FXMLDocumentController implements Initializable
     private TextField findCustomerTextField;
     @FXML
     private ScrollPane customerScrollPane;
+    @FXML
+    private Tab customerpageTab;
 
     /**
      * Initializes the controller class.
@@ -72,6 +77,11 @@ public class FXMLDocumentController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        // TESTcode
+
+        UnifiedShoppingExperience.getInstance().getCustomer("TestCustomer"); //creates customer with ID.
+        UnifiedShoppingExperience.getInstance().setEmail("TestCustomer", "holla@me.bro");
+        // end of test code
         allCheckBoxes = new CheckBox[]
         {
             musKeyboardsCheckBox, grafikkortCheckBox, skærmeCheckBox, kabinetterCheckBox, harddiskeCheckBox
@@ -85,12 +95,23 @@ public class FXMLDocumentController implements Initializable
 
     private void addToCart(String productModel)
     {
-        UnifiedShoppingExperience.getInstance().addProduct(customerID, productModel);
+        UnifiedShoppingExperience.getInstance().addProduct(currentCustomer.getID(), productModel);
         goToSale();
     }
 
     @FXML
     private void findProduct(ActionEvent event)
+    {
+        findProduct();
+    }
+
+    @FXML
+    private void findProductEnter(ActionEvent event)
+    {
+        findProduct();
+    }
+
+    private void findProduct()
     {
         VBox productView = new VBox();
         setContent(productView);
@@ -126,24 +147,36 @@ public class FXMLDocumentController implements Initializable
             //Ændre logikken her
             CallBack cb = () ->
             {
-                addToCart(p.getModel());
+                String email = currentCustomer == null ? "" : currentCustomer.getEmail();
+
+                boolean beenInLoop = false;
+                while (email != null && UnifiedShoppingExperience.getInstance().getRegisteredCustomer(email) == null)
+                {
+                    beenInLoop = true;
+                    email = (String) JOptionPane.showInputDialog(null, "Kunde er ikke fundet, skriv email på en kunde.");
+                }
+
+                if (email != null)
+                {
+                    if (beenInLoop)
+                    {
+                        currentCustomer = UnifiedShoppingExperience.getInstance().getRegisteredCustomer(email);
+                        updateCustomerPage();
+                    }
+                    addToCart(p.getModel());
+                }
+
             };
 
             productView.getChildren().add(new ProductView(cb, i, p));
         }
     }
 
-    @FXML
-    private void findProductEnter(ActionEvent event)
-    {
-        findProduct(event);
-    }
-
     private void goToSale()
     {
         tabPane.getSelectionModel().select(saleTab);
-        final int COLUMN_SPACING = 140;
-        CartDTO c = UnifiedShoppingExperience.getInstance().getShoppingCart(customerID);
+        final int COLUMN_SPACING = 80;
+        CartDTO c = UnifiedShoppingExperience.getInstance().getShoppingCart(currentCustomer.getID());
 
         // GridPane
         Label quantity = new Label("Antal");
@@ -194,43 +227,131 @@ public class FXMLDocumentController implements Initializable
         }
 
         // VBox
-        Button proceed = new Button("Til Betaling");
-        proceed.setOnAction((ActionEvent event) ->
-        {
-            toCheckout();
-        });
-        proceed.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-
         Label sum = new Label(PriceFormatter.format(c.getPrice()));
         sum.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-
-        VBox bottomVBox = new VBox();
-        bottomVBox.getChildren().addAll(sum, proceed);
-        bottomVBox.setAlignment(Pos.CENTER_RIGHT);
-        bottomVBox.setSpacing(20);
 
         // BorderPane
         BorderPane bp = new BorderPane();
         // Offset bottomVBox 5 pixels from right side to match GridPane productLineDescription.
-        BorderPane.setMargin(bottomVBox, new Insets(0, 5, 0, 0));
         bp.setTop(productLineDescription);
         bp.setCenter(productLineView);
-        bp.setBottom(bottomVBox);
         saleContentScrollPane.setContent(bp);
     }
 
-    private void toCheckout()
+    private void updateCustomerPage()
     {
+        GridPane gp = new GridPane();
+
+        Button seeCart = new Button("Se indkøbskurv");
+        Button changeAccountInfo = new Button("Ændre kontoinformation");
+        Button claim = new Button("Reklamation");
+        Button seeWishlists = new Button("Se ønskelister");
+        Button seeOrder = new Button("Se ordre");
+        seeCart.setOnAction((ActionEvent event2) ->
+        {
+            goToSale();
+        });
+
+        Button seePD = new Button("Se personaliseret data");
+
+        //Disabled because it isnt implemented.
+        changeAccountInfo.setDisable(true);
+        claim.setDisable(true);
+        seeWishlists.setDisable(true);
+        seeOrder.setDisable(true);
+        seePD.setDisable(true);
+
+        Label header = new Label("Kundeside");
+
+        if (currentCustomer == null)
+        {
+            header = new Label("Kunden findes ikke");
+        }
+        else
+        {
+            GridPane gpInfo = new GridPane();
+
+            Label deliveryAddress = new Label("                   ");
+            Label name = new Label("");
+            Label email = new Label(currentCustomer.getEmail());
+            Label phoneNumber = new Label(currentCustomer.getPhoneNumber());
+
+            Label fatEmail = new Label("Email: ");
+            Label fatName = new Label("Navn: ");
+            Label fatAddress = new Label("Adresse: ");
+            Label fatPhoneNumber = new Label("Telefonnummer: ");
+
+            if (currentCustomer.getDefaultDeliveryAddress() != null)
+            {
+                deliveryAddress = new Label(currentCustomer.getDefaultDeliveryAddress().toString());
+            }
+
+            if (currentCustomer.getFirstName() != null || currentCustomer.getSurname() != null)
+            {
+                name = new Label(currentCustomer.getFirstName() + currentCustomer.getSurname());
+            }
+
+            fatAddress.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+            fatEmail.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+            fatName.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+            fatPhoneNumber.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+            /*
+             Spacing
+             */
+            gp.add(seeCart, 0, 2);
+            gp.add(changeAccountInfo, 0, 3);
+            gp.add(claim, 0, 4);
+            gp.add(seeWishlists, 0, 5);
+            gp.add(seeOrder, 0, 6);
+            gp.add(seePD, 0, 7);
+            GridPane.setValignment(fatAddress, VPos.TOP);
+
+            fatAddress.setPadding(new Insets(2));
+            fatName.setPadding(new Insets(2));
+            fatEmail.setPadding(new Insets(2));
+            fatPhoneNumber.setPadding(new Insets(2));
+            deliveryAddress.setPadding(new Insets(2));
+            name.setPadding(new Insets(2));
+            email.setPadding(new Insets(2));
+            phoneNumber.setPadding(new Insets(2));
+            gpInfo.add(fatAddress, 0, 0);
+            gpInfo.add(fatName, 0, 1);
+            gpInfo.add(fatEmail, 0, 2);
+            gpInfo.add(fatPhoneNumber, 0, 3);
+            gpInfo.add(deliveryAddress, 1, 0);
+            gpInfo.add(name, 1, 1);
+            gpInfo.add(email, 1, 2);
+            gpInfo.add(phoneNumber, 1, 3);
+            gp.add(gpInfo, 0, 1);
+            gpInfo.setGridLinesVisible(true);
+            gp.setVgap(15);
+        }
+        header.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+        gp.add(header, 0, 0);
+        customerScrollPane.setContent(gp);
     }
 
     @FXML
     private void findCustomer(ActionEvent event)
     {
+
+        currentCustomer = UnifiedShoppingExperience.getInstance().getRegisteredCustomer(findCustomerTextField.getText());
+        updateCustomerPage();
     }
 
     @FXML
     private void findCustomerEnter(ActionEvent event)
     {
+
+        currentCustomer = UnifiedShoppingExperience.getInstance().getRegisteredCustomer(findCustomerTextField.getText());
+        updateCustomerPage();
+    }
+
+    @FXML
+    private void checkboxAction(ActionEvent event)
+    {
+        findProduct();
     }
 
 }

@@ -20,6 +20,7 @@ public class Address
      * @param houseNumber House number of the address, example: "42a, 2".
      * @param zipCode Zip code of the address, example: "6700".
      * @param city City of the address, example: "Copenhagen".
+     * @param country Country of the address, example: "Denmark".
      */
     public Address(String streetName, String houseNumber, int zipCode, String city, String country)
     {
