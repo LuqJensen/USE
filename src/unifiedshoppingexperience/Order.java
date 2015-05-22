@@ -144,37 +144,68 @@ public class Order implements OrderDTO
         orderInsert.addBatch();
     }
 
+    /**
+     * Increments the amount of orders created. This is used to provide unique
+     * ID for orders created.
+     */
     private static void incrementOrderCreations()
     {
         ++orderCreations;
     }
 
+    /**
+     * Sets the payment method of the order.
+     *
+     * @param paymentMethod The payment method as a string. Ie "paypal", "visa"
+     * or "pick-up-point".
+     */
     public void setPaymentMethod(String paymentMethod)
     {
         this.paymentMethod = paymentMethod;
     }
 
+    /**
+     * Sets the date the order was dispatched to the current date.
+     */
     public void setDispatchedDate()
     {
         dispatchedDate = new Date();
     }
 
+    /**
+     * Sets the date the order was dispatched to a specified date.
+     *
+     * @param date The specified date the order was dispatched
+     */
     public void setDispatchedDate(Date date)
     {
         dispatchedDate = date;
     }
 
+    /**
+     * Sets the address the order is to be delivered to.
+     *
+     * @param address The address the order is to be delivered to.
+     */
     public void setAddress(Address address)
     {
         this.deliveryAddress = address;
     }
 
     @Override
-    public ProductLineDTO[] getProductLines() // getOrderLines?
+    public ProductLineDTO[] getProductLines()
     {
         return cart.getProducts().toArray(new ProductLineDTO[0]);
     }
 
+    /**
+     * Provides a callback that sets the order to paid if called, and calls
+     * another specified callback.
+     *
+     * @param eventTrigger The specified callback to call when order is paid
+     * for.
+     * @return Returns a callback that sets the order to paid if called.
+     */
     public CallBack getCallBack(CallBack eventTrigger)
     {
         CallBack cb = () ->

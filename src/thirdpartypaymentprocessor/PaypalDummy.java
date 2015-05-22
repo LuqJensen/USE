@@ -6,6 +6,8 @@ import java.net.ConnectException;
 import java.net.Socket;
 
 /**
+ * Used for simulating a third party payment
+ * processor.
  *
  * @author Gruppe12
  */
@@ -14,6 +16,10 @@ public class PaypalDummy
     private Socket socket;
     private DataOutputStream dos;
 
+    /**
+     * Creates a paypal dummy, used for simulating a third party payment
+     * processor.
+     */
     public PaypalDummy()
     {
         try
@@ -33,6 +39,13 @@ public class PaypalDummy
         }
     }
 
+    /**
+     * Confirms a order by providing the ID of the order to be confirmed, and
+     * the amount of money paid.
+     *
+     * @param orderID ID of the order to be confirmed
+     * @param price Amount of money paid
+     */
     public void confirm(int orderID, double price)
     {
         try
@@ -48,6 +61,17 @@ public class PaypalDummy
         }
     }
 
+    /**
+     * Confirms an order based on a string (that simulates part of a URL)
+     * provided by the requesting party that wishes to have a order paid for.
+     * The string has agreed upon format, in this case it is agreed to split the
+     * information by %%.
+     * This is to simulate how the paypal would know in a real life scenario,
+     * what information to send back to the requesting party.
+     *
+     * @param input The string that provides information about an order that was
+     * requested to be paid for.
+     */
     public void confirm(String input)
     {
         String[] split = input.split("%%");

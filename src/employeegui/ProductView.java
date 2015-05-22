@@ -32,6 +32,14 @@ public class ProductView extends BorderPane
     AnchorPane ap;
     CallBack callBack;
 
+    /**
+     * Constructs a product view with a callback that adds to cart if called, a
+     * productImage and a product being viewed.
+     *
+     * @param callBack The callback that adds a product to the c art.
+     * @param productImage A image of the product.
+     * @param product The product being viewed.
+     */
     public ProductView(CallBack callBack, Image productImage, ProductDTO product)
     {
         // BorderPane
@@ -62,7 +70,7 @@ public class ProductView extends BorderPane
         gp.add(new ImageView(productImage), 0, 0, 1, 3);
 
         Text title = new Text(product.getName());
-        title.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        title.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         // Pin title to top of its grid.
         GridPane.setValignment(title, VPos.TOP);
         // Add title to grid[1, 0] and let it stretch to grid[2, 1]

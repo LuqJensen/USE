@@ -17,11 +17,23 @@ public class PriceFormatter
     private static final DecimalFormat df = new DecimalFormat("0.00',-'", new DecimalFormatSymbols(Locale.ENGLISH));
     private static final DecimalFormat dfDKK = new DecimalFormat("0.00' DKK'", new DecimalFormatSymbols(Locale.ENGLISH));
 
+    /**
+     * Formats the price to the "0.00',-'" format.
+     *
+     * @param val the value to be formated
+     * @return Returns a formated price.
+     */
     public static String format(BigDecimal val)
     {
         return df.format(val);
     }
 
+    /**
+     * Formats the price to the "0.00' DKK'" format.
+     *
+     * @param val the value to be formated
+     * @return Returns a formated price.
+     */
     public static String formatDKK(BigDecimal val)
     {
         return dfDKK.format(val);

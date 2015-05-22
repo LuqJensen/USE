@@ -27,6 +27,14 @@ public class ProductView extends BorderPane
     AnchorPane ap;
     CallBack callBack;
 
+    /**
+     * Constructs a product view with a callback that adds to cart if called, a
+     * productImage and a product being viewed.
+     *
+     * @param callBack The callback that adds a product to the c art.
+     * @param productImage A image of the product.
+     * @param product The product being viewed.
+     */
     public ProductView(CallBack callBack, Image productImage, ProductDTO product)
     {
         // BorderPane

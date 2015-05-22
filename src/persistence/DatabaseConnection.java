@@ -86,18 +86,35 @@ public class DatabaseConnection
         Disconnect();
     }
 
+    /**
+     * Keeps a connection open, allowing for many queries to be done in a row
+     * without closing the connection.
+     *
+     * @throws SQLException
+     */
     public void prepareSequentialTasks() throws SQLException
     {
         Connect();
         keepAlive = true;
     }
 
+    /**
+     * Stops keeping the connection open for sequential tasks.
+     *
+     * @throws SQLException
+     */
     public void unprepareSequentialTasks() throws SQLException
     {
         keepAlive = false;
         Disconnect();
     }
 
+    /**
+     * Connects to the database.
+     *
+     * @return Returns false if an error happened connecting to the database.
+     * @throws SQLException
+     */
     private boolean Connect() throws SQLException
     {
         if (keepAlive)
@@ -109,6 +126,11 @@ public class DatabaseConnection
         return connection != null;
     }
 
+    /**
+     * Disconnects from the database
+     *
+     * @throws SQLException
+     */
     private void Disconnect() throws SQLException
     {
         if (keepAlive)
@@ -129,10 +151,11 @@ public class DatabaseConnection
     }
 
     /**
+     * For querying select statements to the database.
      *
      * @param query a select query
      * @param arguments for the prepared statement
-     * @return
+     * @return Returns the result set provided by the select query.
      * @throws java.sql.SQLException
      */
     public ResultSet Select(String query, Object... arguments) throws SQLException
@@ -169,10 +192,12 @@ public class DatabaseConnection
     }
 
     /**
+     * For querying insert statements on the databae.
      *
      * @param query an insert statement
      * @param arguments arguments for the preparedstatement
-     * @return
+     * @return Returns error codes as int. For now "-1" is the only error
+     * code error.
      * @throws SQLException
      */
     public int Insert(String query, Object... arguments) throws SQLException
@@ -181,9 +206,11 @@ public class DatabaseConnection
     }
 
     /**
+     * For querying Alter statements on the database.
      *
      * @param query a DDL statement
-     * @return
+     * @return Returns error codes as int. For now "-1" is the only error
+     * code error.
      * @throws SQLException
      */
     public int Alter(String query) throws SQLException
@@ -212,10 +239,12 @@ public class DatabaseConnection
     }
 
     /**
+     * For querying Update statements on the database.
      *
      * @param query an update statement
      * @param arguments arguments for the preparedstatement
-     * @return
+     * @return Returns error codes as int. For now "-1" is the only error
+     * code error.
      * @throws SQLException
      */
     public int Update(String query, Object... arguments) throws SQLException
@@ -223,6 +252,15 @@ public class DatabaseConnection
         return Query(query, arguments);
     }
 
+    /**
+     * Main query method. Provides the means to parse a query to the database.
+     *
+     * @param query The query to be queried on the database.
+     * @param arguments arguments for the preparedstatement
+     * @return Returns error codes as int. For now "-1" is the only error
+     * code error.
+     * @throws SQLException
+     */
     public int Query(String query, Object... arguments) throws SQLException
     {
         try
@@ -257,6 +295,7 @@ public class DatabaseConnection
     }
 
     /**
+     * Prepares a statement with an SQL statement.
      *
      * @param sql any SQL statement fitting a prepared statement
      * @return new preparedstatement to use with batches of statements

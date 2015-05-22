@@ -47,6 +47,13 @@ public class CustomerCollection
         customerQuery.executeBatch();
     }
 
+    /**
+     * Sets an email to a specified customer and puts the email in a map
+     * pointing to the specified customer.
+     *
+     * @param email The email to be set.
+     * @param customerID The ID of the customer.
+     */
     public void setEmail(String email, String customerID)
     {
 
@@ -61,6 +68,12 @@ public class CustomerCollection
 
     }
 
+    /**
+     * Gets a registered customer by email.
+     *
+     * @param email The email of the customer.
+     * @return Returns a registered customer.
+     */
     public Customer getRegisteredCustomer(String email)
     {
         Customer c = customerEmailMap.get(email);
@@ -68,6 +81,13 @@ public class CustomerCollection
         return c;
     }
 
+    /**
+     * Gets a customer by ID, and creates a customer if there is no customer
+     * with this ID. It is not certain that the customer returned is registered.
+     *
+     * @param customerID The ID of the customer.
+     * @return Returns a customer with specified ID.
+     */
     public Customer getCustomer(String customerID)
     {
         Customer c = customerMap.get(customerID);

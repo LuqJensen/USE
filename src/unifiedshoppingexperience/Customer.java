@@ -116,7 +116,7 @@ public class Customer implements CustomerDTO
 
         String addressQuery2 = "UPDATE address SET inhabitant_name = ?, street_address = ?, zip_code = ?, city = ?, country = ? WHERE id = ?;";
         String addressQuery = "INSERT INTO address(id, inhabitant_name, street_address, zip_code, city, country) "
-                              + "SELECT ?, ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT * FROM address WHERE id = ?);";
+                + "SELECT ?, ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT * FROM address WHERE id = ?);";
 
         PreparedStatement addressInsert = db.createPreparedStatement(addressQuery);
         PreparedStatement addressUpdate = db.createPreparedStatement(addressQuery2);
@@ -147,9 +147,9 @@ public class Customer implements CustomerDTO
         }
 
         String orderQuery2 = "UPDATE \"order\" SET customer_id = ?, price = ?, status = ?, payment_method = ?, "
-                             + "purchase_date = ?, dispatched_date = ?, cart_id = ?, delivery_address = ? WHERE id = ?;";
+                + "purchase_date = ?, dispatched_date = ?, cart_id = ?, delivery_address = ? WHERE id = ?;";
         String orderQuery = "INSERT INTO \"order\" (customer_id, id, price, status, payment_method, purchase_date, dispatched_date, cart_id, delivery_address)"
-                            + " SELECT ?, ?, ?, ?, ?, ?, ?, ?, ? WHERE NOT EXISTS(SELECT * FROM \"order\" WHERE id = ?)";
+                + " SELECT ?, ?, ?, ?, ?, ?, ?, ?, ? WHERE NOT EXISTS(SELECT * FROM \"order\" WHERE id = ?)";
         PreparedStatement orderInsert = db.createPreparedStatement(orderQuery);
         PreparedStatement orderUpdate = db.createPreparedStatement(orderQuery2);
 
@@ -257,6 +257,11 @@ public class Customer implements CustomerDTO
         return firstName;
     }
 
+    /**
+     * Sets the first name of the customer.
+     *
+     * @param firstName The first name of the customer.
+     */
     public void setFirstName(String firstName)
     {
         this.firstName = firstName;
@@ -268,9 +273,14 @@ public class Customer implements CustomerDTO
         return surName;
     }
 
-    public void setSurname(String surName)
+    /**
+     * Sets a surname for the customer.
+     *
+     * @param surname The surname of the customer.
+     */
+    public void setSurname(String surname)
     {
-        this.surName = surName;
+        this.surName = surname;
     }
 
     @Override
@@ -279,6 +289,11 @@ public class Customer implements CustomerDTO
         return email;
     }
 
+    /**
+     * Sets an email for the customer.
+     *
+     * @param email The email to be set.
+     */
     public void setEmail(String email)
     {
         this.email = email;
@@ -290,6 +305,11 @@ public class Customer implements CustomerDTO
         return phoneNumber;
     }
 
+    /**
+     * Sets a phone number for the customer.
+     *
+     * @param phoneNumber The phone number to be set.
+     */
     public void setPhoneNumber(String phoneNumber)
     {
         this.phoneNumber = phoneNumber;
@@ -301,6 +321,11 @@ public class Customer implements CustomerDTO
         return personalizedData;
     }
 
+    /**
+     * Sets a default delivery address for the customer.
+     *
+     * @param address The default delivery address to be set.
+     */
     public void setDefaultDeliveryAddress(Address address)
     {
         defaultDeliveryAddress = address;

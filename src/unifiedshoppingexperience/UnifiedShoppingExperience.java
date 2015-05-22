@@ -113,6 +113,15 @@ public class UnifiedShoppingExperience
         return USE;
     }
 
+    /**
+     * Creates an order on the specified customer. The order created is based on
+     * the customers shopping cart.
+     *
+     * @param customerID The ID of the customer.
+     * @return Returns the status of this method and the order ID. The status
+     * can be either UNPAID or NO_EMAIL. UNPAID means the method was
+     * successfully executed. NO_EMAIL means the customer is not registered.
+     */
     public CreateOrderResult createOrder(String customerID)
     {
         return customers.getCustomer(customerID).createOrder();
@@ -174,16 +183,41 @@ public class UnifiedShoppingExperience
         return customers.getCustomer(customerID).getShoppingCart();
     }
 
+    /**
+     * Gets a registered customer by email.
+     *
+     * @param email The email of the customer.
+     * @return Returns a registered customer.
+     */
     public CustomerDTO getRegisteredCustomer(String email)
     {
         return customers.getRegisteredCustomer(email);
     }
 
+    /**
+     * Gets a customer by ID. It is not certain that the customer is registered.
+     *
+     * @param customerID The ID of the customer.
+     * @return Returns a DTO for the customer.
+     */
     public CustomerDTO getCustomer(String customerID)
     {
         return customers.getCustomer(customerID);
     }
 
+    /**
+     * Attempts to complete the sale by sending the customer to third party
+     * payment processer.
+     *
+     * @param customerID The ID of the customer.
+     * @param orderID The ID of the order.
+     * @param paymentMethod The method used to pay for the order.
+     * @param address The address the order is to be delivered to.
+     * @param eventTrigger The eventtrigger that tells the UI the order was paid
+     * for.
+     * @return Returns the URL that needs to be opened if the order is to be
+     * paid for.
+     */
     public String finishSale(String customerID, int orderID, String paymentMethod, Address address, CallBack eventTrigger)
     {
         Customer c = customers.getCustomer(customerID);
@@ -200,6 +234,13 @@ public class UnifiedShoppingExperience
         return paymentManager.getPaymentProcessor(paymentMethod, confirmPayment, orderID, productLines, o.getPrice());
     }
 
+    /**
+     * Sets the email of a specified customer.
+     *
+     * @param customerID The ID of the customer.
+     * @param email The email to be set.
+     * @return Returns false if the email was not set.
+     */
     public boolean setEmail(String customerID, String email)
     {
         if (email == null || email.isEmpty())
