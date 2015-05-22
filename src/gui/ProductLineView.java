@@ -27,6 +27,15 @@ public class ProductLineView extends BorderPane
     GridPane gpLeft;
     GridPane gpRight;
 
+    /**
+     * Creates a product line view, for viewing product lines. A image of the
+     * product in the product line and a product line is shown.
+     *
+     * @param productImage The image of the product in the product line.
+     * @param pl The product line
+     * @param columnSpacing The column spacing in between the sections of the
+     * product line view
+     */
     public ProductLineView(Image productImage, ProductLineDTO pl, int columnSpacing)
     {
         // BorderPane

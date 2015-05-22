@@ -26,6 +26,7 @@ public class GUIController extends Application
 
         stage.setOnCloseRequest((WindowEvent event) ->
         {
+
             System.exit(0);
         });
     }

@@ -74,37 +74,74 @@ public class Address
         insertPS.addBatch();
     }
 
+    /**
+     * Turns the address into a string by combining the information and
+     * formatting it, as if it was written on a postcard.
+     *
+     * @return Returns a formatted combination of the address related fields.
+     */
     @Override
     public String toString()
     {
         return String.format("%s\n %s\n%s %s\n%s", inhabitantName, street_address, zipCode, city, country);
     }
 
+    /**
+     * Gets the city of the address.
+     *
+     * @return The city of the address..
+     */
     public String getCity()
     {
         return city;
     }
 
+    /**
+     * Gets the country of the address.
+     *
+     * @return The country of the address.
+     */
     public String getCountry()
     {
         return country;
     }
 
+    /**
+     * Gets the inhabitants name of the address.
+     *
+     * @return The inhabitants name of the address.
+     */
     public String getInhabitantName()
     {
         return inhabitantName;
     }
 
+    /**
+     * Gets the street name of the address.
+     *
+     * @return The street name of the address.
+     */
     public String getStreetName()
     {
         return street_address;
     }
 
+    /**
+     * Gets the zip code of the address.
+     *
+     * @return The zip code of the address.
+     */
     public int getZipCode()
     {
         return zipCode;
     }
 
+    /**
+     * Gets the ID of the address. This is the number the system uses to
+     * identify the address object.
+     *
+     * @return The ID of the address within the USE system..
+     */
     public int getID()
     {
         return id;

@@ -109,6 +109,10 @@ public abstract class Cart implements CartDTO
         return new ArrayList(productLines.values());
     }
 
+    /**
+     * Increments the amount of carts created. This is used to provide unique ID
+     * for the carts.
+     */
     private static void incrementCartCreations()
     {
         ++cartCreations;

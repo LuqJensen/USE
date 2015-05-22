@@ -123,6 +123,9 @@ public class FXMLDocumentController implements Initializable
         findProduct();
     }
 
+    /**
+     * Search for a product, based on the text in the search field.
+     */
     private void findProduct()
     {
         VBox productView = new VBox();
@@ -172,6 +175,10 @@ public class FXMLDocumentController implements Initializable
         findProduct();
     }
 
+    /**
+     * Proceeds to checkout, providing the customer with a list of what one is
+     * buying, and asks for the delivery address and payment method.
+     */
     private void proceedToCheckout()
     {
         final int COLUMN_SPACING = 140;
@@ -401,18 +408,18 @@ public class FXMLDocumentController implements Initializable
                 String deliveryAddressCountry = currentCountry.getText();
 
                 if (deliveryAddressInhabitant.isEmpty() || deliveryAddressStreet.isEmpty()
-                    || deliveryAddressZipcode.isEmpty() || deliveryAddressCity.isEmpty()
-                    || deliveryAddressCountry.isEmpty() || !TryParse.tryParseInteger(deliveryAddressZipcode))
+                        || deliveryAddressZipcode.isEmpty() || deliveryAddressCity.isEmpty()
+                        || deliveryAddressCountry.isEmpty() || !TryParse.tryParseInteger(deliveryAddressZipcode))
                 {
                     JOptionPane.showMessageDialog(new JFrame(), "Angiv venlist en gyldig adresse.");
                     return;
                 }
 
-                String paymentMethod = ((RadioButton)tg.getSelectedToggle()).getText();
+                String paymentMethod = ((RadioButton) tg.getSelectedToggle()).getText();
 
                 finishSale(orderResult.getOrderID(), paymentMethod, new Address(deliveryAddressInhabitant, deliveryAddressStreet,
-                                                                                Integer.parseInt(deliveryAddressZipcode),
-                                                                                deliveryAddressCity, deliveryAddressCountry));
+                        Integer.parseInt(deliveryAddressZipcode),
+                        deliveryAddressCity, deliveryAddressCountry));
             });
 
             // GridPane
@@ -439,6 +446,15 @@ public class FXMLDocumentController implements Initializable
         }
     }
 
+    /**
+     * Attempts to complete the sale by sending the customer to third party
+     * payment processer.
+     *
+     * @param orderID The ID of the order to be paid for.
+     * @param paymentMethod The method the customer chose to pay for.
+     * @param address The address the ordered items is to be delivered to, if
+     * the order is paid.
+     */
     private void finishSale(int orderID, String paymentMethod, Address address)
     {
         CallBack cb = () ->
@@ -451,9 +467,15 @@ public class FXMLDocumentController implements Initializable
         };
 
         String URL = UnifiedShoppingExperience.getInstance().finishSale(CUSTOMER_ID, orderID, paymentMethod, address, cb);
-        goToURL(URL);
+        goToURL(URL); // depending on payment method, this wouldnt be done in a complete system.
     }
 
+    /**
+     * Sends the customer to the specified URL. In this case, it is simulated
+     * and no real website is opened.
+     *
+     * @param URL The URL the customer is send to.
+     */
     private void goToURL(String URL)
     {
         // We now pretend that we redirect the customer to the given URL of the decided third party payment processor.
@@ -484,6 +506,11 @@ public class FXMLDocumentController implements Initializable
         }
     }
 
+    /**
+     * Shows the customer a none editable order.
+     *
+     * @param orderID The ID of the order.
+     */
     private void showOrder(int orderID)
     {
         final int COLUMN_SPACING = 140;
@@ -660,6 +687,11 @@ public class FXMLDocumentController implements Initializable
         setContent(gp);
     }
 
+    /**
+     * Adds a product to the cart by its product model.
+     *
+     * @param productModel The model of the product.
+     */
     private void addToCart(String productModel)
     {
         UnifiedShoppingExperience.getInstance().addProduct(CUSTOMER_ID, productModel);
@@ -672,6 +704,9 @@ public class FXMLDocumentController implements Initializable
         seeCart();
     }
 
+    /**
+     * Shows the customers shopping cart to the user.
+     */
     private void seeCart()
     {
         final int COLUMN_SPACING = 140;
@@ -752,6 +787,11 @@ public class FXMLDocumentController implements Initializable
         setContent(bp);
     }
 
+    /**
+     * Sets the content of the main scroll pane.
+     *
+     * @param content The content to be shown on the scroll pane
+     */
     private void setContent(Node content)
     {
         contentContainer.setContent(content);

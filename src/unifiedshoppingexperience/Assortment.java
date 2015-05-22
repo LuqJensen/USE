@@ -69,7 +69,7 @@ public class Assortment
     {
         String update = "UPDATE product SET price = ?, \"type\" = ?, name = ? WHERE model = ?;";
         String insert = "INSERT INTO product(model, price, \"type\", name)"
-                        + " VALUES (?, ?, ?, ?) WHERE NOT EXISTS(SELECT * FROM product WHERE model = ?);";
+                + " VALUES (?, ?, ?, ?) WHERE NOT EXISTS(SELECT * FROM product WHERE model = ?);";
         PreparedStatement productInsert = db.createPreparedStatement(insert);
         PreparedStatement productUpdate = db.createPreparedStatement(update);
 

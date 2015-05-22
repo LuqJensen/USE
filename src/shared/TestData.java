@@ -8,6 +8,7 @@ import unifiedshoppingexperience.Product;
 import utility.CaseInsensitiveKeyMap;
 
 /**
+ * Provides test data that was needed before we had a database.
  *
  * @author Gruppe12
  */

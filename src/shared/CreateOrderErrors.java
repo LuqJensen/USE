@@ -1,6 +1,7 @@
 package shared;
 
 /**
+ * Status of creating a order.
  *
  * @author Gruppe12
  */

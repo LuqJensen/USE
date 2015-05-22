@@ -12,6 +12,8 @@ import java.util.Map;
 import thirdpartypaymentprocessor.PaypalDummy;
 
 /**
+ * An active class running in a secondary thread that handles communication with
+ * third party paytment processors.
  *
  * @author Gruppe12
  */
@@ -51,6 +53,10 @@ public class PaymentManager
         t.start();
     }
 
+    /**
+     * Starts the server so its ready to communicate with third party payment
+     * processors
+     */
     public void startServer()
     {
         try (ServerSocket listener = new ServerSocket(43593))
@@ -99,6 +105,20 @@ public class PaymentManager
         }
     }
 
+    /**
+     * Creates a URL based on information about specified order. This URL is
+     * crucial to be able to confirm the right order, paid for with the right
+     * amount of money.
+     *
+     * @param paymentMethod The payment method used to paying for the order.
+     * @param confirmPayment The callback that sets the orders status to paid if
+     * called.
+     * @param orderID The ID of the order.
+     * @param productLines The produce lines in the order.
+     * @param price The total price of the order.
+     * @return Returns the URL that needs to be opened if the order is to be
+     * paid for.
+     */
     public String getPaymentProcessor(String paymentMethod, CallBack confirmPayment, int orderID, ProductLineDTO[] productLines, BigDecimal price)
     {
         StringBuilder URLBuilder = new StringBuilder();
@@ -124,8 +144,13 @@ public class PaymentManager
         return URLBuilder.toString();
     }
 
-    // This is more of an integration test than a unit test.
-    // This test has succeeded if the hashcode of order is printed to System.out.
+    /**
+     * Integration test of the payment manager.
+     * This test has succeeded if the hashcode of order is printed to
+     * the console
+     *
+     * @param test The arguments for the main method.
+     */
     public static void main(String[] test)
     {
         PaymentManager hda = new PaymentManager();

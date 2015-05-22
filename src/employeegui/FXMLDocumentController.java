@@ -6,10 +6,17 @@ import interfaces.CartDTO;
 import interfaces.CustomerDTO;
 import interfaces.ProductDTO;
 import interfaces.ProductLineDTO;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,6 +39,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import unifiedshoppingexperience.UnifiedShoppingExperience;
 import utility.PriceFormatter;
@@ -88,15 +96,25 @@ public class FXMLDocumentController implements Initializable
         };
     }
 
+    /**
+     * Sets content on the main scroll pane of the UI.
+     *
+     * @param content The content to be put on the scroll pane.
+     */
     private void setContent(Node content)
     {
         findProductsScrollPane.setContent(content);
     }
 
+    /**
+     * Adds a product to the customers cart by product model.
+     *
+     * @param productModel The product model of the product.
+     */
     private void addToCart(String productModel)
     {
         UnifiedShoppingExperience.getInstance().addProduct(currentCustomer.getID(), productModel);
-        goToSale();
+        seeCart();
     }
 
     @FXML
@@ -111,6 +129,9 @@ public class FXMLDocumentController implements Initializable
         findProduct();
     }
 
+    /**
+     * Search for a product, based on the text in the search field.
+     */
     private void findProduct()
     {
         VBox productView = new VBox();
@@ -136,7 +157,8 @@ public class FXMLDocumentController implements Initializable
             Image i;
             try
             {
-                i = new Image("/pictures/" + p.getType() + ".jpg"); // Should probably get this from some Image Manager Interface
+                i = new Image("/pictures/" + p.getType() + ".jpg", 150, 0, true, false); // Should probably get this from some Image Manager Interface
+
             }
             catch (IllegalArgumentException e)
             {
@@ -172,7 +194,10 @@ public class FXMLDocumentController implements Initializable
         }
     }
 
-    private void goToSale()
+    /**
+     * Shows a cart to the UI.
+     */
+    private void seeCart()
     {
         tabPane.getSelectionModel().select(saleTab);
         final int COLUMN_SPACING = 80;
@@ -238,6 +263,9 @@ public class FXMLDocumentController implements Initializable
         saleContentScrollPane.setContent(bp);
     }
 
+    /**
+     * Updates the customer page when a new customers page needs to be shown.
+     */
     private void updateCustomerPage()
     {
         GridPane gp = new GridPane();
@@ -249,7 +277,7 @@ public class FXMLDocumentController implements Initializable
         Button seeOrder = new Button("Se ordre");
         seeCart.setOnAction((ActionEvent event2) ->
         {
-            goToSale();
+            seeCart();
         });
 
         Button seePD = new Button("Se personaliseret data");
