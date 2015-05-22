@@ -6,17 +6,10 @@ import interfaces.CartDTO;
 import interfaces.CustomerDTO;
 import interfaces.ProductDTO;
 import interfaces.ProductLineDTO;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,7 +32,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import unifiedshoppingexperience.UnifiedShoppingExperience;
 import utility.PriceFormatter;
@@ -280,12 +272,15 @@ public class FXMLDocumentController implements Initializable
             seeCart();
         });
 
+        seeWishlists.setOnAction((ActionEvent event2) ->
+        {
+            JOptionPane.showMessageDialog(null, "The customer has no wishlists.\n\n [Also making of wishlists is not implemented yet].");
+        });
         Button seePD = new Button("Se personaliseret data");
 
         //Disabled because it isnt implemented.
         changeAccountInfo.setDisable(true);
         claim.setDisable(true);
-        seeWishlists.setDisable(true);
         seeOrder.setDisable(true);
         seePD.setDisable(true);
 

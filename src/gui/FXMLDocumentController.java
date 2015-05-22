@@ -54,7 +54,7 @@ import utility.TryParse;
  */
 public class FXMLDocumentController implements Initializable
 {
-    private final String CUSTOMER_ID = "c123456";
+    private final String CUSTOMER_ID = "c12345asd6";
 
     @FXML
     private TextField findProductSearchField;
@@ -408,18 +408,18 @@ public class FXMLDocumentController implements Initializable
                 String deliveryAddressCountry = currentCountry.getText();
 
                 if (deliveryAddressInhabitant.isEmpty() || deliveryAddressStreet.isEmpty()
-                    || deliveryAddressZipcode.isEmpty() || deliveryAddressCity.isEmpty()
-                    || deliveryAddressCountry.isEmpty() || !TryParse.tryParseInteger(deliveryAddressZipcode))
+                        || deliveryAddressZipcode.isEmpty() || deliveryAddressCity.isEmpty()
+                        || deliveryAddressCountry.isEmpty() || !TryParse.tryParseInteger(deliveryAddressZipcode))
                 {
                     JOptionPane.showMessageDialog(new JFrame(), "Angiv venlist en gyldig adresse.");
                     return;
                 }
 
-                String paymentMethod = ((RadioButton)tg.getSelectedToggle()).getText();
+                String paymentMethod = ((RadioButton) tg.getSelectedToggle()).getText();
 
                 finishSale(orderResult.getOrderID(), paymentMethod, new Address(deliveryAddressInhabitant, deliveryAddressStreet,
-                                                                                Integer.parseInt(deliveryAddressZipcode),
-                                                                                deliveryAddressCity, deliveryAddressCountry));
+                        Integer.parseInt(deliveryAddressZipcode),
+                        deliveryAddressCity, deliveryAddressCountry));
             });
 
             // GridPane
@@ -439,7 +439,13 @@ public class FXMLDocumentController implements Initializable
         {
             String email = JOptionPane.showInputDialog(new JFrame(), "Skriv email:");
 
-            if (UnifiedShoppingExperience.getInstance().setEmail(CUSTOMER_ID, email))
+            boolean correctEmail = UnifiedShoppingExperience.getInstance().setEmail(CUSTOMER_ID, email);
+            while (email != null && !correctEmail)
+            {
+                email = (String) JOptionPane.showInputDialog(null, "Email ikke korrekt, prøv igen.");
+                correctEmail = UnifiedShoppingExperience.getInstance().setEmail(CUSTOMER_ID, email);
+            }
+            if (correctEmail)
             {
                 proceedToCheckout();
             }
@@ -457,7 +463,7 @@ public class FXMLDocumentController implements Initializable
      */
     private void finishSale(int orderID, String paymentMethod, Address address)
     {
-        CallBack cb = () ->
+        CallBack eventTrigger = () ->
         {
             // We cant execute UI methods from the business thread, so we tell the UI thread to run this when it pleases.
             Platform.runLater(() ->
@@ -466,7 +472,7 @@ public class FXMLDocumentController implements Initializable
             });
         };
 
-        String URL = UnifiedShoppingExperience.getInstance().finishSale(CUSTOMER_ID, orderID, paymentMethod, address, cb);
+        String URL = UnifiedShoppingExperience.getInstance().finishSale(CUSTOMER_ID, orderID, paymentMethod, address, eventTrigger);
         goToURL(URL); // depending on payment method, this wouldnt be done in a complete system.
     }
 

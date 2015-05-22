@@ -66,7 +66,7 @@ public class Address
     @Override
     public String toString()
     {
-        return String.format("%s\n %s\n%s %s\n%s", inhabitantName, streetAddress, zipCode, city, country);
+        return String.format("%s\n%s\n%s %s\n%s", inhabitantName, streetAddress, zipCode, city, country);
     }
 
     /**
