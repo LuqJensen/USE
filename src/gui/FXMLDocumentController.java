@@ -463,7 +463,7 @@ public class FXMLDocumentController implements Initializable
      */
     private void finishSale(int orderID, String paymentMethod, Address address)
     {
-        CallBack cb = () ->
+        CallBack eventTrigger = () ->
         {
             // We cant execute UI methods from the business thread, so we tell the UI thread to run this when it pleases.
             Platform.runLater(() ->
@@ -472,7 +472,7 @@ public class FXMLDocumentController implements Initializable
             });
         };
 
-        String URL = UnifiedShoppingExperience.getInstance().finishSale(CUSTOMER_ID, orderID, paymentMethod, address, cb);
+        String URL = UnifiedShoppingExperience.getInstance().finishSale(CUSTOMER_ID, orderID, paymentMethod, address, eventTrigger);
         goToURL(URL); // depending on payment method, this wouldnt be done in a complete system.
     }
 
