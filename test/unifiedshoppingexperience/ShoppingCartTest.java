@@ -32,7 +32,7 @@ public class ShoppingCartTest
         System.out.println("addProduct 1");
 
         List<ProductLineDTO> expResult = new ArrayList();
-        expResult.add(new ProductLine(TestData.p1));
+        expResult.add(new ProductLine(TestData.p1, 1));
 
         ShoppingCart instance = new ShoppingCart();
         instance.addProduct(TestData.p1);
@@ -60,8 +60,8 @@ public class ShoppingCartTest
 
         List<ProductLineDTO> expResult = new ArrayList();
         // We have no control over order of products, as Cart uses a HashMap.
-        expResult.add(new ProductLine(TestData.p2));
-        expResult.add(new ProductLine(TestData.p1));
+        expResult.add(new ProductLine(TestData.p2, 1));
+        expResult.add(new ProductLine(TestData.p1, 1));
 
         ShoppingCart instance = new ShoppingCart();
         instance.addProduct(TestData.p1);
@@ -88,7 +88,7 @@ public class ShoppingCartTest
     {
         System.out.println("addProduct 3");
 
-        ProductLine pLine = new ProductLine(TestData.p1);
+        ProductLine pLine = new ProductLine(TestData.p1, 1);
         pLine.incrementQuantity();
         List<ProductLineDTO> expResult = new ArrayList();
         expResult.add(pLine);

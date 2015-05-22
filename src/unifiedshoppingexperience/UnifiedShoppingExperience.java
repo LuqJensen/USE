@@ -5,9 +5,8 @@ import interfaces.CallBack;
 import interfaces.CustomerDTO;
 import interfaces.ProductDTO;
 import interfaces.ProductLineDTO;
-import java.sql.SQLException;
 import java.util.List;
-import persistence.DatabaseConnection;
+import persistence.DataStore;
 import shared.CreateOrderResult;
 
 /**
@@ -28,7 +27,6 @@ public class UnifiedShoppingExperience
     private CustomerCollection customers;
     private Assortment assortment;
     private PaymentManager paymentManager;
-    private DatabaseConnection db;
 
     /**
      * Creates the controller. The controller cant be called directly from
@@ -39,35 +37,12 @@ public class UnifiedShoppingExperience
         email = "ESService@Electroshoppen.dk";
         phoneNumber = "28 52 57 40";
 
+        DataStore.getPersistence().loadAll();
+
         paymentManager = new PaymentManager();
 
-        try
-        {
-            db = new DatabaseConnection();
-        }
-        catch (SQLException ex)
-        {
-            System.out.println("Could not connect to database, please check your settings.");
-            ex.printStackTrace();
-            System.exit(1);
-        }
-        catch (ClassNotFoundException ex)
-        {
-            System.out.println("Could not find postgresql jdbc drivers. Please ensure that you have properly installed postgres.");
-            System.exit(1);
-        }
-
-        try
-        {
-            db.prepareSequentialTasks();
-            customers = new CustomerCollection(db);
-            assortment = new Assortment(db);
-            db.unprepareSequentialTasks();
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
+        customers = new CustomerCollection();
+        assortment = new Assortment();
 
         Runtime.getRuntime().addShutdownHook(new Thread()
         {
@@ -77,23 +52,11 @@ public class UnifiedShoppingExperience
                 shutdown();
             }
         });
-
-        shutdown();
     }
 
     public void shutdown()
     {
-        try
-        {
-            db.prepareSequentialTasks();
-            customers.save(db);
-            assortment = new Assortment(db);
-            db.unprepareSequentialTasks();
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
+        DataStore.getPersistence().saveAll();
     }
 
     /**
@@ -248,7 +211,14 @@ public class UnifiedShoppingExperience
             return false;
         }
 
-        if (!email.contains("@") || !email.contains("."))
+        String[] splitEmail = email.split("@");
+        if (splitEmail.length != 2 || splitEmail[0].equals(""))
+        {
+            return false;
+        }
+
+        String[] secondSplit = splitEmail[1].split("\\.");
+        if (secondSplit.length != 2 || secondSplit[0].equals(""))
         {
             return false;
         }

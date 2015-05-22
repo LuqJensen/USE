@@ -159,7 +159,7 @@ public class PaymentManager
         cart.addProduct(new Product("AMDRocks", new BigDecimal(200.0), "type1", "AMD R Best"));
         cart.addProduct(new Product("nvidia", new BigDecimal(200.0), "type2", "sucks"));
 
-        Order order = new Order(cart, new BigDecimal(400.0));
+        Order order = new Order(cart, new BigDecimal(400.0), null); /// TODODODOOOTODOODOOTOODO use a mock object here, or else database persists this object.
         CallBack cb = () ->
         {
             System.out.println(order);

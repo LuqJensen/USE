@@ -1,8 +1,8 @@
 package unifiedshoppingexperience;
 
-import interfaces.ProductDTO;
 import interfaces.ProductLineDTO;
 import java.math.BigDecimal;
+import persistence.DataStore;
 
 /**
  * Contains a product line, which is the product and the quantity of the
@@ -16,16 +16,26 @@ public class ProductLine implements ProductLineDTO
     private final Product product;
 
     /**
-     * Creates a product line starting at a quantity of 1.
+     * Creates a product line at runtime starting at a quantity of 1.
      *
      * @param product The product of the product line.
+     * @param c
      */
-    public ProductLine(Product product)
+    public ProductLine(Product product, Cart c)
     {
         this.product = product;
         this.quantity = 1;
+
+        DataStore.getPersistence().persist(this, c);
     }
 
+    /**
+     * Creates a product line at startup, this object is already persisted by
+     * the database.
+     *
+     * @param product
+     * @param quantity
+     */
     public ProductLine(Product product, Integer quantity)
     {
         this.product = product;
@@ -38,7 +48,7 @@ public class ProductLine implements ProductLineDTO
      * @return Returns the product the product line describes.
      */
     @Override
-    public ProductDTO getProduct()
+    public Product getProduct()
     {
         return this.product;
     }

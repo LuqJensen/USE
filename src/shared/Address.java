@@ -3,6 +3,7 @@ package shared;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import persistence.DataStore;
 
 /**
  * Keeps information about any address.
@@ -14,7 +15,7 @@ public class Address
     private static int addressCreations;
     private final int id;
     private String inhabitantName;
-    private String street_address;
+    private String streetAddress;
     private int zipCode;
     private String city;
     private String country;
@@ -37,41 +38,23 @@ public class Address
     {
         this.id = ++addressCreations;
         this.inhabitantName = inhabitantName;
-        this.street_address = streetName;
+        this.streetAddress = streetName;
         this.zipCode = zipCode;
         this.city = city;
         this.country = country;
+
+        DataStore.getPersistence().persist(this);
     }
 
-    public Address(ResultSet rs) throws SQLException
+    public Address(Integer id, String inhabitantName, String streetAddress, Integer zipCode, String city, String country) throws SQLException
     {
-        this.id = rs.getInt("id");
-        this.inhabitantName = rs.getString("inhabitant_name");
-        this.street_address = rs.getString("street_address");
-        this.zipCode = rs.getInt("zip_code");
-        this.city = rs.getString("city");
-        this.country = rs.getString("country");
+        this.id = id;
+        this.inhabitantName = inhabitantName;
+        this.streetAddress = streetAddress;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.country = country;
         ++addressCreations;
-    }
-
-    public void save(PreparedStatement insertPS, PreparedStatement updatePS) throws SQLException
-    {
-        updatePS.setString(1, inhabitantName);
-        updatePS.setString(2, street_address);
-        updatePS.setInt(3, zipCode);
-        updatePS.setString(4, city);
-        updatePS.setString(5, country);
-        updatePS.setInt(6, id);
-        updatePS.addBatch();
-
-        insertPS.setInt(1, id);
-        insertPS.setString(2, inhabitantName);
-        insertPS.setString(3, street_address);
-        insertPS.setInt(4, zipCode);
-        insertPS.setString(5, city);
-        insertPS.setString(6, country);
-        insertPS.setInt(7, id);
-        insertPS.addBatch();
     }
 
     /**
@@ -83,7 +66,7 @@ public class Address
     @Override
     public String toString()
     {
-        return String.format("%s\n %s\n%s %s\n%s", inhabitantName, street_address, zipCode, city, country);
+        return String.format("%s\n %s\n%s %s\n%s", inhabitantName, streetAddress, zipCode, city, country);
     }
 
     /**
@@ -121,9 +104,9 @@ public class Address
      *
      * @return The street name of the address.
      */
-    public String getStreetName()
+    public String getStreetAddress()
     {
-        return street_address;
+        return streetAddress;
     }
 
     /**

@@ -1,8 +1,8 @@
 package unifiedshoppingexperience;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import persistence.DatabaseConnection;
+import java.math.BigDecimal;
+import java.util.Map;
+import persistence.DataStore;
 
 /**
  * Contains appropriate methods for handling Shopping cart related actions such
@@ -13,16 +13,26 @@ import persistence.DatabaseConnection;
 public class ShoppingCart extends Cart
 {
     /**
-     * Creates a ShoppingCart same way a Cart is created.
+     * Creates a ShoppingCart at runtime and calls for the database to persist
+     * this object.
      */
     public ShoppingCart()
     {
         super();
+        DataStore.getPersistence().persist(this);
     }
 
-    public ShoppingCart(DatabaseConnection db, ResultSet rs) throws SQLException
+    /**
+     * Creates a ShoppingCart at startup, this object is already persisted by
+     * the database.
+     *
+     * @param cartID
+     * @param price
+     * @param productLines
+     */
+    public ShoppingCart(int cartID, BigDecimal price, Map<Product, ProductLine> productLines)
     {
-        super(db, rs);
+        super(cartID, price, productLines);
     }
 
     /**
@@ -39,7 +49,7 @@ public class ShoppingCart extends Cart
         }
         else
         {
-            productLines.put(product, new ProductLine(product));
+            productLines.put(product, new ProductLine(product, this));
         }
 
         // BigDecimal is immutable, must assign return value of method to the variable,

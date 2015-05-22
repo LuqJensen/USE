@@ -33,8 +33,8 @@ public class PaymentManagerTest
         ProductLine[] productLines = new ProductLine[2];
         BigDecimal price = new BigDecimal("400.0");
 
-        productLines[0] = new ProductLine(new Product("AMDRocks", new BigDecimal("200.0"), "type1", "AMD R Best"));
-        productLines[1] = new ProductLine(new Product("nvidia", new BigDecimal("200.0"), "type2", "sucks"));
+        productLines[0] = new ProductLine(new Product("AMDRocks", new BigDecimal("200.0"), "type1", "AMD R Best"), 1);
+        productLines[1] = new ProductLine(new Product("nvidia", new BigDecimal("200.0"), "type2", "sucks"), 1);
 
         String expResult = "www.paypal.com/payment/123%%AMDRocks%nvidia%%AMD R Best%sucks%%1%1%%" + price;
         System.out.println(expResult);

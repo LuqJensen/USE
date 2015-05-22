@@ -1,9 +1,8 @@
 package unifiedshoppingexperience;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import persistence.DatabaseConnection;
+import java.math.BigDecimal;
+import java.util.Map;
+import persistence.DataStore;
 
 /**
  *
@@ -14,36 +13,34 @@ public class WishList extends Cart
     private String name;
 
     /**
-     * Creates a wish list by creating a cart with a name.
+     * Creates a wish list at runtime by creating a cart with a name.
      *
      * @param name The name of the wish list.
      */
-    public WishList(String name)
+    public WishList(String name, Customer c)
     {
         super();
         this.name = name;
+        DataStore.getPersistence().persist(this, c);
     }
 
-    public WishList(DatabaseConnection db, ResultSet rs) throws SQLException
+    /**
+     * Creates a wish list at startup, this object is already persisted by the
+     * database.
+     *
+     * @param cartID
+     * @param price
+     * @param productLines
+     * @param name
+     */
+    public WishList(int cartID, BigDecimal price, Map<Product, ProductLine> productLines, String name)
     {
-        super(db, rs);
-        ResultSet rs1 = db.Select("SELECT name FROM wishlist WHERE id = ?;", rs.getInt(2));
-        if (rs1.next())
-        {
-            this.name = rs1.getString(2);
-        }
+        super(cartID, price, productLines);
+        this.name = name;
     }
 
-    public void save(DatabaseConnection db, PreparedStatement wishlistInsert, PreparedStatement wishlistUpdate, PreparedStatement cartInsert, PreparedStatement cartUpdate) throws SQLException
+    public String getName()
     {
-        super.save(db, cartInsert, cartUpdate);
-
-        wishlistUpdate.setString(1, name);
-        wishlistUpdate.setInt(2, cartID);
-        wishlistUpdate.addBatch();
-
-        wishlistInsert.setInt(1, cartID);
-        wishlistInsert.setString(2, name);
-        wishlistInsert.addBatch();
+        return name;
     }
 }

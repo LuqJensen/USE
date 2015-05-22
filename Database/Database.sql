@@ -1,5 +1,10 @@
 ﻿DROP TABLE IF EXISTS product, address, customer, cart, productline, wishlist, "order";
 
+CREATE TABLE cart
+(
+	id INT PRIMARY KEY
+);
+
 CREATE TABLE product
 (
     model VARCHAR(25) PRIMARY KEY,
@@ -25,13 +30,8 @@ CREATE TABLE customer
 	sur_name VARCHAR(50),
 	email VARCHAR(100),
 	phonenumber VARCHAR(20),
-    address INT REFERENCES address(id) ON DELETE SET NULL ON UPDATE CASCADE
-);
-
-CREATE TABLE cart
-(
-	customer_id VARCHAR(20) REFERENCES customer(id) ON DELETE SET NULL ON UPDATE CASCADE,
-	id INT PRIMARY KEY
+    address INT REFERENCES address(id) ON DELETE SET NULL ON UPDATE CASCADE,
+    shopping_cart INT NOT NULL REFERENCES cart(id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE productline
@@ -43,21 +43,22 @@ CREATE TABLE productline
 
 CREATE TABLE wishlist
 (
+	customer_id VARCHAR(20) REFERENCES customer(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	id INT REFERENCES cart(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	name VARCHAR(30)
 );
 
 CREATE TABLE "order"
 (
-    customer_id VARCHAR(20) REFERENCES customer(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    customer_id VARCHAR(20) REFERENCES customer(id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	id INT PRIMARY KEY,
 	price DECIMAL(19,4),
     status INT,
     payment_method VARCHAR(50),
 	purchase_date DATE,
 	dispatched_date DATE,
-	cart_id INT REFERENCES cart(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    delivery_address INT REFERENCES address(id) ON DELETE SET NULL ON UPDATE CASCADE
+	cart_id INT NOT NULL REFERENCES cart(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    delivery_address INT REFERENCES address(id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 INSERT INTO product(model, name, type, price) VALUES
@@ -99,9 +100,17 @@ INSERT INTO product(model, name, type, price) VALUES
 ('90LM00U0-B013L0', 'Asus 27\" LED G-Sync ROG SWIFT PG278QE', 'Skærme', 769.81),
 ('WD1003FZEX', 'WD Desktop Black 1TB', 'Harddiske', 94.44);
 
-INSERT INTO customer(id, first_name, sur_name, email, phonenumber) VALUES
-('c123456', 'Hans', 'Hansen', 'hans.hansen@hotmail.com', '+4512345678'),
-('c223456', 'Peter', 'Petersen', 'peter.petersen@hotmail.com', '+4522345678'),
-('c323456', 'Gorm', 'Gormsen', 'gorm.gormsen@hotmail.com', '+4532345678'),
-('c423456', 'Lars', 'Larsen', 'lars.larsen@hotmail.com', '+4542345678'),
-('c523456', 'Hanne', 'Hansen', 'hanne.hansen@hotmail.com', '+4552345678');
+INSERT INTO cart(id) VALUES
+(1),
+(2),
+(3),
+(4),
+(5);
+
+INSERT INTO customer(id, first_name, sur_name, email, phonenumber, shopping_cart) VALUES
+('c123456', 'Hans', 'Hansen', 'hans.hansen@hotmail.com', '+4512345678', 1),
+('c223456', 'Peter', 'Petersen', 'peter.petersen@hotmail.com', '+4522345678', 2),
+('c323456', 'Gorm', 'Gormsen', 'gorm.gormsen@hotmail.com', '+4532345678', 3),
+('c423456', 'Lars', 'Larsen', 'lars.larsen@hotmail.com', '+4542345678', 4),
+('c523456', 'Hanne', 'Hansen', 'hanne.hansen@hotmail.com', '+4552345678', 5);
+

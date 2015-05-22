@@ -1,9 +1,6 @@
 package unifiedshoppingexperience;
 
 import interfaces.ProductDTO;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import persistence.DatabaseConnection;
+import persistence.DataStore;
 import utility.CaseInsensitiveKeyMap;
 
 /**
@@ -49,47 +46,17 @@ public class Assortment
         this.descriptionMap = descriptionMap;
     }
 
-    public Assortment(DatabaseConnection db) throws SQLException
+    public Assortment()
     {
         this.products = new CaseInsensitiveKeyMap();
 
-        ResultSet rs = db.Select("SELECT * FROM product;");
-
-        while (rs.next()) // for each tuple in ResultSet
+        for (Product p : DataStore.getPersistence().getAllProducts())
         {
-            Product product = new Product(rs.getString(1), rs.getBigDecimal(2), rs.getString(3), rs.getString(4));
-            products.put(product.getModel(), product);
+            this.products.put(p.getModel(), p);
         }
 
         loadTypeMap();
         loadDescriptionMap();
-    }
-
-    public void save(DatabaseConnection db) throws SQLException
-    {
-        String update = "UPDATE product SET price = ?, \"type\" = ?, name = ? WHERE model = ?;";
-        String insert = "INSERT INTO product(model, price, \"type\", name)"
-                + " VALUES (?, ?, ?, ?) WHERE NOT EXISTS(SELECT * FROM product WHERE model = ?);";
-        PreparedStatement productInsert = db.createPreparedStatement(insert);
-        PreparedStatement productUpdate = db.createPreparedStatement(update);
-
-        for (Product p : products.values())
-        {
-            productUpdate.setBigDecimal(1, p.getPrice());
-            productUpdate.setString(2, p.getType());
-            productUpdate.setString(3, p.getName());
-            productUpdate.setString(4, p.getModel());
-            productUpdate.addBatch();
-
-            productInsert.setString(1, p.getModel());
-            productInsert.setBigDecimal(2, p.getPrice());
-            productInsert.setString(3, p.getType());
-            productInsert.setString(4, p.getName());
-            productInsert.addBatch();
-        }
-
-        productInsert.executeBatch();
-        productUpdate.executeBatch();
     }
 
     private void loadTypeMap()

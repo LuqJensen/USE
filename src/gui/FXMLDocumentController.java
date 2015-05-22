@@ -203,7 +203,7 @@ public class FXMLDocumentController implements Initializable
             if (address != null)
             {
                 currentInhabitantName.setText(address.getInhabitantName());
-                currentStreetName.setText(address.getStreetName());
+                currentStreetName.setText(address.getStreetAddress());
                 currentZipcode.setText(Integer.toString(address.getZipCode()));
                 currentCity.setText(address.getCity());
                 currentCountry.setText(address.getCountry());
@@ -408,18 +408,18 @@ public class FXMLDocumentController implements Initializable
                 String deliveryAddressCountry = currentCountry.getText();
 
                 if (deliveryAddressInhabitant.isEmpty() || deliveryAddressStreet.isEmpty()
-                        || deliveryAddressZipcode.isEmpty() || deliveryAddressCity.isEmpty()
-                        || deliveryAddressCountry.isEmpty() || !TryParse.tryParseInteger(deliveryAddressZipcode))
+                    || deliveryAddressZipcode.isEmpty() || deliveryAddressCity.isEmpty()
+                    || deliveryAddressCountry.isEmpty() || !TryParse.tryParseInteger(deliveryAddressZipcode))
                 {
                     JOptionPane.showMessageDialog(new JFrame(), "Angiv venlist en gyldig adresse.");
                     return;
                 }
 
-                String paymentMethod = ((RadioButton) tg.getSelectedToggle()).getText();
+                String paymentMethod = ((RadioButton)tg.getSelectedToggle()).getText();
 
                 finishSale(orderResult.getOrderID(), paymentMethod, new Address(deliveryAddressInhabitant, deliveryAddressStreet,
-                        Integer.parseInt(deliveryAddressZipcode),
-                        deliveryAddressCity, deliveryAddressCountry));
+                                                                                Integer.parseInt(deliveryAddressZipcode),
+                                                                                deliveryAddressCity, deliveryAddressCountry));
             });
 
             // GridPane
@@ -555,7 +555,7 @@ public class FXMLDocumentController implements Initializable
         Label orderAddressHeader = new Label("Leveres til:");
         orderAddressHeader.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 
-        Text orderAddress = new Text(order.getAddress());
+        Text orderAddress = new Text(order.getAddress().toString());
 
         GridPane orderInfoGrid = new GridPane();
         orderInfoGrid.setPadding(new Insets(10, 10, 10, 0));

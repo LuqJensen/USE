@@ -2,6 +2,7 @@ package interfaces;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import shared.Address;
 import shared.OrderStatus;
 
 /**
@@ -44,8 +45,6 @@ public interface OrderDTO
      *
      * @return The address the order is was to be delivered to.
      */
-    public String getAddress();
-
     /**
      * Gets the status of the order. A status can be PAID, UNPAID or DISPATCHED.
      *
@@ -74,4 +73,6 @@ public interface OrderDTO
      * @return The total price of the order.
      */
     public BigDecimal getPrice();
+
+    public Address getAddress();
 }
