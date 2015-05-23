@@ -1,0 +1,8 @@
+1. Install Java Runtime.
+2. Install Java SE Development Kit (tick JavaFX and optinally JUnit), optionally choose the Netbeans package to skip step 3 and 4.
+3. Install JUnit if you did'nt in step 2.
+4. Install your Java compatible IDE(Netbeans, Eclipse, IntelliJ) of choice.
+5. Install PostgreSQL; let user be "postgresql" and password be "test" without quotes, optionally pick something else for user and password (you will have to modify /Database/Database.properties).
+6. Create a new database with name "test", optionally pick something else for database name (you will have to modify /Database/Database.properties), optionally apply the supplied backup dump file (/Database/dump.sql) and skip step 7.
+7. Execute the provided SQL (/Database/Database.sql) on the new database.
+8. Run the provided UnifiedShoppingExperience.jar, optionally open the provided project source code in your IDE of choice and run /gui/GUIController.java or /employeegui/GUIController.java. Optionally run the unit tests, by clicking "Test".
