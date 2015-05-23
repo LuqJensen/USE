@@ -89,7 +89,7 @@ public class ShoppingCartTest
         System.out.println("addProduct 3");
 
         ProductLine pLine = new ProductLine(TestData.p1, 1);
-        pLine.incrementQuantity();
+        pLine.addQuantity(1);
         List<ProductLineDTO> expResult = new ArrayList();
         expResult.add(pLine);
 

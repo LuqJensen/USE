@@ -36,16 +36,6 @@ public class ShoppingCart extends Cart
     }
 
     /**
-     * Adds a productLine to the shopping cart.
-     *
-     * @param productLine The productLine to be added.
-     */
-    public void addProductLine(ProductLine productLine)
-    {
-        productLines.put(productLine.getProduct(), productLine);
-    }
-
-    /**
      * Adds a product to the shopping cart.
      *
      * @param product The product to be added.
@@ -55,7 +45,7 @@ public class ShoppingCart extends Cart
         ProductLine productLine = productLines.get(product);
         if (productLine != null)
         {
-            productLine.incrementQuantity();
+            productLine.addQuantity(1);
         }
         else
         {
