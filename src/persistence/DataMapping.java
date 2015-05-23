@@ -115,21 +115,7 @@ public class DataMapping implements IRepository
         productlineStore = new HashMap();
         productStore = new HashMap();
 
-        try
-        {
-            db = new DatabaseConnection();
-        }
-        catch (SQLException ex)
-        {
-            System.out.println("Could not connect to database, please check your settings.");
-            ex.printStackTrace();
-            System.exit(1);
-        }
-        catch (ClassNotFoundException ex)
-        {
-            System.out.println("Could not find postgresql jdbc drivers. Please ensure that you have properly installed postgres.");
-            System.exit(1);
-        }
+        db = new DatabaseConnection();
     }
 
     /**
@@ -140,13 +126,22 @@ public class DataMapping implements IRepository
     @Override
     public final void loadAll()
     {
-        // Order matters!!!!
-        loadAddresses();
-        loadProducts();
-        loadProductLines();
-        loadCartsAndWishLists();
-        loadOrders();
-        loadCustomers();
+        try
+        {
+            db.prepareSequentialTasks();
+            // Order matters!!!!
+            loadAddresses();
+            loadProducts();
+            loadProductLines();
+            loadCartsAndWishLists();
+            loadOrders();
+            loadCustomers();
+            db.unprepareSequentialTasks();
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("Failed to prepare or unprepare database connection for sequential tasks...");
+        }
     }
 
     private void loadCartsAndWishLists()
@@ -399,14 +394,23 @@ public class DataMapping implements IRepository
     @Override
     public void saveAll()
     {
-        // Order matters!!!!!
-        saveAllAddresses();
-        saveAllProducts();
-        saveAllCarts();
-        saveAllWishLists();
-        saveAllProductLines();
-        saveAllOrders();
-        saveAllCustomers();
+        try
+        {
+            db.prepareSequentialTasks();
+            // Order matters!!!!!
+            saveAllAddresses();
+            saveAllProducts();
+            saveAllCarts();
+            saveAllWishLists();
+            saveAllProductLines();
+            saveAllCustomers();
+            saveAllOrders();
+            db.unprepareSequentialTasks();
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("Failed to prepare or unprepare database connection for sequential tasks...");
+        }
     }
 
     @Override
@@ -557,14 +561,12 @@ public class DataMapping implements IRepository
                     }
 
                     orderUpdate.setString(1, customerID);
-
-                    orderInsert.setString(1, customerID);
-
                     orderUpdate.setInt(9, o.getID());
                     orderUpdate.setBigDecimal(2, o.getPrice());
                     orderUpdate.setInt(3, o.getStatus().ordinal());
                     orderUpdate.setString(4, o.getPaymentMethod());
 
+                    orderInsert.setString(1, customerID);
                     orderInsert.setInt(2, o.getID());
                     orderInsert.setInt(10, o.getID());
                     orderInsert.setBigDecimal(3, o.getPrice());

@@ -1,11 +1,17 @@
 package persistence;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 /**
  *
@@ -13,13 +19,13 @@ import java.sql.Statement;
  */
 public class DatabaseConnection
 {
-    private static Connection connection = null;
+    private Connection connection = null;
     private String db;
-    private String address = "127.0.0.1";
-    private String port = "5432";
-    private String database = "test";
-    private String userName = "postgres";
-    private String password = "test";
+    private String address;
+    private String port;
+    private String database;
+    private String username;
+    private String password;
 
     private boolean keepAlive = false;
 
@@ -28,62 +34,48 @@ public class DatabaseConnection
      * values database name: test username: postgres password: test address:
      * localhost port: 5432.
      *
-     * @throws java.sql.SQLException
-     * @throws java.lang.ClassNotFoundException
      */
-    public DatabaseConnection() throws SQLException, ClassNotFoundException
+    public DatabaseConnection()
     {
-        Class.forName("org.postgresql.Driver");
-        db = String.format("jdbc:postgresql://%s:%s/%s", address, port, database);
-        Connect();
-        Disconnect();
-    }
+        try
+        {
+            Class.forName("org.postgresql.Driver");
 
-    /**
-     * Initialiazes a DatabaseConnection and tests the connection with given
-     * database name, username and password with default address: localhost and
-     * port: 5432.
-     *
-     * @param database name of database to connect to. Default value test
-     * @param userName name of user/owner of database. Default value: postgres
-     * @param password password of user/owner of database. Default value: test
-     * @throws java.sql.SQLException
-     * @throws java.lang.ClassNotFoundException
-     */
-    public DatabaseConnection(String database, String userName, String password) throws SQLException, ClassNotFoundException
-    {
-        Class.forName("org.postgresql.Driver");
-        this.database = database;
-        this.userName = userName;
-        this.password = password;
-        db = String.format("jdbc:postgresql://%s:%s/%s", address, port, database);
-        Connect();
-        Disconnect();
-    }
+            Properties properties = new Properties();
+            InputStream input = new FileInputStream(new File("Database/Database.properties"));
+            properties.load(input);
 
-    /**
-     * Initialiazes a DatabaseConnection and tests the connection with given
-     * database name, username, password address and port.
-     *
-     * @param address address of database to connecto. Default value: localhost
-     * @param port port of database to connect to. Default value: 5432
-     * @param database name of database to connect to. Default value: test
-     * @param userName name of user/owner of database. Default value: postgres
-     * @param password password of user/owner of database. Default value: test
-     * @throws java.sql.SQLException
-     * @throws java.lang.ClassNotFoundException
-     */
-    public DatabaseConnection(String address, String port, String database, String userName, String password) throws SQLException, ClassNotFoundException
-    {
-        Class.forName("org.postgresql.Driver");
-        this.address = address;
-        this.port = port;
-        this.database = database;
-        this.userName = userName;
-        this.password = password;
-        db = String.format("jdbc:postgresql://%s:%s/%s", address, port, database);
-        Connect();
-        Disconnect();
+            this.address = properties.getProperty("address");
+            this.port = properties.getProperty("port");
+            this.database = properties.getProperty("database");
+            this.username = properties.getProperty("username");
+            this.password = properties.getProperty("password");
+
+            this.db = String.format("jdbc:postgresql://%s:%s/%s", this.address, this.port, this.database);
+            Connect();
+            Disconnect();
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("Could not connect to database, please check your settings.");
+            ex.printStackTrace();
+            System.exit(1);
+        }
+        catch (FileNotFoundException ex)
+        {
+            System.out.println("Could not find database config file, cannot load properties.");
+            System.exit(1);
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+            System.exit(1);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            System.out.println("Could not find postgresql jdbc drivers. Please ensure that you have properly installed postgres.");
+            System.exit(1);
+        }
     }
 
     /**
@@ -122,7 +114,7 @@ public class DatabaseConnection
             return true;
         }
 
-        connection = DriverManager.getConnection(db, userName, password);
+        connection = DriverManager.getConnection(db, username, password);
         return connection != null;
     }
 
@@ -196,8 +188,8 @@ public class DatabaseConnection
      *
      * @param query an insert statement
      * @param arguments arguments for the preparedstatement
-     * @return Returns error codes as int. For now "-1" is the only error
-     * code error.
+     * @return Returns error codes as int. For now "-1" is the only error code
+     * error.
      * @throws SQLException
      */
     public int Insert(String query, Object... arguments) throws SQLException
@@ -209,8 +201,8 @@ public class DatabaseConnection
      * For querying Alter statements on the database.
      *
      * @param query a DDL statement
-     * @return Returns error codes as int. For now "-1" is the only error
-     * code error.
+     * @return Returns error codes as int. For now "-1" is the only error code
+     * error.
      * @throws SQLException
      */
     public int Alter(String query) throws SQLException
@@ -243,8 +235,8 @@ public class DatabaseConnection
      *
      * @param query an update statement
      * @param arguments arguments for the preparedstatement
-     * @return Returns error codes as int. For now "-1" is the only error
-     * code error.
+     * @return Returns error codes as int. For now "-1" is the only error code
+     * error.
      * @throws SQLException
      */
     public int Update(String query, Object... arguments) throws SQLException
@@ -257,8 +249,8 @@ public class DatabaseConnection
      *
      * @param query The query to be queried on the database.
      * @param arguments arguments for the preparedstatement
-     * @return Returns error codes as int. For now "-1" is the only error
-     * code error.
+     * @return Returns error codes as int. For now "-1" is the only error code
+     * error.
      * @throws SQLException
      */
     public int Query(String query, Object... arguments) throws SQLException
