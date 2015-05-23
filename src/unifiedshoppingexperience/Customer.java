@@ -21,7 +21,7 @@ public class Customer implements CustomerDTO
 {
     private String ID;
     private String firstName;
-    private String surName;
+    private String surname;
     private String email;
     private String phoneNumber;
     private ShoppingCart shoppingCart;
@@ -51,7 +51,7 @@ public class Customer implements CustomerDTO
      *
      * @param ID
      * @param firstName
-     * @param surName
+     * @param surname
      * @param email
      * @param phoneNumber
      * @param address
@@ -60,14 +60,14 @@ public class Customer implements CustomerDTO
      * @param orders
      * @throws SQLException
      */
-    public Customer(String ID, String firstName, String surName, String email, String phoneNumber,
-                    Address address, ShoppingCart shoppingCart, ArrayList<WishList> wishLists, Map<Integer, Order> orders) throws SQLException
+    public Customer(String ID, String firstName, String surname, String email, String phoneNumber,
+            Address address, ShoppingCart shoppingCart, ArrayList<WishList> wishLists, Map<Integer, Order> orders) throws SQLException
     {
         this.orders = new HashMap();
         this.wishLists = new ArrayList();
         this.ID = ID;
         this.firstName = firstName;
-        this.surName = surName;
+        this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.defaultDeliveryAddress = address;
@@ -169,7 +169,7 @@ public class Customer implements CustomerDTO
     @Override
     public String getSurname()
     {
-        return surName;
+        return surname;
     }
 
     /**
@@ -179,7 +179,7 @@ public class Customer implements CustomerDTO
      */
     public void setSurname(String surname)
     {
-        this.surName = surname;
+        this.surname = surname;
     }
 
     @Override

@@ -198,6 +198,35 @@ public class UnifiedShoppingExperience
     }
 
     /**
+     * Sets the email of Electroshoppen.
+     *
+     * @param email The email to be set.
+     * @return Returns false if the email was not set.
+     */
+    public boolean setEmail(String email)
+    {
+        if (email == null || email.isEmpty())
+        {
+            return false;
+        }
+
+        String[] splitEmail = email.split("@");
+        if (splitEmail.length != 2 || splitEmail[0].equals(""))
+        {
+            return false;
+        }
+
+        String[] secondSplit = splitEmail[1].split("\\.");
+        if (secondSplit.length != 2 || secondSplit[0].equals(""))
+        {
+            return false;
+        }
+
+        this.email = email;
+        return true;
+    }
+
+    /**
      * Sets the email of a specified customer.
      *
      * @param customerID The ID of the customer.
