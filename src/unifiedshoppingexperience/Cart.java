@@ -72,6 +72,27 @@ public abstract class Cart implements CartDTO
         ++cartCreations;
     }
 
+    /**
+     * Adds productLines to the cart.
+     *
+     * @param productLines The productLines to be added.
+     */
+    public void addProductLines(ProductLine[] productLines)
+    {
+        for (ProductLine productLine : productLines)
+        {
+            ProductLine mappedPL = this.productLines.get(productLine.getProduct());
+            if (mappedPL == null)
+            {
+                this.productLines.put(productLine.getProduct(), productLine);
+            }
+            else
+            {
+                mappedPL.addQuantity(productLine.getQuantity());
+            }
+        }
+    }
+
     @Override
     public BigDecimal getPrice()
     {

@@ -54,11 +54,13 @@ public class ProductLine implements ProductLineDTO
     }
 
     /**
-     * Increments the quantity of the product in the product line.
+     * Increases the quantity of this productLine with the inputted parameter.
+     *
+     * @param quantity The amount to increase the quantity with.
      */
-    public void incrementQuantity()
+    public void addQuantity(int quantity)
     {
-        ++quantity;
+        this.quantity += quantity;
     }
 
     /**

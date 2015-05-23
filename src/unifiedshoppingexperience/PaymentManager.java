@@ -67,7 +67,7 @@ public class PaymentManager
                 {
                     DataInputStream in = new DataInputStream(socket.getInputStream());
                     int orderID = in.readInt();
-                    BigDecimal transferedMoney = BigDecimal.valueOf(in.readDouble());
+                    BigDecimal transferredMoney = BigDecimal.valueOf(in.readDouble());
 
                     BigDecimal prePrice = orderPriceMap.get(orderID);
 
@@ -75,7 +75,7 @@ public class PaymentManager
                     {
                         System.out.printf("Error: price of order %s is null.\n", orderID);
                     }
-                    else if (prePrice.compareTo(transferedMoney) == 0)
+                    else if (prePrice.compareTo(transferredMoney) == 0)
                     {
                         CallBack confirmPayment = callBackMap.get(orderID);
 
@@ -90,7 +90,7 @@ public class PaymentManager
                     }
                     else
                     {
-                        System.out.printf("Order %s was not paid, preprocessed price: %s, postprocessed price: %s.\n", orderID, prePrice, transferedMoney);
+                        System.out.printf("Order %s was not paid, preprocessed price: %s, postprocessed price: %s.\n", orderID, prePrice, transferredMoney);
                     }
                 }
                 catch (IOException ex)
@@ -145,9 +145,8 @@ public class PaymentManager
     }
 
     /**
-     * Integration test of the payment manager.
-     * This test has succeeded if the hashcode of order is printed to
-     * the console
+     * Integration test of the payment manager. This test has succeeded if the
+     * hashcode of order is printed to the console
      *
      * @param test The arguments for the main method.
      */
