@@ -67,7 +67,7 @@ public class PaymentManager
                 {
                     DataInputStream in = new DataInputStream(socket.getInputStream());
                     int orderID = in.readInt();
-                    BigDecimal postPrice = BigDecimal.valueOf(in.readDouble());
+                    BigDecimal transferedMoney = BigDecimal.valueOf(in.readDouble());
 
                     BigDecimal prePrice = orderPriceMap.get(orderID);
 
@@ -75,7 +75,7 @@ public class PaymentManager
                     {
                         System.out.printf("Error: price of order %s is null.\n", orderID);
                     }
-                    else if (prePrice.compareTo(postPrice) == 0)
+                    else if (prePrice.compareTo(transferedMoney) == 0)
                     {
                         CallBack confirmPayment = callBackMap.get(orderID);
 
@@ -90,7 +90,7 @@ public class PaymentManager
                     }
                     else
                     {
-                        System.out.printf("Order %s was not paid, preprocessed price: %s, postprocessed price: %s.\n", orderID, prePrice, postPrice);
+                        System.out.printf("Order %s was not paid, preprocessed price: %s, postprocessed price: %s.\n", orderID, prePrice, transferedMoney);
                     }
                 }
                 catch (IOException ex)
