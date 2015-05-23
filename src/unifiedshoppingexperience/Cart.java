@@ -4,6 +4,7 @@ import interfaces.CartDTO;
 import interfaces.ProductLineDTO;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,11 +74,11 @@ public abstract class Cart implements CartDTO
     }
 
     /**
-     * Adds productLines to the cart.
+     * Adds productlines to the cart.
      *
-     * @param productLines The productLines to be added.
+     * @param productLines The productlines to be added.
      */
-    public void addProductLines(ProductLine[] productLines)
+    public void addProductLines(Collection<ProductLine> productLines)
     {
         for (ProductLine productLine : productLines)
         {
@@ -90,6 +91,10 @@ public abstract class Cart implements CartDTO
             {
                 mappedPL.addQuantity(productLine.getQuantity());
             }
+
+            // BigDecimal is immutable, must assign return value of method to the variable,
+            // if not, the calculation is lost.
+            price = price.add(productLine.getTotalPrice());
         }
     }
 
