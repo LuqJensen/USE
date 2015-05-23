@@ -9,5 +9,12 @@ public enum OrderStatus
 {
     UNPAID,
     PAID,
-    DISPATCHED
+    DISPATCHED;
+
+    private static final OrderStatus[] values = OrderStatus.values();
+
+    public static OrderStatus getValue(int index)
+    {
+        return values[index];
+    }
 }

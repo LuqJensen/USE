@@ -277,7 +277,7 @@ public class DataMapping implements IRepository
             {
                 Integer id = rs.getInt(2);
                 BigDecimal price = rs.getBigDecimal(3);
-                OrderStatus status = OrderStatus.values()[rs.getInt(4)];
+                OrderStatus status = OrderStatus.getValue(rs.getInt(4));
                 String paymentMethod = rs.getString(5);
                 Date purchaseDate = rs.getDate(6);
                 Date dispatchedDate = rs.getDate(7);
