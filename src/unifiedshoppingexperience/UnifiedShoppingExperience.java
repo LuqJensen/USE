@@ -222,7 +222,7 @@ public class UnifiedShoppingExperience
         }
 
         String[] splitEmail = email.split("@");
-        if (splitEmail.length != 2 || splitEmail[0].equals(""))
+        if (email.endsWith("@") || splitEmail.length != 2 || splitEmail[0].equals(""))
         {
             return false;
         }
