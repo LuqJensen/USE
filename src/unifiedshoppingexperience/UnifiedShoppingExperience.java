@@ -228,7 +228,7 @@ public class UnifiedShoppingExperience
         }
 
         String[] secondSplit = splitEmail[1].split("\\.");
-        if (secondSplit.length != 2 || secondSplit[0].equals(""))
+        if (splitEmail[1].endsWith(".") || secondSplit.length != 2 || secondSplit[0].equals(""))
         {
             return false;
         }
