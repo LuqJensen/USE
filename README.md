@@ -5,7 +5,6 @@
 
 USE - Unified Shopping Experience is an offline webshop prototype based mostly in java.
 
-It is completely open source; yet probably won't make much sense to others than the developers.
 The project is our complete prototype solution to our project case "Electroshoppens Cross-Channel satsning".
 
 

@@ -34,10 +34,8 @@ public class PaymentManager
                 startServer();
             }
         };
-        // Let JVM interrupt this thread on shutdown.
-        // Apparantly the JVM cant handle this despite documentation saying it will...
+
         //t.setDaemon(true);
-        // Instead we add a shutdown hook, a thread which is run at shutdown.
         /*Runtime.getRuntime().addShutdownHook(new Thread()
          {
          @Override
@@ -46,10 +44,6 @@ public class PaymentManager
          t.interrupt();
          }
          });*/
-        // Neither of the above solutions appear to work. Probably because
-        // we only shutdown the GUI thread and the business thread along with
-        // the PaymentManager thread will continue running.
-        // No graceful exists for us...
         t.start();
     }
 
@@ -152,18 +146,20 @@ public class PaymentManager
      */
     public static void main(String[] test)
     {
-        PaymentManager hda = new PaymentManager();
-        ShoppingCart cart = new ShoppingCart();
-        ProductLine[] testProductLines = new ProductLine[2];
-        cart.addProduct(new Product("AMDRocks", new BigDecimal(200.0), "type1", "AMD R Best"));
-        cart.addProduct(new Product("nvidia", new BigDecimal(200.0), "type2", "sucks"));
+        PaymentManager pm = new PaymentManager();
 
-        Order order = new Order(cart, new BigDecimal(400.0), null); /// TODODODOOOTODOODOOTOODO use a mock object here, or else database persists this object.
+        int orderID = 123;
+        BigDecimal orderPrice = new BigDecimal(400.0);
+
+        ProductLine[] testProductLines = new ProductLine[2];
+        testProductLines[0] = new ProductLine(new Product("AMDRocks", new BigDecimal(200.0), "type1", "AMD R Best"), 1);
+        testProductLines[1] = new ProductLine(new Product("nvidia", new BigDecimal(200.0), "type2", "sucks"), 2);
+
         CallBack cb = () ->
         {
-            System.out.println(order);
+            System.out.println(orderID + " integration test passed");
         };
-        String URL = hda.getPaymentProcessor("visaDankort", cb, order.getID(), testProductLines, order.getPrice());
+        String URL = pm.getPaymentProcessor("paypal", cb, orderID, testProductLines, orderPrice);
         PaypalDummy pd = new PaypalDummy();
         pd.confirm(URL.substring(URL.lastIndexOf("/") + 1));
     }

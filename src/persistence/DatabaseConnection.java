@@ -58,7 +58,6 @@ public class DatabaseConnection
         catch (SQLException ex)
         {
             System.out.println("Could not connect to database, please check your settings.");
-            ex.printStackTrace();
             System.exit(1);
         }
         catch (FileNotFoundException ex)
@@ -68,7 +67,7 @@ public class DatabaseConnection
         }
         catch (IOException ex)
         {
-            ex.printStackTrace();
+            System.out.println(ex);
             System.exit(1);
         }
         catch (ClassNotFoundException ex)
@@ -173,6 +172,7 @@ public class DatabaseConnection
         }
         catch (SQLException ex)
         {
+            System.out.println(ex);
             ex.printStackTrace();
         }
         finally
@@ -220,6 +220,7 @@ public class DatabaseConnection
         }
         catch (SQLException ex)
         {
+            System.out.println(ex);
             ex.printStackTrace();
         }
         finally
@@ -276,6 +277,7 @@ public class DatabaseConnection
         }
         catch (SQLException ex)
         {
+            System.out.println(ex);
             ex.printStackTrace();
         }
         finally
