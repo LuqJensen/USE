@@ -222,13 +222,13 @@ public class UnifiedShoppingExperience
         }
 
         String[] splitEmail = email.split("@");
-        if (splitEmail.length != 2 || splitEmail[0].equals(""))
+        if (email.endsWith("@") || splitEmail.length != 2 || splitEmail[0].equals(""))
         {
             return false;
         }
 
         String[] secondSplit = splitEmail[1].split("\\.");
-        if (secondSplit.length != 2 || secondSplit[0].equals(""))
+        if (splitEmail[1].endsWith(".") || secondSplit.length != 2 || secondSplit[0].equals(""))
         {
             return false;
         }
