@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import persistence.DataStore;
-import shared.CreateOrderErrors;
-import shared.CreateOrderResult;
+import shared.OrderCreationError;
+import shared.OrderCreationResult;
 
 /**
  * Contains information about a customer and provides methods to handle the
@@ -122,16 +122,16 @@ public class Customer implements CustomerDTO
      *
      * @return Returns the order that was created.
      */
-    public CreateOrderResult createOrder()
+    public OrderCreationResult createOrder()
     {
         if (this.email == null)
         {
-            return new CreateOrderResult(CreateOrderErrors.NO_EMAIL);
+            return new OrderCreationResult(OrderCreationError.NO_EMAIL);
         }
         Order order = new Order(shoppingCart, shoppingCart.getPrice(), this);
         shoppingCart = new ShoppingCart();
         orders.put(order.getID(), order);
-        return new CreateOrderResult(CreateOrderErrors.UNPAID, order.getID());
+        return new OrderCreationResult(OrderCreationError.UNPAID, order.getID());
     }
 
     /**

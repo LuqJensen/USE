@@ -5,7 +5,7 @@ package shared;
  *
  * @author Gruppe12
  */
-public enum CreateOrderErrors
+public enum OrderCreationError
 {
     UNPAID,
     NO_EMAIL

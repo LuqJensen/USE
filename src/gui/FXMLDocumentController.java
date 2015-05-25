@@ -38,11 +38,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import shared.CreateOrderErrors;
+import shared.OrderCreationError;
 import unifiedshoppingexperience.UnifiedShoppingExperience;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import shared.CreateOrderResult;
+import shared.OrderCreationResult;
 import shared.OrderStatus;
 import thirdpartypaymentprocessor.PaypalDummy;
 import shared.Address;
@@ -183,9 +183,9 @@ public class FXMLDocumentController implements Initializable
     {
         final int COLUMN_SPACING = 140;
 
-        CreateOrderResult orderResult = UnifiedShoppingExperience.getInstance().createOrder(CUSTOMER_ID);
+        OrderCreationResult orderResult = UnifiedShoppingExperience.getInstance().createOrder(CUSTOMER_ID);
 
-        if (orderResult.getError() == CreateOrderErrors.UNPAID)
+        if (orderResult.getError() == OrderCreationError.UNPAID)
         {
             CustomerDTO customer = UnifiedShoppingExperience.getInstance().getCustomer(CUSTOMER_ID);
             Address address = customer.getDefaultDeliveryAddress();
@@ -435,7 +435,7 @@ public class FXMLDocumentController implements Initializable
             gp.add(orderLineView, 0, 5, 2, 1);
             setContent(gp);
         }
-        else if (orderResult.getError() == CreateOrderErrors.NO_EMAIL)
+        else if (orderResult.getError() == OrderCreationError.NO_EMAIL)
         {
             String email = JOptionPane.showInputDialog(new JFrame(), "Skriv email:");
 

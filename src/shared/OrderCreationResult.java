@@ -5,17 +5,17 @@ package shared;
  *
  * @author Gruppe12
  */
-public class CreateOrderResult
+public class OrderCreationResult
 {
-    private CreateOrderErrors error;
-    private int orderID;
+    private final OrderCreationError error;
+    private final int orderID;
 
     /**
      * Creates a CreaterOrderResult without a specific order ID.
      *
      * @param error The status of the creation of the order.
      */
-    public CreateOrderResult(CreateOrderErrors error)
+    public OrderCreationResult(OrderCreationError error)
     {
         this.error = error;
         this.orderID = 0;
@@ -27,7 +27,7 @@ public class CreateOrderResult
      * @param error The status of the creation of the order.
      * @param orderID The order ID.
      */
-    public CreateOrderResult(CreateOrderErrors error, int orderID)
+    public OrderCreationResult(OrderCreationError error, int orderID)
     {
         this.error = error;
         this.orderID = orderID;
@@ -48,7 +48,7 @@ public class CreateOrderResult
      *
      * @return The status of the creation of the order.
      */
-    public CreateOrderErrors getError()
+    public OrderCreationError getError()
     {
         return error;
     }

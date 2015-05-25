@@ -7,7 +7,7 @@ import interfaces.ProductDTO;
 import interfaces.ProductLineDTO;
 import java.util.List;
 import persistence.DataStore;
-import shared.CreateOrderResult;
+import shared.OrderCreationResult;
 
 /**
  * The controller handling communication between the presentation tier and logic
@@ -85,7 +85,7 @@ public class UnifiedShoppingExperience
      * can be either UNPAID or NO_EMAIL. UNPAID means the method was
      * successfully executed. NO_EMAIL means the customer is not registered.
      */
-    public CreateOrderResult createOrder(String customerID)
+    public OrderCreationResult createOrder(String customerID)
     {
         return customers.getCustomer(customerID).createOrder();
     }
