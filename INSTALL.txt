@@ -9,4 +9,7 @@
 5. Install PostgreSQL; let user be "postgresql" and password be "test" without quotes, optionally pick something else for user and password (you will have to modify /Database/Database.properties).
 6. Create a new database with name "test", optionally pick something else for database name (you will have to modify /Database/Database.properties), optionally apply the supplied backup dump file (/Database/dump.sql) and skip step 7.
 7. Execute the provided SQL (/Database/Database.sql) on the new database.
-8. Run the provided UnifiedShoppingExperience.jar, optionally open the provided project source code in your IDE of choice and run /gui/GUIController.java or /employeegui/GUIController.java. Optionally run the unit tests, by clicking "Test".
+8. Run the provided UnifiedShoppingExperience.jar.
+8.1     Optionally open the provided project source code in your IDE of choice and run /gui/GUIController.java or /employeegui/GUIController.java. 
+8.1.1   Optionally run the unit tests, by clicking "Test".
+8.2     Optionally run the provided UnifiedShoppingExperience.jar from cmd/terminal using no parameters. Navigate to your install path and execute "java -jar unifiedshoppingexperience.jar".
