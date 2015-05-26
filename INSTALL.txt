@@ -1,3 +1,7 @@
+## For requirements, please refer to README.md ##
+## Note, for development the Database directory must always be in the same directory as the src directory. ##
+## Note, for common use the Database directory must always be in the same directory as UnifiedShoppingExperience.jar ##
+
 1. Install Java Runtime.
 2. Install Java SE Development Kit (tick JavaFX and optinally JUnit), optionally choose the Netbeans package to skip step 3 and 4.
 3. Install JUnit if you did'nt in step 2.

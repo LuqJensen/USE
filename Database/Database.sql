@@ -25,11 +25,11 @@ CREATE TABLE address
 
 CREATE TABLE customer
 (
-	id VARCHAR(20) PRIMARY KEY,
-	first_name VARCHAR(50),
-	sur_name VARCHAR(50),
-	email VARCHAR(100),
-	phonenumber VARCHAR(20),
+    id VARCHAR(20) PRIMARY KEY,
+    first_name VARCHAR(50),
+    sur_name VARCHAR(50),
+    email VARCHAR(100),
+    phonenumber VARCHAR(20),
     address INT REFERENCES address(id) ON DELETE SET NULL ON UPDATE CASCADE,
     shopping_cart INT NOT NULL REFERENCES cart(id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -37,27 +37,28 @@ CREATE TABLE customer
 CREATE TABLE productline
 (
     cart_id INT REFERENCES cart(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	product_model VARCHAR(25) REFERENCES product(model) ON DELETE CASCADE ON UPDATE CASCADE,
-	quantity INT
+    product_model VARCHAR(25) REFERENCES product(model) ON DELETE CASCADE ON UPDATE CASCADE,
+    quantity INT,
+    CONSTRAINT productline_pkey PRIMARY KEY (cart_id, product_model)
 );
 
 CREATE TABLE wishlist
 (
-	customer_id VARCHAR(20) REFERENCES customer(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	id INT REFERENCES cart(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	name VARCHAR(30)
+    customer_id VARCHAR(20) REFERENCES customer(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    id INT REFERENCES cart(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    name VARCHAR(30)
 );
 
 CREATE TABLE "order"
 (
     customer_id VARCHAR(20) REFERENCES customer(id) ON DELETE RESTRICT ON UPDATE CASCADE,
-	id INT PRIMARY KEY,
-	price DECIMAL(19,4),
+    id INT PRIMARY KEY,
+    price DECIMAL(19,4),
     status INT,
     payment_method VARCHAR(50),
-	purchase_date DATE,
-	dispatched_date DATE,
-	cart_id INT NOT NULL REFERENCES cart(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    purchase_date DATE,
+    dispatched_date DATE,
+    cart_id INT NOT NULL REFERENCES cart(id) ON DELETE RESTRICT ON UPDATE CASCADE,
     delivery_address INT REFERENCES address(id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
