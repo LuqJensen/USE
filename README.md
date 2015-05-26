@@ -10,13 +10,17 @@ The project is our complete prototype solution to our project case "Electroshopp
 
 ## Requirements
 
-+ Platform: Linux, Windows, Mac or Oracle Solaris
++ Platform: Linux, Windows, Mac(IS NOT CURRENTLY SUPPORTED) or Oracle Solaris
 + Java SE Development Kit ≥ 8.0.310.13
 + Java Runtime ≥ 8.0.310
 + PostgreSQL ≥ 9.4
 + JavaFX Scene Builder ≥ 2.0
 + JUnit ≥ 4.10
 
+NOTE: Mac IS NOT currently supported, because the software simply does'nt work on Mac. 
+We suspect this is due to a bug within Java Runtime 8.0.x
+Specifically with either JFrames or Lambdas.
+We have not tried to reproduce this bug on other Java versions, due to time limitations.
 
 ## Install
 
